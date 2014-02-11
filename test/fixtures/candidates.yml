@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  young: false
+  secular: false
+  experienced: false
+  clean: false
+  eminent: false
+  astute: false
+  comment: MyString
+
+two:
+  name: MyString
+  young: false
+  secular: false
+  experienced: false
+  clean: false
+  eminent: false
+  astute: false
+  comment: MyString

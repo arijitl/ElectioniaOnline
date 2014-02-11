@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-lg-3">
+    <div class="row">
+      <div class="col-lg-12">
+        <img src="/assets/logo.png" alt="Electionia - Every Vote Counts" class="img-responsive"/>
+      </div>
+      <div class="col-lg-12">
+        <h1>Electionia</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-9">
+    <div class="row">
+      <div class="grayRayed well" id="candidateCanvas">
+        <div class="row">
+          <% @candidates.each do |c| %>
+              <div class="col-lg-4">
+                <div class="candidate">
+                  <%= image_tag c.avatar.url, class: "img-responsive" %>
+                  <div class="screen">
+                    <ul class="candidateDetails">
+                      <li><h4 class="candidateQuality"><%= young c.young %></h4></li>
+                      <li><h4 class="candidateQuality"><%= secular c.secular %></h4></li>
+                      <li><h4 class="candidateQuality"><%= clean c.clean %></h4></li>
+                      <li><h4 class="candidateQuality"><%= experienced c.experienced %></h4></li>
+                      <li><h4 class="candidateQuality"><%= eminent c.eminent %></h4></li>
+                      <li><h4 class="candidateQuality"><%= astute c.astute %></h4></li>
+                      <li><h4 class="candidateStatement"><%= c.comment %></h4>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <h4 class="candidateName"><%= c.name %></h4>
+                <div class="cardSlot col-lg-6">
+                  <a href="#" class="btn btn-primary buy">Run a <br/>Campaign</a>
+                  <a href="#" class="btn btn-danger ">Cast <br/>Your Vote</a>
+                </div>
+                <div class="cardSlot col-lg-6">
+                  <a href="#" class="btn btn-primary buy ">Run a <br/>Campaign</a>
+                  <a href="#" class="btn btn-danger ">Cast <br/>Your Vote</a>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="grayShelfed well" id="shop">
+        <%= hidden_field_tag "attacked" %>
+        <h2>Run a Campaign against <span id="attackedName"></span> <%= link_to "Cancel", "#", id: "shopCancel", class:"btn btn-danger pull-right" %></h2>
+
+        <div id="shopShelf" class="owl-carousel owl-theme">
+          <% @campaigns.each do |c| %>
+              <div class="item">
+                <h4><%= c.name %></h4>
+                <%= image_tag c.avatar.url(:original), class: "img-responsive" %>
+                <%#= c.description %>
+                <%= link_to "Campaign for R.#{c.bet}","#", class:"btn btn-primary" %>
+                <br/>
+                <h5>If the candidate loses, you will get <strong>R.<%= c.payoff %></strong></h5>
+              </div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
