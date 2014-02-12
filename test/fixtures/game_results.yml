@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  game_id: 1
+  votewin: false
+  income: 1
+  expense: 1
+  contribution: 1
+  balance: 1
+
+two:
+  game_id: 1
+  votewin: false
+  income: 1
+  expense: 1
+  contribution: 1
+  balance: 1

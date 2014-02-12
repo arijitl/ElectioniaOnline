@@ -1,7 +1,17 @@
 ElectioniaOnline::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-
+  devise_scope :user do
+    get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_facebook_session
+  end
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
+  post '/buy/:campaign_id/against/:candidate_id', to: 'welcome#buy_campaign', as: :buy_campaign
+  post '/cancel/:anticampaign_id', to: 'welcome#cancel_campaign', as: :cancel_campaign
+  post '/vote/:candidate_id', to:'welcome#cast_vote', as: :cast_vote
+  post '/uncast/:vote_id', to:'welcome#uncast_vote', as: :uncast_vote
+
+  get '/evaluate/:id', to:'welcome#evaluate_game', as: :evaluate_game
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

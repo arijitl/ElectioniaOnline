@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140211215426) do
+ActiveRecord::Schema.define(version: 20140212124917) do
+
+  create_table "anticampaigns", force: true do |t|
+    t.integer  "game_id"
+    t.integer  "user_id"
+    t.integer  "candidate_id"
+    t.integer  "campaign_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "campaigns", force: true do |t|
     t.string   "name"
@@ -43,6 +52,28 @@ ActiveRecord::Schema.define(version: 20140211215426) do
     t.datetime "avatar_updated_at"
   end
 
+  create_table "game_results", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.boolean  "votewin"
+    t.integer  "income"
+    t.integer  "expense"
+    t.integer  "contribution"
+    t.integer  "balance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "games", force: true do |t|
+    t.date     "game_date"
+    t.integer  "first_id"
+    t.integer  "second_id"
+    t.integer  "third_id"
+    t.integer  "winner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "rails_admin_histories", force: true do |t|
     t.text     "message"
     t.string   "username"
@@ -55,6 +86,17 @@ ActiveRecord::Schema.define(version: 20140211215426) do
   end
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], name: "index_rails_admin_histories"
+
+  create_table "transactions", force: true do |t|
+    t.integer  "user_id"
+    t.date     "game_date"
+    t.string   "account"
+    t.integer  "cost"
+    t.integer  "return"
+    t.integer  "balance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -81,5 +123,13 @@ ActiveRecord::Schema.define(version: 20140211215426) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "votes", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "candidate_id"
+    t.integer  "game_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

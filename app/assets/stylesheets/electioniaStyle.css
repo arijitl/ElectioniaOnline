@@ -1,15 +1,22 @@
-html{
-    width:100%;
-    height:100%;
-}
-body{
-    padding:20px;
-    width:960px;
-    margin: 0 auto;
-    font-size: 16px;
+html {
+    width: 100%;
+    height: 100%;
+    background: #333;
 }
 
-a{
+body {
+    padding: 20px;
+    padding-top: 0;
+    padding-right: 30px;
+    width: 960px;
+    margin: 0 auto;
+    box-shadow: #aaa 0 0 80px;
+    font-size: 16px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+a {
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
@@ -18,79 +25,159 @@ a{
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-h1{
+.btn-inverse.active {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.btn-inverse {
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #2d373c;
+    background-image: -moz-linear-gradient(top, #242c30, #3a474d);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#242c30), to(#3a474d));
+    background-image: -webkit-linear-gradient(top, #242c30, #3a474d);
+    background-image: -o-linear-gradient(top, #242c30, #3a474d);
+    background-image: linear-gradient(to bottom, #242c30, #3a474d);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff242c30', endColorstr='#ff3a474d', GradientType=0);
+    border-color: #3a474d #3a474d #191f21;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    *background-color: #3a474d;
+    /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-inverse:hover,
+.btn-inverse:focus,
+.btn-inverse:active,
+.btn-inverse.active,
+.btn-inverse.disabled,
+.btn-inverse[disabled] {
+    color: #ffffff;
+    background-color: #3a474d;
+    *background-color: #2f393f;
+}
+
+.btn-inverse:active,
+.btn-inverse.active {
+    background-color: #242c30;
+}
+
+.btn-grayscale.active {
+    color: rgba(255, 255, 255, 1);
+}
+
+.btn-grayscale {
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #757575;
+    background-image: -moz-linear-gradient(top, #6b6b6b, #858585);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6b6b6b), to(#858585));
+    background-image: -webkit-linear-gradient(top, #6b6b6b, #858585);
+    background-image: -o-linear-gradient(top, #6b6b6b, #858585);
+    background-image: linear-gradient(to bottom, #6b6b6b, #858585);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff6b6b6b', endColorstr='#ff858585', GradientType=0);
+    border-color: #858585 #858585 #5e5e5e;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    *background-color: #858585;
+    /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-grayscale:hover,
+.btn-grayscale:focus,
+.btn-grayscale:active,
+.btn-grayscale.active,
+.btn-grayscale.disabled,
+.btn-grayscale[disabled] {
+    color: #000;
+    background-color: #aaa;
+    *background-color: #787878;
+}
+
+.btn-grayscale:active,
+.btn-grayscale.active {
+    background-color: #6b6b6b;
+}
+
+h1 {
     font-size: 3.2em;
 }
 
-#candidateCanvas{
+#candidateCanvas {
     text-align: center;
 }
 
-.grayRayed{
+.grayRayed {
     background: url(/assets/background.jpg);
     background-size: 100% 100%;
 }
 
-.candidate img{
-    border:5px solid #666;
+.candidate img {
+    border: 5px solid #666;
     border-radius: 10px;
     box-shadow: #333 0 0 20px;
 }
 
-.screen{
+.screen {
     background: url('/assets/canvas.jpg');
-    color:white;
+    color: white;
     box-shadow: #333 0 0 20px;
     width: 100%;
     height: 0;
     border-radius: 10px;
     position: relative;
     display: none;
-    opacity:0.97;
+    opacity: 0.97;
 }
 
-ul.candidateDetails{
+ul.candidateDetails {
     display: none;
-    padding:0.5em;
-    padding-top:1em;
+    padding: 0.5em;
+    padding-top: 1em;
     list-style: none;
 }
-.candidateQuality{
-    padding:0;
-    margin:0;
+
+.candidateQuality {
+    padding: 0;
+    margin: 0;
 }
 
-.candidateStatement{
-    color:white;
-    padding:0.5em;
+.candidateStatement {
+    color: white;
+    padding: 0.5em;
     background: #333;
     border-radius: 5px;
 }
 
-.candidateName{
-    background:#333;
-    padding:0.2em;
+.candidateName {
+    background: #333;
+    padding: 0.2em;
     color: white;
     border-radius: 5px;
     font-size: 1.5em;
 }
 
-.cardSlot{
+.cardSlot {
     background: white;
-    border:2px solid black;
-    height:100%;
+    border: 2px solid black;
+    height: 100%;
     border-radius: 10px;
-    padding:0.5em;
+    padding: 0.5em;
+    position: relative;
 }
 
-#shop{
-    width:100%;
+#shop {
+    width: 100%;
     height: 100%;
     display: none;
     position: relative;
 }
 
-#shopShelf .item{
+#shopShelf .item {
     background: #333;
     padding: 10px 0px;
     margin: 10px;
@@ -101,8 +188,99 @@ ul.candidateDetails{
     text-align: center;
 }
 
-#shopShelf .item img{
-    height:5em;
+#shopShelf .item img {
+    height: 5em;
     margin: 0 auto;
     margin-bottom: 1em;
+}
+
+#profileBox {
+    background: #333;
+    color: white;
+    margin-top: 1em;
+    padding-top: 1em;
+    height: 5em;
+}
+
+#profileBox img {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
+    -webkit-transition: all .6s ease; /* Fade to color for Chrome and Safari */
+    -webkit-backface-visibility: hidden; /* Fix for transition flickering */
+}
+
+.logout {
+    width: 100%;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.slottedCampaign {
+    display: none;
+    border-radius: 5px;
+}
+
+.slottedCampaign h4 {
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0;
+    min-height: 2.2em;
+}
+
+.slottedCampaign h5 {
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+.slottedCampaign img {
+    width: 60%;
+    min-height: 3em;
+    margin: 0 auto;
+    margin-bottom: 0.2em;
+}
+
+.rollover {
+    display: none;
+    background: #333;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    padding: 1em;
+    color: white;
+}
+
+.cost {
+    font-size: 0.8em;
+    margin-bottom: 1em;
+}
+
+.footer {
+    text-align: center;
+    color: #666;
+}
+
+#menu {
+    padding-top: 2.5em;
+}
+
+#menu a h2 {
+    display: inline;
+    margin-left: 1em;
+    color:#333;
+    font-size: 1.2em;
+    padding-bottom: 0.2em;
+    border-bottom: #aaa solid 1px;
+}
+
+#menu a:hover {
+    text-decoration: none;
+}
+
+#menu a h2:hover {
+    border-bottom: #000 solid 3px;
 }

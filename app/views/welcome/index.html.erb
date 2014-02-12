@@ -1,21 +1,33 @@
 <div class="row">
+  <div class="col-lg-3"><h1>Electionia</h1></div>
+  <div class="col-lg-9" style="text-align: right" id="menu">
+    <a href="#"><h2>Instructions</h2></a>
+    <a href="#"><h2>Leaderboard</h2></a>
+    <a href="#"><h2>Transactions</h2></a>
+  </div>
+</div>
+<div class="row">
   <div class="col-lg-3">
     <div class="row">
       <div class="col-lg-12">
         <img src="/assets/logo.png" alt="Electionia - Every Vote Counts" class="img-responsive"/>
       </div>
-      <div class="col-lg-12">
-        <h1>Electionia</h1>
+    </div>
+    <div id="profileBox">
+      <div class="col-lg-4" style="padding-right: 0;vertical-align: middle">
+        <%= image_tag current_user.avatar.url(:original), class: "img-responsive" %>
+      </div>
+      <div class="col-lg-8" style="padding-left: 0.3em;">
+        <h2 style="margin-top: -0.3em;padding: 0">
+          <small><%= current_user.name %></small>
+          <br/>
+          <span class="glyphicon glyphicon-briefcase"></span>
+          <span id="bank"><%= current_user.bank rescue 1000 %></span>
+        </h2>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-6">
-        <%= image_tag "bank.png", class: "img-responsive" %>
-      </div>
-      <div class="col-lg-6">
-        <h2><%= current_user.bank rescue 0%></h2>
-      </div>
-    </div>
+    <%= link_to "Logout", destroy_facebook_session_path, class: "btn btn-grayscale logout" %>
+    <h1 style="text-align: right"><%= Date.today.strftime("%d %b") %></h1>
   </div>
   <div class="col-lg-9">
     <div class="row">
@@ -38,14 +50,17 @@
                     </ul>
                   </div>
                 </div>
-                <h4 class="candidateName"><%= c.name %></h4>
-                <div class="cardSlot col-lg-6">
-                  <a href="#" class="btn btn-primary buy">Run a <br/>Campaign</a>
-                  <a href="#" class="btn btn-danger ">Cast <br/>Your Vote</a>
+                <h4 class="candidateName" id="candidateNo<%= c.id %>"><%= c.name %></h4>
+
+                <div class="cardSlot col-lg-6" id="slot<%= c.id %>a">
+                  <a href="#" class="btn btn-inverse buy">Run a <br/>Campaign</a>
+                  <%= link_to_function raw("Cast <br/>Your Vote"), "cast_vote(#{c.id},'a')", class: "btn btn-grayscale voteBtn" %>
+                  <div class="slottedCampaign"></div>
                 </div>
-                <div class="cardSlot col-lg-6">
-                  <a href="#" class="btn btn-primary buy ">Run a <br/>Campaign</a>
-                  <a href="#" class="btn btn-danger ">Cast <br/>Your Vote</a>
+                <div class="cardSlot col-lg-6" id="slot<%= c.id %>b">
+                  <a href="#" class="btn btn-inverse buy ">Run a <br/>Campaign</a>
+                  <%= link_to_function raw("Cast <br/>Your Vote"), "cast_vote(#{c.id},'b')", class: "btn btn-grayscale voteBtn" %>
+                  <div class="slottedCampaign"></div>
                 </div>
               </div>
           <% end %>
@@ -53,17 +68,22 @@
       </div>
       <div class="grayShelfed well" id="shop">
         <%= hidden_field_tag "attacked" %>
-        <h2>Run a Campaign against <span id="attackedName"></span> <%= link_to "Cancel", "#", id: "shopCancel", class:"btn btn-danger pull-right" %></h2>
+        <%= hidden_field_tag "selectedSlot" %>
+        <h2>Run a Campaign against
+          <span id="attackedName"></span> <%= link_to "Cancel", "#", id: "shopCancel", class: "btn btn-inverse pull-right" %>
+        </h2>
 
         <div id="shopShelf" class="owl-carousel owl-theme">
           <% @campaigns.each do |c| %>
-              <div class="item">
+              <div class="item" id="campaign<%= c.id %>">
                 <h4><%= c.name %></h4>
                 <%= image_tag c.avatar.url(:original), class: "img-responsive" %>
-                <%#= c.description %>
-                <%= link_to "Campaign for R.#{c.bet}","#", class:"btn btn-primary" %>
-                <br/>
-                <h5>If the candidate loses, you will get <strong>R.<%= c.payoff %></strong></h5>
+                <%= link_to_function "Campaign for R.#{c.bet}", "buy_campaign(#{c.id})", class: "btn btn-grayscale" %>
+                <h5 style="display: inline-block"><strong>R.<%= c.payoff %></strong> if the candidate loses</h5>
+                <div class="rollover">
+                  <div class="cost">Cost: R.<%= c.bet %></div>
+                  <a href="#" class="cancelSlot btn btn-grayscale">Refund</a>
+                </div>
               </div>
           <% end %>
         </div>
@@ -71,4 +91,10 @@
       </div>
     </div>
   </div>
+</div>
+<hr/>
+<div class="footer">
+  A Ptotem &copy; Games Creation
+  <br/>
+  <small>Mail us at info@ptotem.com to get a copy of the Electionia Card Game</small>
 </div>

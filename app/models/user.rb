@@ -8,6 +8,11 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
+  has_many :votes, dependent: :destroy
+  has_many :anticampaigns, dependent: :destroy
+  has_many :transactions, dependent: :destroy
+  has_many :votes, dependent: :destroy
+
   def self.find_for_facebook_oauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.provider = auth.provider
@@ -16,6 +21,7 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0, 20]
       user.name = auth.info.name # assuming the user model has a name
       user.avatar = auth.info.image # assuming the user model has an image
+      user.bank = 1000
     end
   end
 

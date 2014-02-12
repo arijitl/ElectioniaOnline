@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  game_date: 2014-02-12
+  account: MyString
+  cost: 1
+  return: 1
+
+two:
+  user_id: 1
+  game_date: 2014-02-12
+  account: MyString
+  cost: 1
+  return: 1

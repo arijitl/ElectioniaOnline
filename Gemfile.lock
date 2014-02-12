@@ -52,6 +52,9 @@ GEM
       multipart-post (~> 1.1)
     font-awesome-rails (4.0.3.0)
       railties (>= 3.2, < 5.0)
+    gon (4.1.1)
+      actionpack (>= 2.3.0)
+      json
     haml (4.0.4)
       tilt
     hashie (2.0.5)
@@ -180,6 +183,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise
+  gon
   jbuilder (~> 1.2)
   jquery-rails
   omniauth-facebook

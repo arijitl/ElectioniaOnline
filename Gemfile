@@ -30,6 +30,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'rails_admin'
 gem 'paperclip'
 gem 'omniauth-facebook'
+gem 'gon'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
