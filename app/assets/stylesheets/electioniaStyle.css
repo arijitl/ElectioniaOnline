@@ -107,8 +107,13 @@ h1 {
     font-size: 3.2em;
 }
 
+#fbsignin{
+    font-size: 1.5em;
+}
+
 #candidateCanvas {
     text-align: center;
+    /*display: none;*/
 }
 
 .grayRayed {
@@ -283,4 +288,8 @@ ul.candidateDetails {
 
 #menu a h2:hover {
     border-bottom: #000 solid 3px;
+}
+
+#instructions{
+    display: none;
 }

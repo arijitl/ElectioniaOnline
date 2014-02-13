@@ -75,6 +75,12 @@ class WelcomeController < ApplicationController
     first=@candidates.count(@game.first_id)
     second=@candidates.count(@game.second_id)
     third=@candidates.count(@game.third_id)
+    @votecount=@votes.count
+    @total_anticampaigns=@game.anticampaigns.all.map{|a| a.campaign.bet}.sum
+    first=first+(1-(@game.anticampaigns.where(candidate_id: @game.first_id).all.map{|a| a.campaign.bet}.sum.to_f/@total_anticampaigns.to_f)*@votecount)
+    second=second+(1-(@game.anticampaigns.where(candidate_id: @game.second_id).all.map{|a| a.campaign.bet}.sum.to_f/@total_anticampaigns.to_f)*@votecount)
+    third=third+(1-(@game.anticampaigns.where(candidate_id: @game.third_id).all.map{|a| a.campaign.bet}.sum.to_f/@total_anticampaigns.to_f)*@votecount)
+
     winner_id=[@game.first_id, @game.second_id, @game.third_id][[first, second, third].index([first, second, third].max)]
     @game.winner_id=winner_id
     @game.save
@@ -114,7 +120,7 @@ class WelcomeController < ApplicationController
       @game_result.balance=user.bank
       @game_result.save
     end
-
+    render text: "#{Candidate.find(@game.first_id).name}: #{first}<br/>#{Candidate.find(@game.second_id).name}: #{second}<br/>#{Candidate.find(@game.third_id).name}: #{third}<br/><br/>Winner: #{Candidate.find(@game.winner_id).name}"
   end
 
 end

@@ -101,6 +101,7 @@ function cast_vote(candidate) {
                 $votedSlot.addClass('slotFilled').addClass('col-lg-offset-3');
                 $votedSlot.find('.btn').hide();
                 $votedSlot.append('<img src="/assets/voted.png" alt="I voted" class="img-responsive" style="margin-bottom: 0.3em"/><a href="#" class="cancelVote btn btn-xs btn-inverse">Cancel</a>')
+                $('#voteStatus').val(true);
                 $('.voteBtn').addClass('disabled');
                 $votedSlot.fadeIn();
                 $votedSlot.find('a.cancelVote').on('click', function () {
@@ -117,6 +118,7 @@ function cast_vote(candidate) {
                                 $canceledSlot.find('.cancelVote').remove();
                                 $canceledSlot.removeClass('slotFilled').removeClass('col-lg-offset-3');
                                 $canceledSlot.fadeIn();
+                                $('#voteStatus').val(false);
                                 $('.voteBtn').removeClass('disabled');
                                 $votedSlot.next().fadeIn();
                             });
@@ -177,8 +179,8 @@ function buy_campaign(campaign, candidate) {
                             $canceledSlot.find('.cancelSlot').remove();
                             $canceledSlot.find('.slottedCampaign').html("").hide();
                             $('#bank').text(cancelData);
-                            if ($canceledSlot.parent().parent().parent().find('.slotFilled').length == 0) {
-                                $canceledSlot.parent().parent().parent().find('.voteBtn').removeClass('disabled');
+                            if ($canceledSlot.parent().find('.slotFilled').length == 0 && !$('#voteStatus').val()) {
+                                $canceledSlot.parent().find('.voteBtn').removeClass('disabled');
                             }
                             $canceledSlot.unbind('hover');
                             $canceledSlot.fadeIn();

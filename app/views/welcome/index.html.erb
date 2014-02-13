@@ -31,6 +31,27 @@
   </div>
   <div class="col-lg-9">
     <div class="row">
+      <div class="well" id="instructions">
+        In the land of Electionia, there is an election every day. Vote for the candidate of your choice and run down
+        their opponents in this game of electoral machinations. The
+        game will be played for 100 days for a grand prize.
+        Here's how it goes:
+        <h4>
+          <ul>
+            <li>You start with initial money of R.1000.</li>
+            <br/>
+            <li>Every day, you get to see the profile of 3 political candidates.</li>
+            <li>Choose a candidate you like and cast your vote on them.</li>
+            <li>You receive R.1000 every day that you cast your vote.</li>
+            <li>If your chosen candidate wins on a day, you receive an additional R.1000</li>
+            <br/>
+            <li>You can spend your money to buy anti-campaigns against the other candidates</li>
+            <li>Every time a target of your anti-campaign loses you make money</li>
+            <li></li>
+          </ul>
+        </h4>
+
+      </div>
       <div class="grayRayed well" id="candidateCanvas">
         <div class="row">
           <% @candidates.each do |c| %>
@@ -66,9 +87,10 @@
           <% end %>
         </div>
       </div>
-      <div class="grayShelfed well" id="shop">
+      <div class="well" id="shop">
         <%= hidden_field_tag "attacked" %>
         <%= hidden_field_tag "selectedSlot" %>
+        <%= hidden_field_tag "voteStatus", false %>
         <h2>Run a Campaign against
           <span id="attackedName"></span> <%= link_to "Cancel", "#", id: "shopCancel", class: "btn btn-inverse pull-right" %>
         </h2>
@@ -92,7 +114,6 @@
     </div>
   </div>
 </div>
-<hr/>
 <div class="footer">
   A Ptotem &copy; Games Creation
   <br/>
