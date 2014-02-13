@@ -31,6 +31,7 @@ gem 'rails_admin'
 gem 'paperclip'
 gem 'omniauth-facebook'
 gem 'gon'
+gem 'better_errors'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
