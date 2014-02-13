@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-lg-3"><h1>Electionia</h1></div>
   <div class="col-lg-9" style="text-align: right" id="menu">
-    <a href="#"><h2>Instructions</h2></a>
+    <a href="#" onclick="$('.well').hide();$('#instructions').fadeIn();"><h2>Instructions</h2></a>
     <a href="#"><h2>Leaderboard</h2></a>
     <a href="#"><h2>Transactions</h2></a>
   </div>
@@ -32,24 +32,30 @@
   <div class="col-lg-9">
     <div class="row">
       <div class="well" id="instructions">
-        In the land of Electionia, there is an election every day. Vote for the candidate of your choice and run down
-        their opponents in this game of electoral machinations. The
-        game will be played for 100 days for a grand prize.
-        Here's how it goes:
+        <h2 style="margin-top: 0">Instructions<div class="pull-right" style="font-size: 2em;cursor: pointer;margin-top: -0.5em;" onclick="$('.well').hide();$('#candidateCanvas').fadeIn();">&times;</div></h2>
         <h4>
           <ul>
             <li>You start with initial money of R.1000.</li>
             <br/>
             <li>Every day, you get to see the profile of 3 political candidates.</li>
             <li>Choose a candidate you like and cast your vote on them.</li>
-            <li>You receive R.1000 every day that you cast your vote.</li>
-            <li>If your chosen candidate wins on a day, you receive an additional R.1000</li>
+            <li>Buy anti-campaigns against the other candidates to run down their credibility.</li>
             <br/>
-            <li>You can spend your money to buy anti-campaigns against the other candidates</li>
-            <li>Every time a target of your anti-campaign loses you make money</li>
-            <li></li>
+            <li>In the land of Electionia, there is an election every day around 11am IST.</li>
+            <li>After the election, all players' votes are counted</li>
+            <li>An equal number of votes are simulated based on the anticampaigns and counted.</li>
+            <li>The candidate with the highest number of total votes is the winner for the day</li>
+            <br/>
+            <li>You receive R.1000 every day that you cast your vote. Remember, it pays to vote!</li>
+            <li>If your chosen candidate wins on a day, you receive an additional R.1000.</li>
+            <li>If a target of your anti-campaign loses you receive the payoff.</li>
+            <br/>
+            <li>The total number of points you accumulate decides your place on the Leaderboard.</li>
           </ul>
         </h4>
+        <br/>
+        Keep playing the game over the next 100 days and the top 3 scorers at the end will receive a grand prize from our sponsors.
+        <strong>Remember, Every Vote Counts!</strong>
 
       </div>
       <div class="grayRayed well" id="candidateCanvas">
@@ -102,6 +108,7 @@
                 <%= image_tag c.avatar.url(:original), class: "img-responsive" %>
                 <%= link_to_function "Campaign for R.#{c.bet}", "buy_campaign(#{c.id})", class: "btn btn-grayscale" %>
                 <h5 style="display: inline-block"><strong>R.<%= c.payoff %></strong> if the candidate loses</h5>
+
                 <div class="rollover">
                   <div class="cost">Cost: R.<%= c.bet %></div>
                   <a href="#" class="cancelSlot btn btn-grayscale">Refund</a>
