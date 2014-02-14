@@ -93,6 +93,10 @@ $(function () {
         });
     }
 
+    $('.datatable').dataTable({
+        "sPaginationType": "bootstrap"
+    });
+
 
 });
 

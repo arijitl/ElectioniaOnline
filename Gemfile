@@ -32,6 +32,7 @@ gem 'paperclip'
 gem 'omniauth-facebook'
 gem 'gon'
 gem 'better_errors'
+gem 'jquery-datatables-rails'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
