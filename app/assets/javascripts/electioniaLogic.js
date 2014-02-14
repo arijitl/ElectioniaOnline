@@ -94,7 +94,8 @@ $(function () {
     }
 
     $('.datatable').dataTable({
-        "sPaginationType": "bootstrap"
+        "sPaginationType": "bootstrap",
+        "aaSorting": [[ 2, "desc" ]]
     });
 
 
