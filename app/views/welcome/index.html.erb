@@ -131,7 +131,7 @@
             <th>User</th>
             <th>Bank</th>
           </tr>
-          <% User.all.order(:bank).each do |u| %>
+          <% User.all.order(bank: :desc).each do |u| %>
               <tr>
                 <td><%= u.name %></td>
                 <td><%= u.bank %></td>

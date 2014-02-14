@@ -290,7 +290,7 @@ ul.candidateDetails {
     border-bottom: #000 solid 3px;
 }
 
-#instructions {
+#instructions, #leaderboard {
     display: none;
 }
 
