@@ -47,6 +47,26 @@ $(function () {
             autoHeight: false
         });
 
+        $(".next").click(function(){
+            owl.trigger('owl.next');
+        });
+        $(".prev").click(function(){
+            owl.trigger('owl.prev');
+        });
+
+        $('.item').each(function (index,entry) {
+            var itemCost = parseInt($(entry).find('a').first().text().split("R.")[1]);
+            if (parseInt($('#bank').text()) < itemCost) {
+                $(entry).css('opacity','0.5');
+                $(entry).find('a').addClass('disabled');
+                $(entry).find('h5').html("Cannot afford this");
+            } else {
+                $(entry).css('opacity','1');
+                $(entry).find('a').removeClass('disabled')
+                $(entry).find('h5').html('R.'+itemCost*1.5+ ' if the candidate loses');
+            }
+        });
+
     });
 
     $('#shopCancel').on('click', function () {

@@ -28,10 +28,14 @@ class WelcomeController < ApplicationController
     @existing=Anticampaign.where(user_id: @user.id, game_id: @game.id)
     if @existing.all.length<6
       if @existing.where(candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).blank?
-        @user.bank=@user.bank-@campaign.bet
-        @user.save
-        @anticampaign=Anticampaign.create!(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id])
-        @msg=@anticampaign.id
+        if @user.bank>=@campaign.bet
+          @user.bank=@user.bank-@campaign.bet
+          @user.save
+          @anticampaign=Anticampaign.create!(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id])
+          @msg=@anticampaign.id
+        else
+          @msg="You do not have enough money"
+        end
       else
         @anticampaign=@existing.where(candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).first
         @msg=@anticampaign.id
