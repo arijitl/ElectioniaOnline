@@ -13,6 +13,12 @@ class User < ActiveRecord::Base
   has_many :transactions, dependent: :destroy
   has_many :votes, dependent: :destroy
 
+  before_create :give_money
+
+  def give_money
+    self.bank=1000
+  end
+
   def self.find_for_facebook_oauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.provider = auth.provider
