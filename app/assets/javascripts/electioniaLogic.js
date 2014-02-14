@@ -95,7 +95,8 @@ $(function () {
 
     $('.datatable').dataTable({
         "sPaginationType": "bootstrap",
-        "aaSorting": [[ 2, "desc" ]]
+        "aaSorting": [[ 2, "desc" ]],
+        "iDisplayLength": 5
     });
 
 
