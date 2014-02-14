@@ -9,10 +9,9 @@ $(function () {
             var $screen = $this.find('.screen');
             $screen.fadeIn(200);
             $screen.animate({
-                marginTop: "-" + $this.height() + "px",
                 height: $this.height() + "px"
             }, 200, function () {
-                $screen.find('.candidateDetails').fadeIn(100);
+                $screen.find('.candidateDetails').fadeIn(200);
             });
         },
         function () {
@@ -21,7 +20,6 @@ $(function () {
             setTimeout(function () {
                 $screen.find('.candidateDetails').fadeOut(10, function () {
                     $screen.animate({
-                        marginTop: "0",
                         height: "0"
                     }, 500);
                     $screen.fadeOut();
@@ -47,23 +45,23 @@ $(function () {
             autoHeight: false
         });
 
-        $(".next").click(function(){
+        $(".next").click(function () {
             owl.trigger('owl.next');
         });
-        $(".prev").click(function(){
+        $(".prev").click(function () {
             owl.trigger('owl.prev');
         });
 
-        $('.item').each(function (index,entry) {
+        $('.item').each(function (index, entry) {
             var itemCost = parseInt($(entry).find('a').first().text().split("R.")[1]);
             if (parseInt($('#bank').text()) < itemCost) {
-                $(entry).css('opacity','0.5');
+                $(entry).css('opacity', '0.5');
                 $(entry).find('a').addClass('disabled');
                 $(entry).find('h5').html("Cannot afford this");
             } else {
-                $(entry).css('opacity','1');
+                $(entry).css('opacity', '1');
                 $(entry).find('a').removeClass('disabled')
-                $(entry).find('h5').html('R.'+itemCost*1.5+ ' if the candidate loses');
+                $(entry).find('h5').html('R.' + itemCost * 1.5 + ' if the candidate loses');
             }
         });
 
@@ -95,7 +93,9 @@ $(function () {
 
     $('.datatable').dataTable({
         "sPaginationType": "bootstrap",
-        "aaSorting": [[ 2, "desc" ]],
+        "aaSorting": [
+            [ 2, "desc" ]
+        ],
         "iDisplayLength": 5
     });
 
@@ -124,12 +124,16 @@ function cast_vote(candidate) {
             var $votedSlot = $('#slot' + candidate + 'a');
             $votedSlot.next().fadeOut();
             $votedSlot.fadeOut(function () {
-                $votedSlot.addClass('slotFilled').addClass('col-lg-offset-3');
+                $votedSlot.addClass('slotFilled').removeClass('col-lg-6').addClass('col-lg-12');
                 $votedSlot.find('.btn').hide();
-                $votedSlot.append('<img src="/assets/voted.png" alt="I voted" class="img-responsive" style="margin-bottom: 0.3em"/><a href="#" class="cancelVote btn btn-xs btn-inverse">Cancel</a>')
+                $votedSlot.append('<img src="/assets/voted.png" alt="I voted" class="img-responsive" style="margin-bottom: 0.3em"/><a href="#" class="cancelVote btn btn-success">Cancel my Vote</a>')
                 $('#voteStatus').val(true);
-                $('.voteBtn').addClass('disabled');
+                $('.voteBtn').hide();
                 $votedSlot.fadeIn();
+                $('.cardSlot').css({
+                    height: '8em'
+                });
+                $('.btn-submit').removeClass('disabled').text("Click here to Submit");
                 $votedSlot.find('a.cancelVote').on('click', function () {
                     $this = $(this);
                     $.ajax({
@@ -137,15 +141,22 @@ function cast_vote(candidate) {
                         method: 'post',
                         success: function (cancelData) {
                             var $canceledSlot = $this.parent();
+                            $('.btn-submit').addClass('disabled').text("Cast your Vote to Submit");
                             $canceledSlot.fadeOut(function () {
                                 $canceledSlot.find('.btn').show();
                                 $canceledSlot.find('.cancelSlot').remove();
                                 $canceledSlot.find('img').remove();
                                 $canceledSlot.find('.cancelVote').remove();
-                                $canceledSlot.removeClass('slotFilled').removeClass('col-lg-offset-3');
+                                $canceledSlot.removeClass('slotFilled').removeClass('col-lg-12').addClass('col-lg-6');
+                                $('.votable').next().css({
+                                    height: '100%'
+                                });
+                                $('.votable').next().next().css({
+                                    height: '100%'
+                                });
                                 $canceledSlot.fadeIn();
                                 $('#voteStatus').val(false);
-                                $('.voteBtn').removeClass('disabled');
+                                $('.voteBtn.votable').fadeIn();
                                 $votedSlot.next().fadeIn();
                             });
                         }
@@ -164,6 +175,7 @@ function buy_campaign(campaign, candidate) {
         url: '/buy/' + campaign + '/against/' + candidate,
         method: 'post',
         success: function (data) {
+            console.log("Buying Campaign "+ campaign+" against Candidate "+candidate);
             var databits = data.split("||");
             var $selectedSlot;
             if ($('#selectedSlot').val() != "") {
@@ -172,7 +184,10 @@ function buy_campaign(campaign, candidate) {
                 $selectedSlot = $('#slot' + candidate + find_empty_slot(candidate));
             }
             $selectedSlot.addClass('slotFilled');
-            $selectedSlot.parent().find('.voteBtn').addClass('disabled');
+            $selectedSlot.parent().find('.cardSlot').css({
+                height: '8em'
+            });
+            $selectedSlot.parent().find('.voteBtn').removeClass('votable').hide();
             $('#bank').text(databits[0]);
             $('#shop').hide();
             $('#candidateCanvas').slideDown('fast');
@@ -199,14 +214,21 @@ function buy_campaign(campaign, candidate) {
                     method: 'post',
                     success: function (cancelData) {
                         var $canceledSlot = $this.parent().parent().parent();
+                        var $voteBtn =$canceledSlot.parent().find('.voteBtn');
                         $canceledSlot.fadeOut(function () {
                             $canceledSlot.find('.btn').show();
                             $canceledSlot.removeClass('slotFilled');
                             $canceledSlot.find('.cancelSlot').remove();
                             $canceledSlot.find('.slottedCampaign').html("").hide();
                             $('#bank').text(cancelData);
-                            if ($canceledSlot.parent().find('.slotFilled').length == 0 && !$('#voteStatus').val()) {
-                                $canceledSlot.parent().find('.voteBtn').removeClass('disabled');
+                            if ($canceledSlot.parent().find('.slotFilled').length == 0) {
+                                $voteBtn.addClass('votable');
+                                if ($('#voteStatus').val() == 'false') {
+                                    $voteBtn.show();
+                                    $selectedSlot.parent().find('.cardSlot').css({
+                                        height: '100%'
+                                    });
+                                }
                             }
                             $canceledSlot.unbind('hover');
                             $canceledSlot.fadeIn();

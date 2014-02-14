@@ -28,14 +28,10 @@ class WelcomeController < ApplicationController
     @existing=Anticampaign.where(user_id: @user.id, game_id: @game.id)
     if @existing.all.length<6
       if @existing.where(candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).blank?
-        if @user.bank>=@campaign.bet
-          @user.bank=@user.bank-@campaign.bet
-          @user.save
-          @anticampaign=Anticampaign.create!(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id])
-          @msg=@anticampaign.id
-        else
-          @msg="You do not have enough money"
-        end
+        @user.bank=@user.bank-@campaign.bet
+        @user.save
+        @anticampaign=Anticampaign.create!(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id])
+        @msg=@anticampaign.id
       else
         @anticampaign=@existing.where(candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).first
         @msg=@anticampaign.id
@@ -80,10 +76,10 @@ class WelcomeController < ApplicationController
     second=@candidates.count(@game.second_id)
     third=@candidates.count(@game.third_id)
     @votecount=@votes.count
-    @total_anticampaigns=@game.anticampaigns.all.map{|a| a.campaign.bet}.sum
-    first=first+(1-(@game.anticampaigns.where(candidate_id: @game.first_id).all.map{|a| a.campaign.bet}.sum.to_f/@total_anticampaigns.to_f)*@votecount)
-    second=second+(1-(@game.anticampaigns.where(candidate_id: @game.second_id).all.map{|a| a.campaign.bet}.sum.to_f/@total_anticampaigns.to_f)*@votecount)
-    third=third+(1-(@game.anticampaigns.where(candidate_id: @game.third_id).all.map{|a| a.campaign.bet}.sum.to_f/@total_anticampaigns.to_f)*@votecount)
+    @total_anticampaigns=@game.anticampaigns.all.map { |a| a.campaign.bet }.sum
+    first=first+(1-(@game.anticampaigns.where(candidate_id: @game.first_id).all.map { |a| a.campaign.bet }.sum.to_f/@total_anticampaigns.to_f)*@votecount)
+    second=second+(1-(@game.anticampaigns.where(candidate_id: @game.second_id).all.map { |a| a.campaign.bet }.sum.to_f/@total_anticampaigns.to_f)*@votecount)
+    third=third+(1-(@game.anticampaigns.where(candidate_id: @game.third_id).all.map { |a| a.campaign.bet }.sum.to_f/@total_anticampaigns.to_f)*@votecount)
 
     winner_id=[@game.first_id, @game.second_id, @game.third_id][[first, second, third].index([first, second, third].max)]
     @game.winner_id=winner_id

@@ -1,9 +1,12 @@
 <div class="row">
   <div class="col-lg-3"><h1>Electionia</h1></div>
   <div class="col-lg-9" style="text-align: right" id="menu">
+    <a href="#" onclick="$('.well').hide();$('#instructions').fadeIn();"><h2>Home</h2></a>
     <a href="#" onclick="$('.well').hide();$('#instructions').fadeIn();"><h2>Instructions</h2></a>
+    <a href="#" onclick="$('.well').hide();$('#candidateCanvas').fadeIn();"><h2>Play</h2></a>
+    <a href="#"><h2>Results</h2></a>
     <a href="#" onclick="$('.well').hide();$('#leaderboard').fadeIn();"><h2>Leaderboard</h2></a>
-    <a href="#"><h2>Transactions</h2></a>
+
   </div>
 </div>
 <div class="row">
@@ -31,6 +34,9 @@
   </div>
   <div class="col-lg-9">
     <div class="row">
+      <div class="well" id="home">
+
+      </div>
       <div class="well" id="instructions">
         <h2 style="margin-top: 0">Instructions
           <div class="pull-right" style="font-size: 2em;cursor: pointer;margin-top: -0.5em;" onclick="$('.well').hide();$('#candidateCanvas').fadeIn();">&times;</div>
@@ -62,6 +68,7 @@
       </div>
       <div class="grayRayed well" id="candidateCanvas">
         <div class="row">
+          <%= hidden_field_tag "voteStatus", false %>
           <% @candidates.each do |c| %>
               <div class="col-lg-4">
                 <div class="candidate">
@@ -80,25 +87,24 @@
                   </div>
                 </div>
                 <h4 class="candidateName" id="candidateNo<%= c.id %>"><%= c.name %></h4>
+                <%= link_to_function raw("Vote for me"), "cast_vote(#{c.id},'a')", class: "btn btn-success voteBtn votable" %>
 
                 <div class="cardSlot col-lg-6" id="slot<%= c.id %>a">
-                  <a href="#" class="btn btn-inverse buy">Run a <br/>Campaign</a>
-                  <%= link_to_function raw("Cast <br/>Your Vote"), "cast_vote(#{c.id},'a')", class: "btn btn-grayscale voteBtn" %>
+                  <a href="#" class="btn btn-danger buy">Run Anti- <br/>Campaign</a>
                   <div class="slottedCampaign"></div>
                 </div>
                 <div class="cardSlot col-lg-6" id="slot<%= c.id %>b">
-                  <a href="#" class="btn btn-inverse buy ">Run a <br/>Campaign</a>
-                  <%= link_to_function raw("Cast <br/>Your Vote"), "cast_vote(#{c.id},'b')", class: "btn btn-grayscale voteBtn" %>
+                  <a href="#" class="btn btn-danger buy ">Run Anti- <br/>Campaign</a>
                   <div class="slottedCampaign"></div>
                 </div>
               </div>
           <% end %>
         </div>
+        <%= link_to "Cast your Vote to Submit", "#", class: "btn btn-inverse btn-submit disabled", confirm: "Are you sure you want to vote like this?" %>
       </div>
       <div class="well" id="shop">
         <%= hidden_field_tag "attacked" %>
         <%= hidden_field_tag "selectedSlot" %>
-        <%= hidden_field_tag "voteStatus", false %>
         <h2>Run a Campaign against
           <span id="attackedName"></span> <%= link_to "Cancel", "#", id: "shopCancel", class: "btn btn-inverse pull-right" %>
         </h2>
@@ -108,12 +114,12 @@
               <div class="item" id="campaign<%= c.id %>">
                 <h4><%= c.name %></h4>
                 <%= image_tag c.avatar.url(:original), class: "img-responsive" %>
-                <%= link_to_function "Campaign for R.#{c.bet}", "buy_campaign(#{c.id})", class: "btn btn-grayscale" %>
+                <%= link_to_function "Campaign for R.#{c.bet}", "buy_campaign(#{c.id})", class: "btn btn-danger" %>
                 <h5 style="display: inline-block"><strong>R.<%= c.payoff %></strong> if the candidate loses</h5>
 
                 <div class="rollover">
                   <div class="cost">Cost: R.<%= c.bet %></div>
-                  <a href="#" class="cancelSlot btn btn-grayscale">Refund</a>
+                  <a href="#" class="cancelSlot btn btn-danger">Refund</a>
                 </div>
               </div>
           <% end %>
