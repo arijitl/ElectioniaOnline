@@ -91,6 +91,15 @@ $(function () {
         });
     }
 
+    setTimeout(function(){
+        if (gon.submitted=='true'){
+            console.log("ok")
+            $('#candidateCanvas').find('.btn').addClass('disabled');
+            $('.btn-submit').hide();
+            $('.btn-reEdit').css('display','block').removeClass('disabled').fadeIn();
+        }
+    },1000);
+
     $('.datatable').dataTable({
         "sPaginationType": "bootstrap",
         "aaSorting": [
@@ -240,3 +249,28 @@ function buy_campaign(campaign, candidate) {
     });
 }
 
+function submitAll(){
+    $('#candidateCanvas').find('.btn').addClass('disabled');
+    $('.btn-submit').hide();
+    $('.btn-reEdit').css('display','block').removeClass('disabled').fadeIn();
+    $.ajax({
+        url:"/finalize/true",
+        method:"post",
+        success: function(data){
+            console.log(data)
+        }
+    })
+}
+
+function reEdit(){
+    $('#candidateCanvas').find('.btn').removeClass('disabled');
+    if (gon.candidate=='-1'){
+        $('.btn-submit').addClass('disabled');
+    }
+    $('.btn-reEdit').hide();
+    $('.btn-submit').fadeIn();
+    $.ajax({
+        url:"/finalize/false",
+        method:"post"
+    })
+}

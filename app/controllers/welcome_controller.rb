@@ -15,9 +15,17 @@ class WelcomeController < ApplicationController
     @vote=Vote.where(game_id: @game.id, user_id: current_user.id).first
     if !@vote.blank?
       gon.candidate=@vote.candidate_id
+      if @vote.submitted
+        gon.submitted='true'
+      else
+        gon.submitted='false'
+      end
     else
       gon.candidate=-1
+      gon.submitted='not a chance'
     end
+
+
   end
 
   def buy_campaign
@@ -121,6 +129,19 @@ class WelcomeController < ApplicationController
       @game_result.save
     end
     render text: "#{Candidate.find(@game.first_id).name}: #{first}<br/>#{Candidate.find(@game.second_id).name}: #{second}<br/>#{Candidate.find(@game.third_id).name}: #{third}<br/><br/>Winner: #{Candidate.find(@game.winner_id).name}"
+  end
+
+  def finalize
+    @game=Game.find_by_game_date(Date.today)
+    @vote=Vote.where(game_id: @game.id, user_id: current_user.id).first
+    if params[:status]=="true"
+      @vote.submitted=true
+    else
+      @vote.submitted=false
+    end
+    @vote.save
+    render text: "The finalization state is #{@vote.submitted}"
+
   end
 
 end

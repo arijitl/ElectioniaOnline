@@ -338,3 +338,15 @@ ul.candidateDetails {
     font-size: 1.5em;
 }
 
+.btn-reEdit{
+    display: none;
+    margin-top: 0.5em;
+    width:100%;
+    font-size: 1.5em;
+}
+
+.btn-bank{
+    width:100%;
+    border-radius: 0;
+    font-size: 1.5em;
+}

@@ -13,20 +13,21 @@
   <div class="col-lg-3">
     <div class="row">
       <div class="col-lg-12">
-        <img src="/assets/logo.png" alt="Electionia - Every Vote Counts" class="img-responsive"/>
+        <img src="/assets/logo.jpg" alt="Electionia - Every Vote Counts" class="img-responsive"/>
       </div>
     </div>
+    <a href="#" class="btn btn-info btn-bank">
+      <span class="glyphicon glyphicon-briefcase"></span>
+      Bank: R.<span id="bank"><%= current_user.bank rescue 1000 %></span>
+    </a>
     <div id="profileBox">
       <div class="col-lg-4" style="padding-right: 0;vertical-align: middle">
         <%= image_tag current_user.avatar.url(:original), class: "img-responsive" %>
       </div>
       <div class="col-lg-8" style="padding-left: 0.3em;">
-        <h3 style="margin-top: -0.3em;padding: 0">
+        <h2 style="margin-top: -0.3em;padding: 0">
           <small><%= current_user.name %></small>
-          <br/>
-          <span class="glyphicon glyphicon-briefcase"></span>
-          <span id="bank"><%= current_user.bank rescue 1000 %></span>
-        </h3>
+        </h2>
       </div>
     </div>
     <%= link_to "Logout", destroy_facebook_session_path, class: "btn btn-grayscale logout" %>
@@ -100,7 +101,8 @@
               </div>
           <% end %>
         </div>
-        <%= link_to "Cast your Vote to Submit", "#", class: "btn btn-inverse btn-submit disabled", confirm: "Are you sure you want to vote like this?" %>
+        <%= link_to "Cast your Vote to Submit", "#", class: "btn btn-inverse btn-submit disabled", onclick: "submitAll()" %>
+        <%= link_to "Redo your Plan", "#", class: "btn btn-inverse btn-reEdit", onclick: "reEdit()" %>
       </div>
       <div class="well" id="shop">
         <%= hidden_field_tag "attacked" %>
