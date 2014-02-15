@@ -99,6 +99,9 @@ $(function () {
         }
     },1000);
 
+    $('#candidateCanvas').hide();
+    $('#home').fadeIn();
+
     $('.datatable').dataTable({
         "sPaginationType": "bootstrap",
         "aaSorting": [

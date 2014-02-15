@@ -25,6 +25,7 @@ class WelcomeController < ApplicationController
       gon.submitted='not a chance'
     end
 
+    @sponsors=Sponsor.all
 
   end
 

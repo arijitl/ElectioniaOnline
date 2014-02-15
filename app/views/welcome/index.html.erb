@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-lg-3"><h1>Electionia</h1></div>
   <div class="col-lg-9" style="text-align: right" id="menu">
-    <a href="#" onclick="$('.well').hide();$('#instructions').fadeIn();"><h2>Home</h2></a>
+    <a href="#" onclick="$('.well').hide();$('#home').fadeIn();"><h2>Home</h2></a>
     <a href="#" onclick="$('.well').hide();$('#instructions').fadeIn();"><h2>Instructions</h2></a>
-    <a href="#" onclick="$('.well').hide();$('#candidateCanvas').fadeIn();"><h2>Play</h2></a>
-    <a href="#"><h2>Results</h2></a>
+    <a href="#" onclick="$('.well').hide();$('#candidateCanvas').fadeIn();"><h2>Today's Election</h2></a>
+    <a href="#" onclick="$('.well').hide();$('#results').fadeIn();"><h2>Results History</h2></a>
     <a href="#" onclick="$('.well').hide();$('#leaderboard').fadeIn();"><h2>Leaderboard</h2></a>
 
   </div>
@@ -16,10 +16,11 @@
         <img src="/assets/logo.jpg" alt="Electionia - Every Vote Counts" class="img-responsive"/>
       </div>
     </div>
-    <a href="#" class="btn btn-info btn-bank">
+    <a href="#" class="btn btn-danger btn-bank">
       <span class="glyphicon glyphicon-briefcase"></span>
       Bank: R.<span id="bank"><%= current_user.bank rescue 1000 %></span>
     </a>
+
     <div id="profileBox">
       <div class="col-lg-4" style="padding-right: 0;vertical-align: middle">
         <%= image_tag current_user.avatar.url(:original), class: "img-responsive" %>
@@ -35,13 +36,41 @@
   </div>
   <div class="col-lg-9">
     <div class="row">
-      <div class="well" id="home">
+      <div class="hashback well" id="home">
+        <div class="row">
+          <div class="col-lg-6">
 
+            <p style="text-align: justify;width:90%;">Play the game over the next 70 days and win prizes every week.
+              Further, the top 5 scorers at the
+              end will receive a grand prize
+              from our sponsors.</p>
+
+            <h2><strong>Remember, Every <%= image_tag "voted.png", class: "img-responsive" %>
+              <span class="pull-right">Counts!</span></strong></h2>
+            <br/>
+            <br/>
+          </div>
+          <div class="col-lg-6">
+            <div id="sponsorList">
+              <h3>Prize Sponsors</h3>
+              <div class="row" style="padding: 0;margin:0">
+                <% @sponsors.each do |s| %>
+                    <div class="col-lg-4" style="padding: 0.3em;margin:0">
+                        <%= image_tag s.avatar.url(:original), class: "sponsorImg img-responsive" %>
+                    </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%= link_to "Check yesterday's results", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#results').fadeIn();" %>
+        <%= link_to "Where do I stand", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#candidateCanvas').fadeIn();" %>
+        <%= link_to "What will I win", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#prizes').fadeIn();" %>
+        <br/>
+        <%= link_to "Vote in the election today", "#", class: "btn btn-success btn-large btn-big", onclick: "$('.well').hide();$('#candidateCanvas').fadeIn();", id: "homeGame" %>
       </div>
-      <div class="well" id="instructions">
-        <h2 style="margin-top: 0">Instructions
-          <div class="pull-right" style="font-size: 2em;cursor: pointer;margin-top: -0.5em;" onclick="$('.well').hide();$('#candidateCanvas').fadeIn();">&times;</div>
-        </h2>
+      <div class="hashback well" id="instructions">
+        <h2>Instructions</h2>
         <h4>
           <ul>
             <li>You start with initial money of R.1000.</li>
@@ -62,9 +91,6 @@
           </ul>
         </h4>
         <br/>
-        Keep playing the game over the next 100 days and the top 3 scorers at the end will receive a grand prize from
-        our sponsors.
-        <strong>Remember, Every Vote Counts!</strong>
 
       </div>
       <div class="grayRayed well" id="candidateCanvas">
@@ -76,12 +102,7 @@
                   <%= image_tag c.avatar.url, class: "img-responsive" %>
                   <div class="screen">
                     <ul class="candidateDetails">
-                      <li><h4 class="candidateQuality"><%= young c.young %></h4></li>
-                      <li><h4 class="candidateQuality"><%= secular c.secular %></h4></li>
-                      <li><h4 class="candidateQuality"><%= clean c.clean %></h4></li>
-                      <li><h4 class="candidateQuality"><%= experienced c.experienced %></h4></li>
-                      <li><h4 class="candidateQuality"><%= eminent c.eminent %></h4></li>
-                      <li><h4 class="candidateQuality"><%= astute c.astute %></h4></li>
+                      <li><h4 class="candidateQuality"><%= c.description %></h4></li>
                       <li><h4 class="candidateStatement"><%= c.comment %></h4>
                       </li>
                     </ul>
@@ -92,10 +113,12 @@
 
                 <div class="cardSlot col-lg-6" id="slot<%= c.id %>a">
                   <a href="#" class="btn btn-danger buy">Run Anti- <br/>Campaign</a>
+
                   <div class="slottedCampaign"></div>
                 </div>
                 <div class="cardSlot col-lg-6" id="slot<%= c.id %>b">
                   <a href="#" class="btn btn-danger buy ">Run Anti- <br/>Campaign</a>
+
                   <div class="slottedCampaign"></div>
                 </div>
               </div>
@@ -152,6 +175,9 @@
           <% end %>
           </tbody>
         </table>
+      </div>
+      <div class="well" id="results">
+
       </div>
     </div>
   </div>
