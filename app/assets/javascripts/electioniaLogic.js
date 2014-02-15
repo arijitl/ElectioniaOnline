@@ -93,7 +93,6 @@ $(function () {
 
     setTimeout(function(){
         if (gon.submitted=='true'){
-            console.log("ok")
             $('#candidateCanvas').find('.btn').addClass('disabled');
             $('.btn-submit').hide();
             $('.btn-reEdit').css('display','block').removeClass('disabled').fadeIn();

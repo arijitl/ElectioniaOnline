@@ -62,11 +62,10 @@ class WelcomeController < ApplicationController
 
   def cast_vote
     @game=Game.find_by_game_date(Date.today)
-    @vote=Vote.where(user_id: current_user.id, game_id: @game.id).first
-    if !@vote.blank?
-      @vote.destroy
+    @vote=Vote.where(user_id: current_user.id, game_id: @game.id, candidate_id: params[:candidate_id]).first
+    if @vote.blank?
+      @vote=Vote.create!(user_id: current_user.id, game_id: @game.id, candidate_id: params[:candidate_id])
     end
-    @vote=Vote.create!(user_id: current_user.id, game_id: @game.id, candidate_id: params[:candidate_id])
     render text: "#{@vote.id}"
   end
 
