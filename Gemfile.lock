@@ -141,7 +141,6 @@ GEM
       remotipart (~> 1.0)
       safe_yaml (~> 0.9)
       sass-rails (~> 4.0)
-    rails_admin_import (0.1.8)
     railties (4.0.0)
       actionpack (= 4.0.0)
       activesupport (= 4.0.0)
@@ -199,7 +198,6 @@ DEPENDENCIES
   paperclip
   rails (= 4.0.0)
   rails_admin
-  rails_admin_import
   sass-rails (~> 4.0.0)
   sdoc
   sqlite3

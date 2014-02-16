@@ -28,7 +28,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 
 gem 'rails_admin'
-gem 'rails_admin_import'
+#gem 'rails_admin_import'
 gem 'paperclip'
 gem 'omniauth-facebook'
 gem 'gon'
