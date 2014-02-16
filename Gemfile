@@ -44,7 +44,6 @@ end
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', git: 'http://github.com/codahale/bcrypt-ruby.git', :require => 'bcrypt'
-gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 # Use unicorn as the app server
 # gem 'unicorn'
