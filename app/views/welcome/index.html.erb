@@ -3,184 +3,263 @@
   <div class="col-lg-9" style="text-align: right" id="menu">
     <a href="#" onclick="$('.well').hide();$('#home').fadeIn();"><h2>Home</h2></a>
     <a href="#" onclick="$('.well').hide();$('#instructions').fadeIn();"><h2>Instructions</h2></a>
-    <a href="#" onclick="$('.well').hide();$('#candidateCanvas').fadeIn();"><h2>Today's Election</h2></a>
-    <a href="#" onclick="$('.well').hide();$('#results').fadeIn();"><h2>Results History</h2></a>
+    <a href="#" onclick="$('.well').hide();$('#candidateCanvas').fadeIn();"><h2>Vote Today</h2></a>
+    <a href="#" onclick="$('.well').hide();$('#results').fadeIn();"><h2>Results</h2></a>
     <a href="#" onclick="$('.well').hide();$('#leaderboard').fadeIn();"><h2>Leaderboard</h2></a>
-
+    <a href="#" onclick="$('.well').hide();$('#prizes').fadeIn();"><h2>Prizes</h2></a>
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-3">
-    <div class="row">
-      <div class="col-lg-12">
-        <img src="/assets/logo.jpg" alt="Electionia - Every Vote Counts" class="img-responsive"/>
-      </div>
+<div class="col-lg-3">
+  <div class="row">
+    <div class="col-lg-12">
+      <img src="/assets/logo.jpg" alt="Electionia - Every Vote Counts" class="img-responsive"/>
     </div>
-    <a href="#" class="btn btn-danger btn-bank">
-      <span class="glyphicon glyphicon-briefcase"></span>
-      Bank: R.<span id="bank"><%= current_user.bank rescue 1000 %></span>
-    </a>
-
-    <div id="profileBox">
-      <div class="col-lg-4" style="padding-right: 0;vertical-align: middle">
-        <%= image_tag current_user.avatar.url(:original), class: "img-responsive" %>
-      </div>
-      <div class="col-lg-8" style="padding-left: 0.3em;">
-        <h2 style="margin-top: -0.3em;padding: 0">
-          <small><%= current_user.name %></small>
-        </h2>
-      </div>
-    </div>
-    <%= link_to "Logout", destroy_facebook_session_path, class: "btn btn-grayscale logout" %>
-    <h1 style="text-align: right"><%= Date.today.strftime("%d %b") %></h1>
   </div>
-  <div class="col-lg-9">
-    <div class="row">
-      <div class="hashback well" id="home">
-        <div class="row">
-          <div class="col-lg-6">
+  <a href="#" class="btn btn-danger btn-bank">
+    <span class="glyphicon glyphicon-briefcase"></span>
+    Bank: R.<span id="bank"><%= current_user.bank rescue 1000 %></span>
+  </a>
 
-            <p style="text-align: justify;width:90%;">Play the game over the next 70 days and win prizes every week.
-              Further, the top 5 scorers at the
-              end will receive a grand prize
-              from our sponsors.</p>
+  <div id="profileBox">
+    <div class="col-lg-4" style="padding-right: 0;vertical-align: middle">
+      <%= image_tag current_user.avatar.url(:original), class: "img-responsive" %>
+    </div>
+    <div class="col-lg-8" style="padding-left: 0.3em;">
+      <h2 style="margin-top: -0.3em;padding: 0">
+        <small><%= current_user.name %></small>
+      </h2>
+    </div>
+  </div>
+  <%= link_to "Logout", destroy_facebook_session_path, class: "btn btn-grayscale logout" %>
+  <h1 style="text-align: right"><%= Date.today.strftime("%d %b") %></h1>
+</div>
+<div class="col-lg-9">
+<div class="row" id="contentPanel">
+<div class="hashback well" id="home">
+  <div class="row">
+    <div class="col-lg-6">
 
-            <h2><strong>Remember, Every <%= image_tag "voted.png", class: "img-responsive" %>
-              <span class="pull-right">Counts!</span></strong></h2>
-            <br/>
-            <br/>
-          </div>
-          <div class="col-lg-6">
-            <div id="sponsorList">
-              <h3>Prize Sponsors</h3>
-              <div class="row" style="padding: 0;margin:0">
-                <% @sponsors.each do |s| %>
-                    <div class="col-lg-4" style="padding: 0.3em;margin:0">
-                        <%= image_tag s.avatar.url(:original), class: "sponsorImg img-responsive" %>
-                    </div>
-                <% end %>
+      <p style="text-align: justify;width:90%;">Play the game over the next 70 days and win prizes every week.
+        Further, the top 5 scorers at the
+        end will receive a grand prize
+        from our sponsors.</p>
+
+      <h2><strong>Remember, Every <%= image_tag "voted.png", class: "img-responsive" %>
+        <span class="pull-right">Counts!</span></strong></h2>
+      <br/>
+      <br/>
+    </div>
+    <div class="col-lg-6">
+      <div id="sponsorList">
+        <h3>Prize Sponsors</h3>
+
+        <div class="row" style="padding: 0;margin:0">
+          <% @sponsors.each do |s| %>
+              <div class="col-lg-4" style="padding: 0.3em;margin:0">
+                <%= image_tag s.avatar.url(:original), class: "sponsorImg img-responsive" %>
               </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= link_to "Check yesterday's results", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#results').fadeIn();" %>
+  <%= link_to "Where do I stand", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#candidateCanvas').fadeIn();" %>
+  <%= link_to "What will I win", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#prizes').fadeIn();" %>
+  <br/>
+  <%= link_to "Vote in the election today", "#", class: "btn btn-success btn-large btn-big", onclick: "$('.well').hide();$('#candidateCanvas').fadeIn();", id: "homeGame" %>
+</div>
+<div class="hashback well" id="instructions">
+  <h2>Instructions</h2>
+  <h4>
+    <ul>
+      <li>You start with initial money of R.1000.</li>
+      <br/>
+      <li>Every day, you get to see the profile of 3 political candidates.</li>
+      <li>Choose a candidate you like and cast your vote on them.</li>
+      <li>Buy anti-campaigns against the other candidates to run down their credibility.</li>
+      <br/>
+      <li>In the land of Electionia, there is an election every day around 11am IST.</li>
+      <li>After the election, all players' votes are counted</li>
+      <li>An equal number of votes are simulated based on the anticampaigns and counted.</li>
+      <li>The candidate with the highest number of total votes is the winner for the day</li>
+      <br/>
+      <li>You receive R.1000 every day that you cast your vote. Remember, it pays to vote!</li>
+      <li>If your chosen candidate wins on a day, you receive an additional R.1000.</li>
+      <li>If a target of your anti-campaign loses you receive the payoff.</li>
+      <li>The total number of points you accumulate decides your place on the Leaderboard.</li>
+    </ul>
+  </h4>
+  <br/>
+
+</div>
+<div class="grayRayed well" id="candidateCanvas">
+  <div class="row">
+    <%= hidden_field_tag "voteStatus", false %>
+    <% @candidates.each do |c| %>
+        <div class="col-lg-4">
+          <div class="candidate">
+            <%= image_tag c.avatar.url, class: "img-responsive" %>
+            <div class="screen">
+              <ul class="candidateDetails">
+                <li><h4 class="candidateQuality"><%= c.description %></h4></li>
+                <li><h4 class="candidateStatement"><%= c.comment %></h4>
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
-        <%= link_to "Check yesterday's results", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#results').fadeIn();" %>
-        <%= link_to "Where do I stand", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#candidateCanvas').fadeIn();" %>
-        <%= link_to "What will I win", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#prizes').fadeIn();" %>
-        <br/>
-        <%= link_to "Vote in the election today", "#", class: "btn btn-success btn-large btn-big", onclick: "$('.well').hide();$('#candidateCanvas').fadeIn();", id: "homeGame" %>
-      </div>
-      <div class="hashback well" id="instructions">
-        <h2>Instructions</h2>
-        <h4>
-          <ul>
-            <li>You start with initial money of R.1000.</li>
-            <br/>
-            <li>Every day, you get to see the profile of 3 political candidates.</li>
-            <li>Choose a candidate you like and cast your vote on them.</li>
-            <li>Buy anti-campaigns against the other candidates to run down their credibility.</li>
-            <br/>
-            <li>In the land of Electionia, there is an election every day around 11am IST.</li>
-            <li>After the election, all players' votes are counted</li>
-            <li>An equal number of votes are simulated based on the anticampaigns and counted.</li>
-            <li>The candidate with the highest number of total votes is the winner for the day</li>
-            <br/>
-            <li>You receive R.1000 every day that you cast your vote. Remember, it pays to vote!</li>
-            <li>If your chosen candidate wins on a day, you receive an additional R.1000.</li>
-            <li>If a target of your anti-campaign loses you receive the payoff.</li>
-            <li>The total number of points you accumulate decides your place on the Leaderboard.</li>
-          </ul>
-        </h4>
-        <br/>
+          <h4 class="candidateName" id="candidateNo<%= c.id %>"><%= c.name %></h4>
+          <%= link_to_function raw("Vote for me"), "cast_vote(#{c.id},'a')", class: "btn btn-success voteBtn votable" %>
 
-      </div>
-      <div class="grayRayed well" id="candidateCanvas">
-        <div class="row">
-          <%= hidden_field_tag "voteStatus", false %>
-          <% @candidates.each do |c| %>
-              <div class="col-lg-4">
-                <div class="candidate">
-                  <%= image_tag c.avatar.url, class: "img-responsive" %>
-                  <div class="screen">
-                    <ul class="candidateDetails">
-                      <li><h4 class="candidateQuality"><%= c.description %></h4></li>
-                      <li><h4 class="candidateStatement"><%= c.comment %></h4>
-                      </li>
-                    </ul>
+          <div class="cardSlot col-lg-6" id="slot<%= c.id %>a">
+            <a href="#" class="btn btn-danger buy">Run Anti- <br/>Campaign</a>
+
+            <div class="slottedCampaign"></div>
+          </div>
+          <div class="cardSlot col-lg-6" id="slot<%= c.id %>b">
+            <a href="#" class="btn btn-danger buy ">Run Anti- <br/>Campaign</a>
+
+            <div class="slottedCampaign"></div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+  <%= link_to "Cast your Vote to Submit", "#", class: "btn btn-inverse btn-submit disabled", onclick: "submitAll()" %>
+  <%= link_to "Redo your Plan", "#", class: "btn btn-inverse btn-reEdit", onclick: "reEdit()" %>
+</div>
+<div class="well" id="shop">
+  <%= hidden_field_tag "attacked" %>
+  <%= hidden_field_tag "selectedSlot" %>
+  <h2>Run a Campaign against
+    <span id="attackedName"></span> <%= link_to "Cancel", "#", id: "shopCancel", class: "btn btn-inverse pull-right" %>
+  </h2>
+
+  <div id="shopShelf" class="owl-carousel owl-theme">
+    <% @campaigns.each do |c| %>
+        <div class="item" id="campaign<%= c.id %>">
+          <h4><%= c.name %></h4>
+          <%= image_tag c.avatar.url(:original), class: "img-responsive" %>
+          <%= link_to_function "Campaign for R.#{c.bet}", "buy_campaign(#{c.id})", class: "btn btn-danger" %>
+          <h5 style="display: inline-block"><strong>R.<%= c.payoff %></strong> if the candidate loses</h5>
+
+          <div class="rollover">
+            <div class="cost">Cost: R.<%= c.bet %></div>
+            <a href="#" class="cancelSlot btn btn-danger">Refund</a>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+  <div class="customNavigation">
+    <a class="btn btn-inverse prev ">Previous</a>
+    <a class="btn btn-inverse next">Next</a>
+  </div>
+
+</div>
+<div class="well" id="leaderboard">
+  <table class="table table-striped table-bordered table-condensed datatable">
+    <thead>
+    <tr>
+      <th>Rank</th>
+      <th>User</th>
+      <th>Bank</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% User.all.order(bank: :desc).each_with_index do |u, index| %>
+        <tr>
+          <td><%= index+1 %></td>
+          <td><%= u.name %></td>
+          <td><%= u.bank %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="well" id="results">
+  <div id="resultsBrowser" class="owl-carousel owl-theme">
+    <% @finished_games.each do |game| %>
+        <div class="item" id="result<%= game[0].id %>">
+          <div class="row">
+            <div class="col-lg-6">
+              <h2 style="margin-bottom: 0">Election Date: <%= game[0].game_date.strftime("%d %b") %></h2>
+
+              <h3 style="margin-top: 0">
+                <% if Vote.where(game_id: game[0].id, user_id: current_user.id, submitted: true).blank? %>
+                    You did not vote on this date.
+                <% else %>
+                    You voted
+                    for <%= Candidate.find(Vote.where(game_id: game[0].id, user_id: current_user.id, submitted: true).first().candidate_id).name %>
+                <% end %>
+              </h3>
+            </div>
+          </div>
+          <br/>
+          <% game[1].each do |c| %>
+              <div class="row" style="margin-bottom: 0.2em">
+                <div class="col-lg-2" style="position: relative">
+                  <%= image_tag c.avatar.url, class: "img-responsive resultCandidateImg" %>
+                  <% if c.id==game[0].winner_id %>
+                      <%= image_tag "winner.png", style: "position:absolute;top:1.8em;width:80%;", class: "img-responsive" %>
+                  <% end %>
+                </div>
+                <div class="col-lg-5">
+                  <h4 style="margin: 0;padding:0"><%= c.name %></h4>
+
+                  <div class="candidateResultDetails">
+                    <%= c.description %>
+                    <br/>
+
+                    <div style="font-style: italic;margin-top: 0.3em; color:green">"<%= c.comment %>."</div>
                   </div>
                 </div>
-                <h4 class="candidateName" id="candidateNo<%= c.id %>"><%= c.name %></h4>
-                <%= link_to_function raw("Vote for me"), "cast_vote(#{c.id},'a')", class: "btn btn-success voteBtn votable" %>
-
-                <div class="cardSlot col-lg-6" id="slot<%= c.id %>a">
-                  <a href="#" class="btn btn-danger buy">Run Anti- <br/>Campaign</a>
-
-                  <div class="slottedCampaign"></div>
-                </div>
-                <div class="cardSlot col-lg-6" id="slot<%= c.id %>b">
-                  <a href="#" class="btn btn-danger buy ">Run Anti- <br/>Campaign</a>
-
-                  <div class="slottedCampaign"></div>
-                </div>
-              </div>
-          <% end %>
-        </div>
-        <%= link_to "Cast your Vote to Submit", "#", class: "btn btn-inverse btn-submit disabled", onclick: "submitAll()" %>
-        <%= link_to "Redo your Plan", "#", class: "btn btn-inverse btn-reEdit", onclick: "reEdit()" %>
-      </div>
-      <div class="well" id="shop">
-        <%= hidden_field_tag "attacked" %>
-        <%= hidden_field_tag "selectedSlot" %>
-        <h2>Run a Campaign against
-          <span id="attackedName"></span> <%= link_to "Cancel", "#", id: "shopCancel", class: "btn btn-inverse pull-right" %>
-        </h2>
-
-        <div id="shopShelf" class="owl-carousel owl-theme">
-          <% @campaigns.each do |c| %>
-              <div class="item" id="campaign<%= c.id %>">
-                <h4><%= c.name %></h4>
-                <%= image_tag c.avatar.url(:original), class: "img-responsive" %>
-                <%= link_to_function "Campaign for R.#{c.bet}", "buy_campaign(#{c.id})", class: "btn btn-danger" %>
-                <h5 style="display: inline-block"><strong>R.<%= c.payoff %></strong> if the candidate loses</h5>
-
-                <div class="rollover">
-                  <div class="cost">Cost: R.<%= c.bet %></div>
-                  <a href="#" class="cancelSlot btn btn-danger">Refund</a>
+                <div class="col-lg-5">
+                  <% unless Vote.where(game_id: game[0].id, user_id: current_user.id, submitted: true).blank? %>
+                      <table class="table table-condensed table-striped table-bordered payoffTable">
+                        <% if Vote.where(game_id: game[0].id, user_id: current_user.id, submitted: true).first.candidate_id==c.id %>
+                            <tr>
+                              <th>Winner</th>
+                              <th>You made</th>
+                            </tr>
+                            <tr>
+                              <td><%= (c.id==game[0].winner_id) ? "Got my choice" : "Not my choice" %></td>
+                              <td><%= (c.id==game[0].winner_id) ? 2000 : 1000 %></td>
+                            </tr>
+                        <% else %>
+                            <tr>
+                              <th>Campaign</th>
+                              <th>You paid</th>
+                              <th>You made</th>
+                            </tr>
+                            <% Anticampaign.where(game_id: game[0].id, user_id: current_user.id, candidate_id: c.id).each do |a| %>
+                                <tr>
+                                  <td><%= a.campaign.name %></td>
+                                  <td><%= a.campaign.bet %></td>
+                                  <td><%= (c.id==game[0].winner_id) ? 0 : a.campaign.payoff %></td>
+                                </tr>
+                            <% end %>
+                        <% end %>
+                      </table>
+                  <% end %>
                 </div>
               </div>
           <% end %>
         </div>
-
-        <div class="customNavigation">
-          <a class="btn btn-inverse prev ">Previous</a>
-          <a class="btn btn-inverse next">Next</a>
-        </div>
-
-      </div>
-      <div class="well" id="leaderboard">
-        <table class="table table-striped table-bordered table-condensed datatable">
-          <thead>
-          <tr>
-            <th>Rank</th>
-            <th>User</th>
-            <th>Bank</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% User.all.order(bank: :desc).each_with_index do |u, index| %>
-              <tr>
-                <td><%= index+1 %></td>
-                <td><%= u.name %></td>
-                <td><%= u.bank %></td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
-      <div class="well" id="results">
-
-      </div>
-    </div>
+    <% end %>
   </div>
+  <br/>
+
+  <div class="customNavigation">
+    <a class="btn btn-inverse prevResult ">Previous</a>
+    <a class="btn btn-inverse nextResult">Next</a>
+  </div>
+</div>
+<div class="well" id="prizes">
+
+</div>
+</div>
+</div>
 </div>
 <div class="footer">
   A Ptotem &copy; Games Creation

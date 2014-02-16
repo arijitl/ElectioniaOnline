@@ -52,7 +52,7 @@ $(function () {
             owl.trigger('owl.prev');
         });
 
-        $('.item').each(function (index, entry) {
+        $('#shopShelf .item').each(function (index, entry) {
             var itemCost = parseInt($(entry).find('a').first().text().split("R.")[1]);
             if (parseInt($('#bank').text()) < itemCost) {
                 $(entry).css('opacity', '0.5');
@@ -71,6 +71,23 @@ $(function () {
         $('#shop').hide();
         $('#candidateCanvas').slideDown();
     });
+
+//    Results Section
+
+    var resultsOwl = $("#resultsBrowser");
+    resultsOwl.owlCarousel({
+        pagination: false,
+        singleItem: true
+    });
+
+    $(".nextResult").click(function () {
+        resultsOwl.trigger('owl.next');
+    });
+    $(".prevResult").click(function () {
+        resultsOwl.trigger('owl.prev');
+    });
+
+//    --------------------------
 
     if (gon.candidate != -1) {
         cast_vote(gon.candidate);
@@ -91,16 +108,17 @@ $(function () {
         });
     }
 
-    setTimeout(function(){
-        if (gon.submitted=='true'){
+    setTimeout(function () {
+        if (gon.submitted == 'true') {
             $('#candidateCanvas').find('.btn').addClass('disabled');
             $('.btn-submit').hide();
-            $('.btn-reEdit').css('display','block').removeClass('disabled').fadeIn();
+            $('.btn-reEdit').css('display', 'block').removeClass('disabled').fadeIn();
         }
-    },1000);
+        $('#candidateCanvas').hide();
+        $('#home').fadeIn();
+        $('#contentPanel').animate({opacity:1});
+    }, 1000);
 
-    $('#candidateCanvas').hide();
-    $('#home').fadeIn();
 
     $('.datatable').dataTable({
         "sPaginationType": "bootstrap",
@@ -186,7 +204,7 @@ function buy_campaign(campaign, candidate) {
         url: '/buy/' + campaign + '/against/' + candidate,
         method: 'post',
         success: function (data) {
-            console.log("Buying Campaign "+ campaign+" against Candidate "+candidate);
+            console.log("Buying Campaign " + campaign + " against Candidate " + candidate);
             var databits = data.split("||");
             var $selectedSlot;
             if ($('#selectedSlot').val() != "") {
@@ -225,7 +243,7 @@ function buy_campaign(campaign, candidate) {
                     method: 'post',
                     success: function (cancelData) {
                         var $canceledSlot = $this.parent().parent().parent();
-                        var $voteBtn =$canceledSlot.parent().find('.voteBtn');
+                        var $voteBtn = $canceledSlot.parent().find('.voteBtn');
                         $canceledSlot.fadeOut(function () {
                             $canceledSlot.find('.btn').show();
                             $canceledSlot.removeClass('slotFilled');
@@ -251,28 +269,28 @@ function buy_campaign(campaign, candidate) {
     });
 }
 
-function submitAll(){
+function submitAll() {
     $('#candidateCanvas').find('.btn').addClass('disabled');
     $('.btn-submit').hide();
-    $('.btn-reEdit').css('display','block').removeClass('disabled').fadeIn();
+    $('.btn-reEdit').css('display', 'block').removeClass('disabled').fadeIn();
     $.ajax({
-        url:"/finalize/true",
-        method:"post",
-        success: function(data){
+        url: "/finalize/true",
+        method: "post",
+        success: function (data) {
             console.log(data)
         }
     })
 }
 
-function reEdit(){
+function reEdit() {
     $('#candidateCanvas').find('.btn').removeClass('disabled');
-    if (gon.candidate=='-1'){
+    if (gon.candidate == '-1') {
         $('.btn-submit').addClass('disabled');
     }
     $('.btn-reEdit').hide();
     $('.btn-submit').fadeIn();
     $.ajax({
-        url:"/finalize/false",
-        method:"post"
+        url: "/finalize/false",
+        method: "post"
     })
 }

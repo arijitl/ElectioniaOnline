@@ -27,6 +27,10 @@ class WelcomeController < ApplicationController
 
     @sponsors=Sponsor.all
 
+  #  Results Details
+
+    @finished_games=Game.all.map{|g| [g, [Candidate.find(g.first_id),Candidate.find(g.second_id),Candidate.find(g.third_id)]]}
+
   end
 
   def buy_campaign
