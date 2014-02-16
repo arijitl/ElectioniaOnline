@@ -189,6 +189,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-datatables-rails
   jquery-rails
+  nokogiri
   omniauth-facebook
   paperclip
   rails (= 4.0.0)
