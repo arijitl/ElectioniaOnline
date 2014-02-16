@@ -29,7 +29,7 @@ class WelcomeController < ApplicationController
 
   #  Results Details
 
-    @finished_games=Game.all.map{|g| [g, [Candidate.find(g.first_id),Candidate.find(g.second_id),Candidate.find(g.third_id)]]}
+    @finished_games=Game.all.map{|g| [g, [Candidate.find(g.first_id),Candidate.find(g.second_id),Candidate.find(g.third_id)],[g.first_total,g.second_total,g.third_total]]}
 
   end
 
@@ -95,6 +95,9 @@ class WelcomeController < ApplicationController
 
     winner_id=[@game.first_id, @game.second_id, @game.third_id][[first, second, third].index([first, second, third].max)]
     @game.winner_id=winner_id
+    @game.first_total=first.round
+    @game.second_total=second.round
+    @game.third_total=third.round
     @game.save
 
     @users=@votes.map { |v| v.user }

@@ -7,24 +7,13 @@ $(function () {
         function () {
             var $this = $(this);
             var $screen = $this.find('.screen');
-            $screen.fadeIn(200);
-            $screen.animate({
+            $screen.css({
                 height: $this.height() + "px"
-            }, 200, function () {
-                $screen.find('.candidateDetails').fadeIn(200);
             });
+            $screen.fadeIn(200);
         },
         function () {
-            var $this = $(this);
-            var $screen = $this.find('.screen');
-            setTimeout(function () {
-                $screen.find('.candidateDetails').fadeOut(10, function () {
-                    $screen.animate({
-                        height: "0"
-                    }, 500);
-                    $screen.fadeOut();
-                });
-            }, 200);
+            $(this).find('.screen').fadeOut();
         }
     );
 
@@ -77,8 +66,10 @@ $(function () {
     var resultsOwl = $("#resultsBrowser");
     resultsOwl.owlCarousel({
         pagination: false,
+        rewindNav: false,
         singleItem: true
     });
+    resultsOwl.data('owlCarousel').goTo(resultsOwl.find('.item').length);
 
     $(".nextResult").click(function () {
         resultsOwl.trigger('owl.next');
@@ -116,7 +107,7 @@ $(function () {
         }
         $('#candidateCanvas').hide();
         $('#home').fadeIn();
-        $('#contentPanel').animate({opacity:1});
+        $('#contentPanel').animate({opacity: 1});
     }, 1000);
 
 
@@ -125,7 +116,8 @@ $(function () {
         "aaSorting": [
             [ 2, "desc" ]
         ],
-        "iDisplayLength": 5
+        "iDisplayLength": 5,
+        sDom:'ft'
     });
 
 

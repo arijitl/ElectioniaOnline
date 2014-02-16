@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140215203652) do
+ActiveRecord::Schema.define(version: 20140216153934) do
 
   create_table "anticampaigns", force: true do |t|
     t.integer  "game_id"
@@ -73,6 +73,9 @@ ActiveRecord::Schema.define(version: 20140215203652) do
     t.integer  "winner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "first_total"
+    t.integer  "second_total"
+    t.integer  "third_total"
   end
 
   create_table "rails_admin_histories", force: true do |t|
