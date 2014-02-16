@@ -4,7 +4,7 @@ ElectioniaOnline::Application.routes.draw do
     get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_facebook_session
   end
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
-  #mount RailsAdminImport::Engine => '/rails_admin_import', :as => 'rails_admin_import'
+  mount RailsAdminImport::Engine => '/rails_admin_import', :as => 'rails_admin_import'
 
   post '/buy/:campaign_id/against/:candidate_id', to: 'welcome#buy_campaign', as: :buy_campaign
   post '/cancel/:anticampaign_id', to: 'welcome#cancel_campaign', as: :cancel_campaign
