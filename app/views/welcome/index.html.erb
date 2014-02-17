@@ -140,7 +140,7 @@
         <div class="item" id="campaign<%= c.id %>">
           <h4><%= c.name %></h4>
           <%= image_tag c.avatar.url(:original), class: "img-responsive" %>
-          <%= link_to_function "Campaign for R.#{c.bet}", "buy_campaign(#{c.id})", class: "btn btn-danger" %>
+          <%= link_to_function "Campaign for R.#{c.bet}", "buy_campaign('false',#{c.id})", class: "btn btn-danger" %>
           <h5 style="display: inline-block"><strong>R.<%= c.payoff %></strong> if the candidate loses</h5>
 
           <div class="rollover">

@@ -86,8 +86,7 @@ $(function () {
     gon.anticampaigns.forEach(function (entry) {
         if (entry[1].length > 0) {
             entry[1].forEach(function (elm) {
-                console.log(elm);
-                buy_campaign(elm, entry[0]);
+                buy_campaign("true", elm, entry[0]);
             });
         }
     });
@@ -181,15 +180,14 @@ function cast_vote(candidate) {
     })
 }
 
-function buy_campaign(campaign, candidate) {
+function buy_campaign(init, campaign, candidate) {
     if (candidate == undefined) {
         candidate = $('#attacked').val();
     }
     $.ajax({
-        url: '/buy/' + campaign + '/against/' + candidate,
+        url: '/buy/' + campaign + '/against/' + candidate + '/' + init,
         method: 'post',
         success: function (data) {
-            console.log("Buying Campaign " + campaign + " against Candidate " + candidate);
             var databits = data.split("||");
             var $selectedSlot;
             if ($('#selectedSlot').val() != "") {

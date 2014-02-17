@@ -34,13 +34,13 @@ class WelcomeController < ApplicationController
     @game=Game.find_by_game_date(Date.today)
     @campaign=Campaign.find(params[:campaign_id])
     @candidate=Candidate.find(params[:candidate_id])
-    @existing=Anticampaign.where(user_id: @user.id, game_id: @game.id)
-    if @existing.where(candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).blank?
+    @existing=
+    if params[:init]=="false"
       @user.bank=@user.bank-@campaign.bet
       @user.save
       @anticampaign=Anticampaign.create!(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id])
     else
-      @anticampaign=@existing.where(candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).first
+      @anticampaign=Anticampaign.where(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).first
     end
     render text: "#{@user.bank}||#{@anticampaign.id}"
   end

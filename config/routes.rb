@@ -6,7 +6,7 @@ ElectioniaOnline::Application.routes.draw do
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   mount RailsAdminImport::Engine => '/rails_admin_import', :as => 'rails_admin_import'
 
-  post '/buy/:campaign_id/against/:candidate_id', to: 'welcome#buy_campaign', as: :buy_campaign
+  post '/buy/:campaign_id/against/:candidate_id/:init', to: 'welcome#buy_campaign', as: :buy_campaign
   post '/cancel/:anticampaign_id', to: 'welcome#cancel_campaign', as: :cancel_campaign
   post '/vote/:candidate_id', to:'welcome#cast_vote', as: :cast_vote
   post '/finalize/:status', to:'welcome#finalize', as: :finalize
