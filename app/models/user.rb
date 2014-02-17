@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -6,7 +8,7 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:facebook]
 
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
-  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  #validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   has_many :votes, dependent: :destroy
   has_many :anticampaigns, dependent: :destroy
@@ -25,7 +27,7 @@ class User < ActiveRecord::Base
                          :uid => uid,
                          :email => email,
                          :password => Devise.friendly_token[0,20],
-                         :avatar=> picture
+                         :avatar=> open(picture)
       )
 
     end
