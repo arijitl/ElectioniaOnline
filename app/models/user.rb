@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
                          :uid => uid,
                          :email => email,
                          :password => Devise.friendly_token[0,20],
-                         :avatar=> URI.parse(picture)
+                         :avatar=> picture
       )
 
     end
