@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140216153934) do
+ActiveRecord::Schema.define(version: 20140217042146) do
 
   create_table "anticampaigns", force: true do |t|
     t.integer  "game_id"
@@ -36,21 +36,13 @@ ActiveRecord::Schema.define(version: 20140216153934) do
   end
 
   create_table "candidates", force: true do |t|
-    t.string   "name"
-    t.boolean  "young"
-    t.boolean  "secular"
-    t.boolean  "experienced"
-    t.boolean  "clean"
-    t.boolean  "eminent"
-    t.boolean  "astute"
+    t.integer  "politician_id"
+    t.integer  "game_id"
     t.string   "comment"
+    t.integer  "vote_count"
+    t.boolean  "winner"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.string   "description"
   end
 
   create_table "game_results", force: true do |t|
@@ -67,15 +59,20 @@ ActiveRecord::Schema.define(version: 20140216153934) do
 
   create_table "games", force: true do |t|
     t.date     "game_date"
-    t.integer  "first_id"
-    t.integer  "second_id"
-    t.integer  "third_id"
     t.integer  "winner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "first_total"
-    t.integer  "second_total"
-    t.integer  "third_total"
+  end
+
+  create_table "politicians", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "rails_admin_histories", force: true do |t|
@@ -99,17 +96,6 @@ ActiveRecord::Schema.define(version: 20140216153934) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-  end
-
-  create_table "transactions", force: true do |t|
-    t.integer  "user_id"
-    t.date     "game_date"
-    t.string   "account"
-    t.integer  "cost"
-    t.integer  "return"
-    t.integer  "balance"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -142,9 +128,9 @@ ActiveRecord::Schema.define(version: 20140216153934) do
     t.integer  "user_id"
     t.integer  "candidate_id"
     t.integer  "game_id"
+    t.boolean  "submitted"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "submitted"
   end
 
 end

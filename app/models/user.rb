@@ -10,8 +10,6 @@ class User < ActiveRecord::Base
 
   has_many :votes, dependent: :destroy
   has_many :anticampaigns, dependent: :destroy
-  has_many :transactions, dependent: :destroy
-  has_many :votes, dependent: :destroy
 
   before_create :give_money
 

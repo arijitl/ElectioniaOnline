@@ -100,16 +100,16 @@
     <% @candidates.each do |c| %>
         <div class="col-lg-4">
           <div class="candidate">
-            <%= image_tag c.avatar.url, class: "img-responsive" %>
+            <%= image_tag c.politician.avatar.url, class: "img-responsive" %>
             <div class="screen">
               <ul class="candidateDetails">
-                <li><h4 class="candidateQuality"><%= c.description %></h4></li>
+                <li><h4 class="candidateQuality"><%= c.politician.description %></h4></li>
                 <li><h4 class="candidateStatement"><%= c.comment %></h4>
                 </li>
               </ul>
             </div>
           </div>
-          <h4 class="candidateName" id="candidateNo<%= c.id %>"><%= c.name %></h4>
+          <h4 class="candidateName" id="candidateNo<%= c.id %>"><%= c.politician.name %></h4>
           <%= link_to_function raw("Vote for me"), "cast_vote(#{c.id},'a')", class: "btn btn-success voteBtn votable" %>
 
           <div class="cardSlot col-lg-6" id="slot<%= c.id %>a">
@@ -160,40 +160,40 @@
 <div class="well" id="results">
   <div id="resultsBrowser" class="owl-carousel owl-theme">
     <% @finished_games.each do |game| %>
-        <div class="item" id="result<%= game[0].id %>">
+        <div class="item" id="result<%= game.id %>">
           <div class="row">
             <div class="col-lg-6">
-              <h2 style="margin-bottom: 0">Election Date: <%= game[0].game_date.strftime("%d %b") %></h2>
+              <h2 style="margin-bottom: 0">Election Date: <%= game.game_date.strftime("%d %b") %></h2>
 
-              <% vote=Vote.where(game_id: game[0].id, user_id: current_user.id, submitted: true).first %>
+              <% vote=Vote.where(game_id: game.id, user_id: current_user.id, submitted: true).first %>
 
               <h3 style="margin-top: 0">
                 <% if vote.blank? %>
                     You did not vote on this date.
                 <% else %>
-                    You voted for <%= Candidate.find(vote.candidate_id).name %>
+                    You voted for <%= vote.candidate.politician.name %>
                 <% end %>
               </h3>
             </div>
           </div>
           <br/>
-          <% game[1].each_with_index do |c, index| %>
+          <% game.candidates.each_with_index do |c, index| %>
               <div class="row" style="margin-bottom: 0.2em">
                 <div class="col-lg-2" style="position: relative">
-                  <%= image_tag c.avatar.url, class: "img-responsive resultCandidateImg" %>
-                  <% if c.id==game[0].winner_id %>
+                  <%= image_tag c.politician.avatar.url, class: "img-responsive resultCandidateImg" %>
+                  <% if c.winner %>
                       <%= image_tag "winner.png", style: "position:absolute;top:1.8em;width:80%;", class: "img-responsive" %>
                   <% end %>
                 </div>
                 <div class="col-lg-5">
-                  <h4 style="margin: 0;padding:0"><%= c.name %>
+                  <h4 style="margin: 0;padding:0"><%= c.politician.name %>
                     <% unless vote.blank? %>
-                        <span style="color:green">(<%= game[2][index] %> votes)</span>
+                        <span style="color:green">(<%= c.vote_count %> votes)</span>
                     <% end %>
                   </h4>
 
                   <div class="candidateResultDetails">
-                    <%= c.description %>
+                    <%= c.politician.description %>
                     <br/>
 
                     <div style="font-style: italic;margin-top: 0.3em; color:green">"<%= c.comment %>."</div>
@@ -208,8 +208,8 @@
                               <th>You made</th>
                             </tr>
                             <tr>
-                              <td><%= (c.id==game[0].winner_id) ? "Got my choice" : "Not my choice" %></td>
-                              <td><%= (c.id==game[0].winner_id) ? 2000 : 1000 %></td>
+                              <td><%= (c.id==game.winner_id) ? "Got my choice" : "Not my choice" %></td>
+                              <td><%= (c.id==game.winner_id) ? 2000 : 1000 %></td>
                             </tr>
                         <% else %>
                             <tr>
@@ -217,11 +217,11 @@
                               <th>You paid</th>
                               <th>You made</th>
                             </tr>
-                            <% Anticampaign.where(game_id: game[0].id, user_id: current_user.id, candidate_id: c.id).each do |a| %>
+                            <% Anticampaign.where(game_id: game.id, user_id: current_user.id, candidate_id: c.id).each do |a| %>
                                 <tr>
                                   <td><%= a.campaign.name %></td>
                                   <td><%= a.campaign.bet %></td>
-                                  <td><%= (c.id==game[0].winner_id) ? 0 : a.campaign.payoff %></td>
+                                  <td><%= (c.id==game.winner_id) ? 0 : a.campaign.payoff %></td>
                                 </tr>
                             <% end %>
                         <% end %>
