@@ -202,7 +202,9 @@ function buy_campaign(init, campaign, candidate) {
             $selectedSlot.parent().find('.voteBtn').removeClass('votable').hide();
             $('#bank').text(databits[0]);
             $('#shop').hide();
-            $('#candidateCanvas').slideDown('fast');
+            if (init=='false'){
+                $('#candidateCanvas').slideDown('fast');
+            }
             var $campaignBlock = $selectedSlot.find('.slottedCampaign');
             $campaignBlock.html($("#campaign" + campaign).html()).fadeIn();
             $selectedSlot.find('.btn').hide();
