@@ -25,7 +25,7 @@ class WelcomeController < ApplicationController
 
     #  Results Details
 
-    @finished_games=Game.all
+    @finished_games=Game.all.order(game_date: :asc)
 
   end
 
