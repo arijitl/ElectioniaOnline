@@ -83,21 +83,14 @@ $(function () {
     if (gon.candidate != -1) {
         cast_vote(gon.candidate);
     }
-    if (gon.antifirst.length > 0) {
-        gon.antifirst.forEach(function (entry) {
-            buy_campaign(entry, gon.candfirst);
-        });
-    }
-    if (gon.antisecond.length > 0) {
-        gon.antisecond.forEach(function (entry) {
-            buy_campaign(entry, gon.candsecond);
-        });
-    }
-    if (gon.antithird.length > 0) {
-        gon.antithird.forEach(function (entry) {
-            buy_campaign(entry, gon.candthird);
-        });
-    }
+    gon.anticampaigns.forEach(function (entry) {
+        if (entry[1].length > 0) {
+            entry[1].forEach(function (elm) {
+                console.log(elm);
+                buy_campaign(elm, entry[0]);
+            });
+        }
+    });
 
     setTimeout(function () {
         if (gon.submitted == 'true') {
@@ -117,7 +110,7 @@ $(function () {
             [ 2, "desc" ]
         ],
         "iDisplayLength": 5,
-        sDom:'ft'
+        sDom: 'ft'
     });
 
 
