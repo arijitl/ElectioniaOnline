@@ -1,0 +1,17 @@
+/usr/local/rvm/rubies/ruby-1.9.3-p484/bin/ruby extconf.rb 
+checking for ruby/util.h... yes
+creating Makefile
+
+make  clean
+
+make
+compiling crypt_blowfish.c
+compiling crypt_gensalt.c
+compiling bcrypt_ext.c
+compiling wrapper.c
+compiling crypt.c
+linking shared-object bcrypt_ext.so
+
+make  install
+/usr/bin/install -m 0755 bcrypt_ext.so /var/www/rails_apps/ElectioniaOnline/vendor/bundle/ruby/1.9.1/bundler/gems/bcrypt-ruby-df09e4c73f2f/ext/mri/.gem.20140217-24035-yh6t49
+installing default bcrypt_ext libraries
