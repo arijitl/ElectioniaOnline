@@ -7,6 +7,10 @@
  */
 var fbSdkLoader;
 
+//appId =>
+// Electionia => 418175744951459
+//agileDex => 222280634572524
+
 fbSdkLoader = function() {
         window.fbAsyncInit = function() {
             var initConfig;

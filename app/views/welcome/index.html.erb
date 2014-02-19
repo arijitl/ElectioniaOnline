@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col-lg-3"><h1>Electionia</h1></div>
-  <div class="col-lg-9" style="text-align: right" id="menu">
+  <div class="col-lg-3 col-md-3 col-sm-3"><h1>Electionia</h1></div>
+  <div class="col-lg-9 col-md-9 col-sm-9" style="text-align: right" id="menu">
     <a href="#" onclick="$('.well').hide();$('#home').fadeIn();"><h2>Home</h2></a>
     <a href="#" onclick="$('.well').hide();$('#instructions').fadeIn();"><h2>Instructions</h2></a>
     <a href="#" onclick="$('.well').hide();$('#candidateCanvas').fadeIn();"><h2>Vote Today</h2></a>
@@ -10,9 +10,9 @@
   </div>
 </div>
 <div class="row">
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3 col-sm-3">
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12 col-md-12 col-sm-12">
       <img src="/assets/logo.jpg" alt="Electionia - Every Vote Counts" class="img-responsive"/>
     </div>
   </div>
@@ -22,23 +22,29 @@
   </a>
 
   <div id="profileBox">
-    <div class="col-lg-4" style="padding-right: 0;vertical-align: middle">
+    <div class="col-lg-4 col-md-4 col-sm-4" style="padding-right: 0;vertical-align: middle">
       <%= image_tag current_user.avatar.url(:original), class: "img-responsive" %>
     </div>
-    <div class="col-lg-8" style="padding-left: 0.3em;">
+    <div class="col-lg-8 col-md-8 col-sm-8" style="padding-left: 0.3em;">
       <h2 style="margin-top: -0.3em;padding: 0">
         <small><%= current_user.name %></small>
       </h2>
     </div>
   </div>
   <%= link_to "Logout", destroy_facebook_session_path, class: "btn btn-grayscale logout" %>
+
+  <a href='#' onclick="FacebookInviteFriends();"> Invite Facebook Friends</a>
+
+
   <h1 style="text-align: right; margin-bottom: 0.3em"><%= Date.today.strftime("%d %b") %></h1>
+  <div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 </div>
-<div class="col-lg-9">
+
+<div class="col-lg-9 col-md-9 col-sm-9">
 <div class="row" id="contentPanel">
 <div class="hashback well" id="home">
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
 
       <p style="text-align: justify;width:90%;">Play the game over the next 70 days and win prizes every week.
         Further, the top 5 scorers at the
@@ -50,13 +56,13 @@
       <br/>
       <br/>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
       <div id="sponsorList">
         <h3>Prize Sponsors</h3>
 
         <div class="row" style="padding: 0;margin:0">
           <% @sponsors.each do |s| %>
-              <div class="col-lg-4" style="padding: 0.3em;margin:0">
+              <div class="col-lg-4 col-md-4 col-sm-4" style="padding: 0.3em;margin:0">
                 <%= image_tag s.avatar.url(:original), class: "sponsorImg img-responsive" %>
               </div>
           <% end %>
@@ -66,6 +72,7 @@
   </div>
   <%= link_to "Check yesterday's results", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#results').fadeIn();" %>
   <%= link_to "Where do I stand", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#leaderboard').fadeIn();" %>
+
   <%= link_to "What will I win", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#prizes').fadeIn();" %>
   <br/>
   <%= link_to "Vote in the election today", "#", class: "btn btn-success btn-large btn-big", onclick: "$('.well').hide();$('#candidateCanvas').fadeIn();", id: "homeGame" %>
@@ -98,7 +105,7 @@
   <div class="row">
     <%= hidden_field_tag "voteStatus", false %>
     <% @candidates.each do |c| %>
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-md-4 col-sm-4">
           <div class="candidate">
             <%= image_tag c.politician.avatar.url, class: "img-responsive" %>
             <div class="screen">
@@ -112,12 +119,12 @@
           <h4 class="candidateName" id="candidateNo<%= c.id %>"><%= c.politician.name %></h4>
           <%= link_to_function raw("Vote for me"), "cast_vote(#{c.id},'a')", class: "btn btn-success voteBtn votable" %>
 
-          <div class="cardSlot col-lg-6" id="slot<%= c.id %>a">
+          <div class="cardSlot col-lg-6 col-md-6 col-sm-6" id="slot<%= c.id %>a">
             <a href="#" class="btn btn-danger buy">Run Anti- <br/>Campaign</a>
 
             <div class="slottedCampaign"></div>
           </div>
-          <div class="cardSlot col-lg-6" id="slot<%= c.id %>b">
+          <div class="cardSlot col-lg-6 col-md-6 col-sm-6" id="slot<%= c.id %>b">
             <a href="#" class="btn btn-danger buy ">Run Anti- <br/>Campaign</a>
 
             <div class="slottedCampaign"></div>
@@ -162,7 +169,7 @@
     <% @finished_games.each do |game| %>
         <div class="item" id="result<%= game.id %>">
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-6 col-sm-6">
               <h2 style="margin-bottom: 0">Election Date: <%= game.game_date.strftime("%d %b") %></h2>
 
               <% vote=Vote.where(game_id: game.id, user_id: current_user.id, submitted: true).first %>
@@ -179,13 +186,13 @@
           <br/>
           <% game.candidates.each_with_index do |c, index| %>
               <div class="row" style="margin-bottom: 0.2em">
-                <div class="col-lg-2" style="position: relative">
+                <div class="col-lg-2 col-md-2 col-sm-2" style="position: relative">
                   <%= image_tag c.politician.avatar.url, class: "img-responsive resultCandidateImg" %>
                   <% if c.winner %>
                       <%= image_tag "winner.png", style: "position:absolute;top:1.8em;width:80%;", class: "img-responsive" %>
                   <% end %>
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-5 col-md-5 col-sm-5">
                   <h4 style="margin: 0;padding:0"><%= c.politician.name %>
                     <% unless vote.blank? %>
                         <span style="color:green">(<%= c.vote_count %> votes)</span>
@@ -199,7 +206,7 @@
                     <div style="font-style: italic;margin-top: 0.3em; color:green">"<%= c.comment %>."</div>
                   </div>
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-5 col-md-5 col-sm-5">
                   <% unless vote.blank? %>
                       <table class="table table-condensed table-striped table-bordered payoffTable">
                         <% if vote.candidate_id==c.id %>
@@ -274,3 +281,5 @@
   <br/>
   <small>Mail us at info@ptotem.com to get a copy of the Electionia Card Game</small>
 </div>
+
+<!--<a href='https://www.facebook.com/dialog/apprequests?app_id=222280634572524&message=Facebook%20Dialogs%20are%20so%20easy!&redirect_uri=http://localhost:3000'> <small>Invite Facebook Friends</small></a>-->

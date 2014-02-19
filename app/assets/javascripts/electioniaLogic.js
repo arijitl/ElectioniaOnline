@@ -2,7 +2,9 @@
  * Created by Arijit on 2/11/14.
  */
 
+
 $(function () {
+
     $('.candidate').hover(
         function () {
             var $this = $(this);
@@ -308,4 +310,14 @@ function get_fb_login_status(){
         }
 
     });
+}
+
+function FacebookInviteFriends(){
+    FB.ui({ method: 'apprequests',
+        message: 'Invite friends...'});
+
+//    FB.ui({method: 'apprequests',
+//        message: 'My Great Request',
+//        to: 'user-ids'
+//    });
 }
