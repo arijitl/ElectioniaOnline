@@ -315,9 +315,18 @@ function get_fb_login_status(){
 function FacebookInviteFriends(){
     FB.ui({ method: 'apprequests',
         message: 'Invite friends...'});
+}
 
-//    FB.ui({method: 'apprequests',
-//        message: 'My Great Request',
-//        to: 'user-ids'
-//    });
+function post_photo_on_fb(curr_usr, score){
+    var wallPost = {
+        message : curr_usr+" scored "+score,
+        picture: "http://1.bp.blogspot.com/-l8t6U5iV9Kw/UAhFb9dlktI/AAAAAAAAAKs/mftBOkZgXRY/s1600/Sachin-Tendulkar.jpg"
+    };
+    FB.api('/me/feed', 'post', wallPost , function(response) {
+        if (!response || response.error) {
+            console.log('Error occured');
+        } else {
+            console.log('Post ID: ' + response);
+        }
+    });
 }
