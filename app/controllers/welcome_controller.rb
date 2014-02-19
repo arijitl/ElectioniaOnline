@@ -27,6 +27,7 @@ class WelcomeController < ApplicationController
 
     @finished_games=Game.all
 
+
   end
 
   def buy_campaign

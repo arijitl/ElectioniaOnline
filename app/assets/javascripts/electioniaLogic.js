@@ -131,6 +131,7 @@ function find_empty_slot(candidate) {
 }
 
 function cast_vote(candidate) {
+    //get_fb_login_status();
     $.ajax({
         url: '/vote/' + candidate,
         method: 'post',
@@ -177,6 +178,7 @@ function cast_vote(candidate) {
                     });
                 });
             });
+            get_fb_login_status();
         }
     })
 }
@@ -278,4 +280,32 @@ function reEdit() {
         url: "/finalize/false",
         method: "post"
     })
+}
+
+
+//TODO: write only one function to post vote/campaign activity, just pass vote/campaign details as arg
+function post_vote_activity_on_fb(user_hash){
+    FB.api(
+        user_hash.userID+'electionia:vote',
+        'post',
+        {
+            candidate: "http://samples.ogp.me/419699874799046"
+        },
+        function(response) {
+            console.log(response);
+            // handle the response
+        }
+    );
+
+}
+
+function get_fb_login_status(){
+    var at = '';
+    FB.getLoginStatus(function (response) {
+        if (response.status == "connected") {
+            at = response.authResponse.accessToken;
+            post_vote_activity_on_fb(response.authResponse)
+        }
+
+    });
 }
