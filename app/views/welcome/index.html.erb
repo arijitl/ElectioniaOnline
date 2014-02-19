@@ -65,7 +65,7 @@
     </div>
   </div>
   <%= link_to "Check yesterday's results", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#results').fadeIn();" %>
-  <%= link_to "Where do I stand", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#candidateCanvas').fadeIn();" %>
+  <%= link_to "Where do I stand", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#leaderboard').fadeIn();" %>
   <%= link_to "What will I win", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#prizes').fadeIn();" %>
   <br/>
   <%= link_to "Vote in the election today", "#", class: "btn btn-success btn-large btn-big", onclick: "$('.well').hide();$('#candidateCanvas').fadeIn();", id: "homeGame" %>
@@ -140,7 +140,7 @@
         <div class="item" id="campaign<%= c.id %>">
           <h4><%= c.name %></h4>
           <%= image_tag c.avatar.url(:original), class: "img-responsive" %>
-          <%= link_to_function "Campaign for R.#{c.bet}", "buy_campaign(#{c.id})", class: "btn btn-danger" %>
+          <%= link_to_function "Campaign for R.#{c.bet}", "buy_campaign('false',#{c.id})", class: "btn btn-danger" %>
           <h5 style="display: inline-block"><strong>R.<%= c.payoff %></strong> if the candidate loses</h5>
 
           <div class="rollover">

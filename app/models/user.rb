@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -17,14 +19,15 @@ class User < ActiveRecord::Base
     self.bank=1000
   end
 
-  def self.find_for_facebook_oauth(provider, uid, name, email, signed_in_resource=nil)
+  def self.find_for_facebook_oauth(provider, uid, name, email, picture, signed_in_resource=nil)
     user = User.where(:provider => provider, :uid => uid).first
     unless user
       user = User.create(:name => name,
                          :provider => provider,
                          :uid => uid,
                          :email => email,
-                         :password => Devise.friendly_token[0,20]
+                         :password => Devise.friendly_token[0,20],
+                         :avatar=> open(picture)
       )
 
     end
