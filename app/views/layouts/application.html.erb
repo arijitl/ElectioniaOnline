@@ -34,17 +34,22 @@
     }(document, 'script', 'facebook-jssdk'));
 
     function vote(obj){
-        FB.api(
-                obj.userID+'electionia:vote',
-                'post',
-                {
-                    candidate: "http://samples.ogp.me/419699874799046"
-                },
-                function(response) {
-                    console.log(response);
-                    // handle the response
-                }
-        );
+        console.log(obj);
+//        FB.api(
+//                obj.userID+'electionia:vote',
+//                'post',
+//                {
+//                    candidate: "http://samples.ogp.me/419699874799046"
+//                },
+//                function(response) {
+//                    console.log(response);
+//                    // handle the response
+//                }
+//        );
+
+        //FB.api( obj.userID+'/myconnfb:eat', 'post', { meal: "http://samples.ogp.me/420887511378501" }, function(response) { console.log(response)} );
+
+
     }
 
     function login() {
@@ -52,7 +57,7 @@
             if (response.authResponse) {
                 vote(response.authResponse);
             } else {
-                // cancelled
+                console.log("error");
             }
         });
     }

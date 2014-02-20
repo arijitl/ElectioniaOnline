@@ -136,7 +136,6 @@ function find_empty_slot(candidate) {
 }
 
 function cast_vote(candidate) {
-    //get_fb_login_status();
     $.ajax({
         url: '/vote/' + candidate,
         method: 'post',
@@ -291,28 +290,38 @@ function reEdit() {
 
 //TODO: write only one function to post vote/campaign activity, just pass vote/campaign details as arg
 function post_vote_activity_on_fb(user_hash){
+
     FB.api(
-        user_hash.userID+'electionia:vote',
-        'post',
-        {
+        user_hash.userID+'/electionia:vote',
+        'post', {
             candidate: "http://samples.ogp.me/419699874799046"
-        },
-        function(response) {
-            console.log(response);
-            // handle the response
+        }, function(response) {
+            console.log(response)
         }
     );
 
 }
 
 function get_fb_login_status(){
-    var at = '';
-    FB.getLoginStatus(function (response) {
-        if (response.status == "connected") {
-            at = response.authResponse.accessToken;
-            post_vote_activity_on_fb(response.authResponse)
-        }
+    console.log("response.status :- ");
+    //var at = '';
+//    FB.getLoginStatus(function (response) {
+//        console.log("response.status :- " + response.status);
+//        if (response.status == "connected") {
+//            at = response.authResponse.accessToken;
+//            console.log("at :- " + at);
+//            post_vote_activity_on_fb(response.authResponse)
+//        }
+//
+//    });
 
+    FB.login(function(response) {
+        if (response.authResponse) {
+            console.log(response.authResponse);
+            post_vote_activity_on_fb(response.authResponse)
+        } else {
+            // cancelled
+        }
     });
 }
 
@@ -335,22 +344,67 @@ function post_photo_on_fb(curr_usr, score){
     });
 }
 
-function share_on_fb(){
+function share_score(curr_usr, score){
+    var curr_usr_rank;
+    $("#leaderboard").find("td").each(function() {
+        if ($(this).text() == curr_usr ){
+            curr_usr_rank = $(this).prev().text();
+            //console.log(curr_usr, curr_usr_rank);
+        }
+    });
+
     FB.ui(
         {
             method: 'feed',
-            name: 'Facebook Dialogs',
+            name: 'I am rank '+curr_usr_rank+ ' on Electionia',
             link: 'https://developers.facebook.com/docs/dialogs/',
             picture: 'http://fbrell.com/f8.jpg',
-            caption: 'Reference Documentation',
-            description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+            caption: 'I have earned R.' +score+ ' by playing this online voting game.',
+            description: 'Check the game out. Vote for the candidate you like, throw a shoe at a candidate you don\'t and make it to the Leader Board to win exciting prizes. Just remember - Every Vote Counts!'
         },
         function(response) {
             if (response && response.post_id) {
-                alert('Post was published.');
+                console.log('Post was published.');
             } else {
-                alert('Post was not published.');
+                console.log('Post was not published.');
             }
         }
     );
+}
+
+function share_result(curr_usr, score){
+    $.ajax({
+        url: '/my_result',
+        method: 'post',
+        success: function (data) {
+
+            var balance = data.split("||")[0];
+            var contribution = data.split("||")[1];
+            var expense = data.split("||")[2];
+            var income = data.split("||")[3];
+            var votewin = data.split("||")[4];
+            var politician = data.split("||")[5];
+
+            //console.log(balance, contribution, expense, income, votewin, politician);
+
+            FB.ui(
+                {
+                    method: 'feed',
+                    name: 'I won R.'+income+' by playing Electionia yesterday',
+                    link: 'https://developers.facebook.com/docs/dialogs/',
+                    picture: 'http://fbrell.com/f8.jpg',
+                    caption: politician+' won yesterday\'s round of voting',
+                    description: 'Check the game out. Vote for the candidate you like, throw a shoe at a candidate you don\'t and make it to the Leader Board to win exciting prizes. Just remember - Every Vote Counts!'
+                },
+                function(response) {
+                    if (response && response.post_id) {
+                        console.log('Post was published.');
+                    } else {
+                        console.log('Post was not published.');
+                    }
+                }
+            );
+        }
+    })
+
 }

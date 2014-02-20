@@ -22,13 +22,13 @@ class User < ActiveRecord::Base
   def self.find_for_facebook_oauth(provider, uid, name, email, picture, signed_in_resource=nil)
     user = User.where(:provider => provider, :uid => uid).first
     unless user
-      user = User.create(:name => name,
-                         :provider => provider,
-                         :uid => uid,
-                         :email => email,
-                         :password => Devise.friendly_token[0,20],
-                         :avatar=> open(picture)
-      )
+        user = User.create(:name => name,
+                           :provider => provider,
+                           :uid => uid,
+                           :email => email,
+                           :password => Devise.friendly_token[0,20],
+                           :avatar=> open(picture)
+        )
 
     end
     return user
@@ -36,9 +36,14 @@ class User < ActiveRecord::Base
 
   def self.new_with_session(params, session)
     super.tap do |user|
-      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
-        user.email = data["email"] if user.email.blank?
+      if !session["devise.facebook_data"]["extra"].nil?
+        if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+          user.email = data["email"] if user.email.blank?
+        end
+      else
+        user.email = "random_user@electionia.com" if user.email.blank?
       end
+
     end
   end
 

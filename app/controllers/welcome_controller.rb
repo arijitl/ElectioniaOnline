@@ -140,4 +140,17 @@ class WelcomeController < ApplicationController
 
   end
 
+  def my_result
+    @user = current_user
+    #@game = Game.find_by_game_date(Date.today)
+    @yesterday_game = Game.find_by_game_date(Date.today-1)
+    @game_result = GameResult.find_by_game_id(@yesterday_game)
+    #@game_result = GameResult.find(112)
+    @winner_candidate = Candidate.find_by_game_id(@yesterday_game.id).politician_id
+    @politician = Politician.find(@winner_candidate).name
+    #render :text => "#{@game_result}||#{@politician}"
+    render :text => "#{@game_result.balance}||#{@game_result.contribution}||#{@game_result.expense}||#{@game_result.income}||#{@game_result.votewin}||#{@politician}"
+    return
+  end
+
 end
