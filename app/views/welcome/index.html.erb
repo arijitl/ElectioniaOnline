@@ -33,14 +33,33 @@
   </div>
   <%= link_to "Logout", destroy_facebook_session_path, class: "btn btn-grayscale logout" %>
 
-  <a href='#' onclick="FacebookInviteFriends();"> Invite Facebook Friends</a>
-  <br>
-  <a href='#' onclick='post_photo_on_fb("<%= current_user.name %>", "<%= current_user.bank %>");'>Post Photo</a>
+
+  <!--<a href='#' onclick="FacebookInviteFriends();"> Invite Facebook Friends</a>-->
+  <!--<br>-->
+
+  <!--<a href='#' onclick='post_photo_on_fb("<%#= current_user.name %>", "<%#= current_user.bank %>");'>Post Photo</a>-->
+
+  <!--share electionia app detail-->
+    <!--<div class="fb-share-button" data-href="http://www.electionia.com/users/sign_in" data-type="button" data-share="true" data-show-faces="true"></div>-->
+  <!--share electionia app detail-->
 
 
-  <h1 style="text-align: right; margin-bottom: 0.3em"><%= Date.today.strftime("%d %b") %></h1>
+  <!--share but opens new tab-->
+      <!--<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fparse.com" data-layout="standard" data-share="true">-->
+      <!--Share on Facebook-->
+      <!--</a>-->
+  <!--share but opens new tab-->
 
-  <div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+  <!--share with custom message-->
+    <!--<a href='#' onclick="share_on_fb();">Share</a>-->
+  <!--share with custom message-->
+
+  <h1 style="text-align: center; margin-bottom: 0.3em"><%= Date.today.strftime("%d %b") %></h1>
+
+  <!--fb like and share buttons-->
+    <!--<div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>-->
+  <!--fb like and share buttons-->
+
 </div>
 
 <div class="col-lg-9 col-md-9 col-sm-9">
@@ -102,6 +121,79 @@
     </ul>
   </h4>
   <br/>
+
+</div>
+<div class="well" id="yesterday">
+
+
+  <% game=@yesterday %>
+  <div class="item" id="result<%= game.id %>">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <h2 style="margin-bottom: 0">Yesterday's Results</h2>
+        <% vote=Vote.where(game_id: game.id, user_id: current_user.id, submitted: true).first %>
+      </div>
+      <div class="col-lg-6 col-md-6 col-md-6">
+        <a href="#" onclick="$('.well').hide();$('#home').fadeIn();" class="btn btn-inverse" style="float: right">Close</a>
+      </div>
+    </div>
+    <br/>
+    <% game.candidates.each_with_index do |c, index| %>
+        <div class="row" style="margin-bottom: 0.2em">
+          <div class="col-lg-2 col-md-2 col-sm-2" style="position: relative">
+            <%= image_tag c.politician.avatar.url, class: "img-responsive resultCandidateImg" %>
+            <% if c.winner %>
+                <%= image_tag "winner.png", style: "position:absolute;top:1.8em;width:80%;", class: "img-responsive" %>
+            <% end %>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-5">
+            <h4 style="margin: 0;padding:0"><%= c.politician.name %>
+              <% unless vote.blank? %>
+                  <span style="color:green">(<%= c.vote_count %> votes)</span>
+              <% end %>
+            </h4>
+
+            <div class="candidateResultDetails">
+              <%= c.politician.description %>
+              <br/>
+
+              <div style="font-style: italic;margin-top: 0.3em; color:green">"<%= c.comment %>."</div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-5">
+            <% unless vote.blank? %>
+                <table class="table table-condensed table-striped table-bordered payoffTable">
+                  <% if vote.candidate_id==c.id %>
+                      <tr>
+                        <th>Winner</th>
+                        <th>You made</th>
+                      </tr>
+                      <tr>
+                        <td><%= (c.id==game.winner_id) ? "Got my choice" : "Not my choice" %></td>
+                        <td><%= (c.id==game.winner_id) ? 2000 : 1000 %></td>
+                      </tr>
+                  <% else %>
+                      <tr>
+                        <th>Campaign</th>
+                        <th>You paid</th>
+                        <th>You made</th>
+                      </tr>
+                      <% Anticampaign.where(game_id: game.id, user_id: current_user.id, candidate_id: c.id).each do |a| %>
+                          <tr>
+                            <td><%= a.campaign.name %></td>
+                            <td><%= a.campaign.bet %></td>
+                            <td><%= (c.id==game.winner_id) ? 0 : a.campaign.payoff %></td>
+                          </tr>
+                      <% end %>
+                  <% end %>
+                </table>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+  <br/>
+
 
 </div>
 <div class="grayRayed well" id="candidateCanvas">

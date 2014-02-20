@@ -1,10 +1,11 @@
 class WelcomeController < ApplicationController
   def index
     @game=Game.find_by_game_date(Date.today)
+    @yesterday=Game.find_by_game_date(Date.today-1)
     @candidates=@game.candidates
     @campaigns=Campaign.all.order(:bet)
 
-    @anticampaigns=@candidates.map { |c| [c.id, c.anticampaigns.map{|a| a.campaign.id}] }
+    @anticampaigns=@candidates.map { |c| [c.id, c.anticampaigns.map { |a| a.campaign.id }] }
     gon.anticampaigns=@anticampaigns
 
     @vote=Vote.where(game_id: @game.id, user_id: current_user.id).first
@@ -18,6 +19,12 @@ class WelcomeController < ApplicationController
     else
       gon.candidate=-1
       gon.submitted='not a chance'
+    end
+
+    if !Vote.where(game_id: @yesterday.id, user_id: current_user.id).first.blank?
+      gon.voted_yesterday='true'
+    else
+      gon.voted_yesterday='false'
     end
 
 
@@ -36,13 +43,13 @@ class WelcomeController < ApplicationController
     @campaign=Campaign.find(params[:campaign_id])
     @candidate=Candidate.find(params[:candidate_id])
     @existing=
-    if params[:init]=="false"
-      @user.bank=@user.bank-@campaign.bet
-      @user.save
-      @anticampaign=Anticampaign.create!(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id])
-    else
-      @anticampaign=Anticampaign.where(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).first
-    end
+        if params[:init]=="false"
+          @user.bank=@user.bank-@campaign.bet
+          @user.save
+          @anticampaign=Anticampaign.create!(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id])
+        else
+          @anticampaign=Anticampaign.where(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).first
+        end
     render text: "#{@user.bank}||#{@anticampaign.id}"
   end
 
@@ -74,15 +81,15 @@ class WelcomeController < ApplicationController
   def evaluate_game
     @game=Game.find(params[:id])
     @candidates=@game.candidates
-    @votes_count=@candidates.map{|c| c.votes.count}
-    @anticampaign_bets=@candidates.map{|c| c.anticampaigns.map{|a| a.campaign.bet}.sum}
-    @antivotes_count=@anticampaign_bets.map{|a| (1-(a.to_f/@anticampaign_bets.sum)) *@votes_count.sum }
-    @total_votes=@votes_count.each_with_index.map{|v, index| v+@antivotes_count[index]}
+    @votes_count=@candidates.map { |c| c.votes.count }
+    @anticampaign_bets=@candidates.map { |c| c.anticampaigns.map { |a| a.campaign.bet }.sum }
+    @antivotes_count=@anticampaign_bets.map { |a| (1-(a.to_f/@anticampaign_bets.sum)) *@votes_count.sum }
+    @total_votes=@votes_count.each_with_index.map { |v, index| v+@antivotes_count[index] }
     @winner_id=@candidates[@total_votes.index(@total_votes.max)].id
     @game.winner_id=@winner_id
     @game.save
 
-    @candidates.each_with_index do |candidate,i|
+    @candidates.each_with_index do |candidate, i|
       candidate.vote_count=@total_votes[i]
       candidate.winner=(candidate.id==@winner_id)
       candidate.save
@@ -117,7 +124,7 @@ class WelcomeController < ApplicationController
       @game_result.balance=user.bank
       @game_result.save
     end
-    render text: "#{@game.candidates.map{|c| c.politician.name.to_s + ' got '+ c.vote_count.to_s+' votes' }.join('<br/>')} <br/><br/>#{Candidate.find(@winner_id).politician.name} Won."
+    render text: "#{@game.candidates.map { |c| c.politician.name.to_s + ' got '+ c.vote_count.to_s+' votes' }.join('<br/>')} <br/><br/>#{Candidate.find(@winner_id).politician.name} Won."
   end
 
   def finalize

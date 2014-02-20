@@ -233,13 +233,16 @@ Devise.setup do |config|
   require "omniauth-facebook"
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
 
+  require "rack-facebook-method-fix"
+  use Rack::Facebook::MethodFix
+
   #electionia app details start
   config.omniauth :facebook, "418175744951459", "e3b0f86886e95468beacf8980494bd9e",  {:scope => "publish_actions"}
   #electionia app details ends
 
-  #agileDex - For Testing app details start
-  #config.omniauth :facebook, "222280634572524", "25d7fbbc976579512a48c28fb1800490",  {:scope => "publish_actions"}
-  #agileDex - For Testing app details ends
+  #electionia-dev - For Testing app details start
+  #config.omniauth :facebook, "255269797987971", "6dac01b2ba502b0e5d621a0444d190e6",  {:scope => "publish_actions"}
+  #electionia-dev - For Testing app details ends
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

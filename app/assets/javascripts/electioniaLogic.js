@@ -100,7 +100,11 @@ $(function () {
             $('.btn-reEdit').css('display', 'block').removeClass('disabled').fadeIn();
         }
         $('#candidateCanvas').hide();
-        $('#home').fadeIn();
+        if (gon.voted_yesterday=="true"){
+            $('#yesterday').fadeIn();
+        }else{
+            $('#home').fadeIn();
+        }
         $('#contentPanel').animate({opacity: 1});
     }, 1000);
 
@@ -329,4 +333,24 @@ function post_photo_on_fb(curr_usr, score){
             console.log('Post ID: ' + response);
         }
     });
+}
+
+function share_on_fb(){
+    FB.ui(
+        {
+            method: 'feed',
+            name: 'Facebook Dialogs',
+            link: 'https://developers.facebook.com/docs/dialogs/',
+            picture: 'http://fbrell.com/f8.jpg',
+            caption: 'Reference Documentation',
+            description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+        },
+        function(response) {
+            if (response && response.post_id) {
+                alert('Post was published.');
+            } else {
+                alert('Post was not published.');
+            }
+        }
+    );
 }
