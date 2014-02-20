@@ -241,6 +241,10 @@ Devise.setup do |config|
   #config.omniauth :facebook, "255269797987971", "6dac01b2ba502b0e5d621a0444d190e6",  {:scope => "publish_actions"}
   #electionia-dev - For Testing app details ends
 
+  #agileDex - For Testing app details start
+  #config.omniauth :facebook, "222280634572524", "25d7fbbc976579512a48c28fb1800490",  {:scope => "publish_actions"}
+  #agileDex - For Testing app details ends
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

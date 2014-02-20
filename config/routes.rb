@@ -14,6 +14,9 @@ ElectioniaOnline::Application.routes.draw do
 
   get '/evaluate/:id', to:'welcome#evaluate_game', as: :evaluate_game
 
+
+  post '/my_result', to: 'welcome#my_result', as: :my_result
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
