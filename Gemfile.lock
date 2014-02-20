@@ -135,6 +135,7 @@ GEM
       mime-types
     polyglot (0.3.3)
     rack (1.5.2)
+    rack-facebook-method-fix (0.4.0)
     rack-oauth2 (1.0.7)
       activesupport (>= 2.3)
       attr_required (>= 0.0.5)
@@ -238,6 +239,7 @@ DEPENDENCIES
   jquery-rails
   omniauth-facebook
   paperclip
+  rack-facebook-method-fix
   rails (= 4.0.0)
   rails_admin
   rails_admin_import

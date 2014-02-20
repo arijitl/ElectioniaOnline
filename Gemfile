@@ -40,6 +40,7 @@ gem 'jquery-datatables-rails'
 gem 'thin'
 gem 'binding_of_caller'
 gem 'fb_graph'
+gem 'rack-facebook-method-fix'
 
 
 group :doc do
