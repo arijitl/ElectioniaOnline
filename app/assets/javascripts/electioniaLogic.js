@@ -2,7 +2,9 @@
  * Created by Arijit on 2/11/14.
  */
 
+
 $(function () {
+
     $('.candidate').hover(
         function () {
             var $this = $(this);
@@ -98,7 +100,11 @@ $(function () {
             $('.btn-reEdit').css('display', 'block').removeClass('disabled').fadeIn();
         }
         $('#candidateCanvas').hide();
-        $('#home').fadeIn();
+        if (gon.voted_yesterday=="true"){
+            $('#yesterday').fadeIn();
+        }else{
+            $('#home').fadeIn();
+        }
         $('#contentPanel').animate({opacity: 1});
     }, 1000);
 
@@ -130,6 +136,7 @@ function find_empty_slot(candidate) {
 }
 
 function cast_vote(candidate) {
+    //get_fb_login_status();
     $.ajax({
         url: '/vote/' + candidate,
         method: 'post',
@@ -176,6 +183,7 @@ function cast_vote(candidate) {
                     });
                 });
             });
+            get_fb_login_status();
         }
     })
 }
@@ -278,4 +286,71 @@ function reEdit() {
         url: "/finalize/false",
         method: "post"
     })
+}
+
+
+//TODO: write only one function to post vote/campaign activity, just pass vote/campaign details as arg
+function post_vote_activity_on_fb(user_hash){
+    FB.api(
+        user_hash.userID+'electionia:vote',
+        'post',
+        {
+            candidate: "http://samples.ogp.me/419699874799046"
+        },
+        function(response) {
+            console.log(response);
+            // handle the response
+        }
+    );
+
+}
+
+function get_fb_login_status(){
+    var at = '';
+    FB.getLoginStatus(function (response) {
+        if (response.status == "connected") {
+            at = response.authResponse.accessToken;
+            post_vote_activity_on_fb(response.authResponse)
+        }
+
+    });
+}
+
+function FacebookInviteFriends(){
+    FB.ui({ method: 'apprequests',
+        message: 'Invite friends...'});
+}
+
+function post_photo_on_fb(curr_usr, score){
+    var wallPost = {
+        message : curr_usr+" scored "+score,
+        picture: "http://1.bp.blogspot.com/-l8t6U5iV9Kw/UAhFb9dlktI/AAAAAAAAAKs/mftBOkZgXRY/s1600/Sachin-Tendulkar.jpg"
+    };
+    FB.api('/me/feed', 'post', wallPost , function(response) {
+        if (!response || response.error) {
+            console.log('Error occured');
+        } else {
+            console.log('Post ID: ' + response);
+        }
+    });
+}
+
+function share_on_fb(){
+    FB.ui(
+        {
+            method: 'feed',
+            name: 'Facebook Dialogs',
+            link: 'https://developers.facebook.com/docs/dialogs/',
+            picture: 'http://fbrell.com/f8.jpg',
+            caption: 'Reference Documentation',
+            description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+        },
+        function(response) {
+            if (response && response.post_id) {
+                alert('Post was published.');
+            } else {
+                alert('Post was not published.');
+            }
+        }
+    );
 }

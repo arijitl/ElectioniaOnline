@@ -222,7 +222,8 @@ Devise.setup do |config|
   # config.navigational_formats = ['*/*', :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
-  config.sign_out_via = :delete
+  #config.sign_out_via = :delete
+  config.sign_out_via = :get
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
@@ -231,7 +232,14 @@ Devise.setup do |config|
 
   require "omniauth-facebook"
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
-  config.omniauth :facebook, "418175744951459", "e3b0f86886e95468beacf8980494bd9e"
+
+  #electionia app details start
+  config.omniauth :facebook, "418175744951459", "e3b0f86886e95468beacf8980494bd9e",  {:scope => "publish_actions"}
+  #electionia app details ends
+
+  #electionia-dev - For Testing app details start
+  #config.omniauth :facebook, "255269797987971", "6dac01b2ba502b0e5d621a0444d190e6",  {:scope => "publish_actions"}
+  #electionia-dev - For Testing app details ends
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
