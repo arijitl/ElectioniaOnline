@@ -5,6 +5,16 @@
 
 $(function () {
 
+
+    if (gon.voted_yesterday=="false"){
+        $('.well').hide();
+        $('#home').fadeIn();
+    }
+    else{
+        $('.well').hide();
+        $('#yesterday').fadeIn();
+    }
+
     $('.candidate').hover(
         function () {
             var $this = $(this);
