@@ -352,12 +352,14 @@
       <h2>Grand Prize</h2>
       Wait for it... we are building it up. Trust us... it is going to be spectacular.
     </div>
-    <div class="fb-share-divs" id="share_leaderboard" style="display:none; background-image: url('/assets/fbshare.png'); background-size: 7% 100%; background-repeat: no-repeat;">
-      <a href='#' onclick='share_score("<%= current_user.name %>", "<%= current_user.bank %>");'><small style="padding-left: 8%;">Leaderboard</small></a>
+
+    <div class="fb-share-divs" id="share_leaderboard" onclick='share_score("<%= current_user.name %>", "<%= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">
+        <img src="/assets/fbshare.png" style="height: 100%;">
     </div>
-    <div class="fb-share-divs" id="share_result" style="display:none; background-image: url('/assets/fbshare.png'); background-size: 7% 100%; background-repeat: no-repeat;">
-      <a href='#' onclick='share_result("<%= current_user.name %>", "<%= current_user.bank %>");'><small style="padding-left: 8%;">Result</small></a>
+    <div class="fb-share-divs" id="share_result" onclick='share_result("<%= current_user.name %>", "<%= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">
+      <img src="/assets/fbshare.png" style="height: 100%;">
     </div>
+
 </div>
 </div>
 </div>
