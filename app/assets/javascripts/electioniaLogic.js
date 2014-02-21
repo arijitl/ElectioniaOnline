@@ -5,16 +5,6 @@
 var which_story;
 $(function () {
 
-    console.log("gon.voted_yesterday :- " + gon.voted_yesterday);
-    if (gon.voted_yesterday=="false"){
-        $('.well').hide();
-        $('#home').fadeIn();
-    }
-    else{
-        $('.well').hide();
-        $('#yesterday').fadeIn();
-    }
-
     $('.candidate').hover(
         function () {
             var $this = $(this);
