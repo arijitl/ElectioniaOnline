@@ -2,7 +2,7 @@
  * Created by Arijit on 2/11/14.
  */
 
-
+var which_story;
 $(function () {
 
     console.log("gon.voted_yesterday :- " + gon.voted_yesterday);
@@ -192,7 +192,8 @@ function cast_vote(candidate) {
                     });
                 });
             });
-            get_fb_login_status();
+            which_story = "vote";
+            //get_fb_login_status();
         }
     })
 }
@@ -266,7 +267,9 @@ function buy_campaign(init, campaign, candidate) {
                         });
                     }
                 })
-            })
+            });
+            which_story = "campaign";
+            //get_fb_login_status();
         }
     });
 }
@@ -306,14 +309,30 @@ function post_vote_activity_on_fb(user_hash){
         'post', {
             candidate: "http://samples.ogp.me/419699874799046"
         }, function(response) {
-            console.log(response)
+            // handle the response
+            console.log(response);
+        }
+    );
+
+}
+
+function post_campaign_activity_on_fb(user_hash){
+
+    FB.api(
+        user_hash.userID+'/electionia:campaign',
+        'post',
+        {
+            candidate: "http://samples.ogp.me/419699874799046"
+        },
+        function(response) {
+            // handle the response
+            console.log(response);
         }
     );
 
 }
 
 function get_fb_login_status(){
-    console.log("response.status :- ");
     //var at = '';
 //    FB.getLoginStatus(function (response) {
 //        console.log("response.status :- " + response.status);
@@ -325,10 +344,18 @@ function get_fb_login_status(){
 //
 //    });
 
+    //console.log(which_story);
+
     FB.login(function(response) {
         if (response.authResponse) {
             console.log(response.authResponse);
-            post_vote_activity_on_fb(response.authResponse)
+            if ( which_story == "vote" ) {
+                post_vote_activity_on_fb(response.authResponse);
+            }
+            else if ( which_story == "campaign" ) {
+                post_campaign_activity_on_fb(response.authResponse);
+            }
+
         } else {
             // cancelled
         }
