@@ -5,7 +5,7 @@
 
 $(function () {
 
-
+    console.log("gon.voted_yesterday :- " + gon.voted_yesterday);
     if (gon.voted_yesterday=="false"){
         $('.well').hide();
         $('#home').fadeIn();
