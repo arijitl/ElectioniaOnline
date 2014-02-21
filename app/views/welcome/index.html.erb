@@ -34,11 +34,15 @@
   <%= link_to "Logout", destroy_facebook_session_path, class: "btn btn-grayscale logout" %>
 
 
-  <a href='#' onclick="FacebookInviteFriends();">Invite Facebook Friends</a>
+  <div id="invite_fb_friends" onclick="FacebookInviteFriends();" style="cursor: pointer; margin-top: 2%;">
+    <img src="/assets/fbinvite.png" style="height: 100%; width: 100%;">
+  </div>
+
 
   <h1 style="text-align: center; margin-bottom: 0.3em"><%= Date.today.strftime("%d %b") %></h1>
 
-  <div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+  <!--<div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>-->
+  <div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-width="240" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 </div>
 
@@ -104,7 +108,6 @@
 
     </div>
     <div class="well" id="yesterday">
-
 
       <% game=@yesterday %>
       <div class="item" id="result<%= game.id %>">
@@ -350,14 +353,10 @@
       Wait for it... we are building it up. Trust us... it is going to be spectacular.
     </div>
     <div class="fb-share-divs" id="share_leaderboard" style="display:none; background-image: url('/assets/fbshare.png'); background-size: 7% 100%; background-repeat: no-repeat;">
-      <!--share with custom message-->
       <a href='#' onclick='share_score("<%= current_user.name %>", "<%= current_user.bank %>");'><small style="padding-left: 8%;">Leaderboard</small></a>
-      <!--share with custom message-->
     </div>
     <div class="fb-share-divs" id="share_result" style="display:none; background-image: url('/assets/fbshare.png'); background-size: 7% 100%; background-repeat: no-repeat;">
-      <!--share with custom message-->
       <a href='#' onclick='share_result("<%= current_user.name %>", "<%= current_user.bank %>");'><small style="padding-left: 8%;">Result</small></a>
-      <!--share with custom message-->
     </div>
 </div>
 </div>
