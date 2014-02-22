@@ -16,6 +16,7 @@ ElectioniaOnline::Application.routes.draw do
 
 
   post '/my_result', to: 'welcome#my_result', as: :my_result
+  post '/control_new_deck_modal', to: 'welcome#control_new_deck_modal', as: :control_new_deck_modal
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
