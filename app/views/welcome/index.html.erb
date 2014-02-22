@@ -1,3 +1,10 @@
+<style>
+    .fb-like{
+        height: 25px;
+        overflow: hidden;
+    }
+</style>
+
 <div class="row">
   <div class="col-lg-3 col-md-3 col-sm-3"><h1>Electionia</h1></div>
   <div class="col-lg-9 col-md-9 col-sm-9" style="text-align: right" id="menu">
@@ -107,7 +114,7 @@
       <br/>
 
     </div>
-    <div class="well" id="yesterday">
+    <div class="well" id="yesterday" style="display: none;">
 
       <% game=@yesterday %>
       <div class="item" id="result<%= game.id %>">
@@ -372,13 +379,50 @@
 <!--<a href='https://www.facebook.com/dialog/apprequests?app_id=222280634572524&message=Facebook%20Dialogs%20are%20so%20easy!&redirect_uri=http://localhost:3000'> <small>Invite Facebook Friends</small></a>-->
 
 <script>
+    console.clear();
     console.log("gon.voted_yesterday :- " + gon.voted_yesterday);
-    if (gon.voted_yesterday=="false"){
-        $('.well').hide();
-        $('#home').fadeIn();
+    console.log("gon.display_modal :- " + gon.display_modal);
+    //gon.voted_yesterday=="true";
+    if( (gon.voted_yesterday=="true") ){
+        if (gon.display_modal==true){
+            $('.well').hide();
+            $('#yesterday').fadeIn();
+
+            $('.fb-share-divs').hide();
+            $('#share_result').fadeIn();
+
+            var current_user_id = <%= current_user.id %>
+            var data = {current_user_id: []};
+            data["current_user_id"].push(current_user_id);
+
+            $.ajax({
+                url: "/control_new_deck_modal",
+                type: "post",
+                async: false,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function (data) {
+
+                }
+            });
+        }
+        else
+        {
+            $('.well').hide();
+            $('#yesterday').hide();
+            $('#home').fadeIn();
+
+            $('.fb-share-divs').hide();
+            //$('#share_result').fadeIn();
+        }
     }
     else{
         $('.well').hide();
-        $('#yesterday').fadeIn();
+        $('#yesterday').hide();
+        $('#home').fadeIn();
+
+        $('.fb-share-divs').hide();
+        //$('#share_result').fadeIn();
     }
+
 </script>

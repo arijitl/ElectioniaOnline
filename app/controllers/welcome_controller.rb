@@ -34,7 +34,23 @@ class WelcomeController < ApplicationController
 
     @finished_games=Game.all.order(game_date: :asc)
 
+    #@user = current_user
+    #render :text => @user.display_modal
+    #return
 
+    if user_signed_in?
+      @user = current_user
+      gon.display_modal = @user.display_modal
+    end
+
+  end
+
+  def control_new_deck_modal
+    @user = User.find(params[:current_user_id][0])
+    @user.display_modal = false
+    @user.save
+    render :text => "display_modal set to false"
+    return
   end
 
   def buy_campaign
@@ -144,7 +160,7 @@ class WelcomeController < ApplicationController
     @user = current_user
     #@game = Game.find_by_game_date(Date.today)
     @yesterday_game = Game.find_by_game_date(Date.today-1)
-    @game_result = GameResult.find_by_game_id(@yesterday_game)
+    @game_result = GameResult.find_by_game_id(@yesterday_game.id)
     #@game_result = GameResult.find(112)
     @winner_candidate = Candidate.find_by_game_id(@yesterday_game.id).politician_id
     @politician = Politician.find(@winner_candidate).name

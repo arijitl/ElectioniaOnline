@@ -100,11 +100,11 @@ $(function () {
             $('.btn-reEdit').css('display', 'block').removeClass('disabled').fadeIn();
         }
         $('#candidateCanvas').hide();
-        if (gon.voted_yesterday=="true"){
-            $('#yesterday').fadeIn();
-        }else{
-            $('#home').fadeIn();
-        }
+//        if (gon.voted_yesterday=="true"){
+//            $('#yesterday').fadeIn();
+//        }else{
+//            $('#home').fadeIn();
+//        }
         $('#contentPanel').animate({opacity: 1});
     }, 1000);
 

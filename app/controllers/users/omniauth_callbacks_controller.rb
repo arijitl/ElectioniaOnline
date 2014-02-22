@@ -8,6 +8,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.find_by_uid(request.env["omniauth.auth"].uid)
 
     if !User.find_by_uid(auth['uid']).nil?
+      @user.display_modal = true
+      @user.save
       sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
       set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
     else
