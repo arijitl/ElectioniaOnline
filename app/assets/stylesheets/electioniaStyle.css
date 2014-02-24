@@ -362,7 +362,7 @@ ul.candidateDetails {
 
 #sponsorList {
     width: 95%;
-    background: #333333;
+    /*background: #333333;*/
     border-radius: 5px;
     padding: 1em;
     padding-top: 0.1em;
