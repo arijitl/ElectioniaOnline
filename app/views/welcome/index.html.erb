@@ -49,8 +49,10 @@
   <h1 style="text-align: center; margin-bottom: 0.3em"><%= Date.today.strftime("%d %b") %></h1>
 
   <!--<div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>-->
-  <div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-width="240" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-
+  <!--<div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-width="240" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>-->
+  <div class="row">
+  <div class="fb-like col-lg-4" data-href="http://www.electionia.com/users/sign_in" data-layout="button" data-action="like" data-show-faces="true" data-share="false"></div>
+  <div class="fb-share-button col-lg-4" data-href="http://www.electionia.com/users/sign_in" data-type="button" style="margin-left: -20px;"></div> </div>
 </div>
 
 <div class="col-lg-9 col-md-9 col-sm-9">
@@ -71,11 +73,11 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6">
           <div id="sponsorList">
-            <h3>Prize Sponsors</h3>
+            <!--<h3>Prize Sponsors</h3>-->
 
             <div class="row" style="padding: 0;margin:0">
               <% @sponsors.each do |s| %>
-                  <div class="col-lg-4 col-md-4 col-sm-4" style="padding: 0.3em;margin:0">
+                  <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0.3em;margin:0">
                     <%= image_tag s.avatar.url(:original), class: "sponsorImg img-responsive" %>
                   </div>
               <% end %>
