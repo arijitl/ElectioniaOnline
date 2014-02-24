@@ -1,23 +1,56 @@
 class WelcomeController < ApplicationController
   def index
     @game=Game.find_by_game_date(Date.today)
-    @candidates=[Candidate.find(@game.first_id), Candidate.find(@game.second_id), Candidate.find(@game.third_id)]
+    @yesterday=Game.find_by_game_date(Date.today-1)
+    @candidates=@game.candidates
     @campaigns=Campaign.all.order(:bet)
 
-    gon.candfirst=@game.first_id
-    gon.candsecond=@game.second_id
-    gon.candthird=@game.third_id
-
-    gon.antifirst= Anticampaign.where(game_id: @game.id, user_id: current_user.id, candidate_id: @game.first_id).all.map { |c| c.campaign.id }
-    gon.antisecond= Anticampaign.where(game_id: @game.id, user_id: current_user.id, candidate_id: @game.second_id).all.map { |c| c.campaign.id }
-    gon.antithird= Anticampaign.where(game_id: @game.id, user_id: current_user.id, candidate_id: @game.third_id).all.map { |c| c.campaign.id }
+    @anticampaigns=@candidates.map { |c| [c.id, c.anticampaigns.map { |a| a.campaign.id }] }
+    gon.anticampaigns=@anticampaigns
 
     @vote=Vote.where(game_id: @game.id, user_id: current_user.id).first
     if !@vote.blank?
       gon.candidate=@vote.candidate_id
+      if @vote.submitted
+        gon.submitted='true'
+      else
+        gon.submitted='false'
+      end
     else
       gon.candidate=-1
+      gon.submitted='not a chance'
     end
+
+    if !Vote.where(game_id: @yesterday.id, user_id: current_user.id).first.blank?
+      gon.voted_yesterday='true'
+    else
+      gon.voted_yesterday='false'
+    end
+
+
+    @sponsors=Sponsor.all
+
+    #  Results Details
+
+    @finished_games=Game.all.order(game_date: :asc)
+
+    #@user = current_user
+    #render :text => @user.display_modal
+    #return
+
+    if user_signed_in?
+      @user = current_user
+      gon.display_modal = @user.display_modal
+    end
+
+  end
+
+  def control_new_deck_modal
+    @user = User.find(params[:current_user_id][0])
+    @user.display_modal = false
+    @user.save
+    render :text => "display_modal set to false"
+    return
   end
 
   def buy_campaign
@@ -25,21 +58,15 @@ class WelcomeController < ApplicationController
     @game=Game.find_by_game_date(Date.today)
     @campaign=Campaign.find(params[:campaign_id])
     @candidate=Candidate.find(params[:candidate_id])
-    @existing=Anticampaign.where(user_id: @user.id, game_id: @game.id)
-    if @existing.all.length<6
-      if @existing.where(candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).blank?
-        @user.bank=@user.bank-@campaign.bet
-        @user.save
-        @anticampaign=Anticampaign.create!(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id])
-        @msg=@anticampaign.id
-      else
-        @anticampaign=@existing.where(candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).first
-        @msg=@anticampaign.id
-      end
-      render text: "#{@user.bank}||#{@msg}"
-    else
-      render text: "Error"
-    end
+    @existing=
+        if params[:init]=="false"
+          @user.bank=@user.bank-@campaign.bet
+          @user.save
+          @anticampaign=Anticampaign.create!(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id])
+        else
+          @anticampaign=Anticampaign.where(user_id: @user.id, game_id: @game.id, candidate_id: params[:candidate_id], campaign_id: params[:campaign_id]).first
+        end
+    render text: "#{@user.bank}||#{@anticampaign.id}"
   end
 
   def cancel_campaign
@@ -54,11 +81,10 @@ class WelcomeController < ApplicationController
 
   def cast_vote
     @game=Game.find_by_game_date(Date.today)
-    @vote=Vote.where(user_id: current_user.id, game_id: @game.id).first
-    if !@vote.blank?
-      @vote.destroy
+    @vote=Vote.where(user_id: current_user.id, game_id: @game.id, candidate_id: params[:candidate_id]).first
+    if @vote.blank?
+      @vote=Vote.create!(user_id: current_user.id, game_id: @game.id, candidate_id: params[:candidate_id])
     end
-    @vote=Vote.create!(user_id: current_user.id, game_id: @game.id, candidate_id: params[:candidate_id])
     render text: "#{@vote.id}"
   end
 
@@ -70,27 +96,30 @@ class WelcomeController < ApplicationController
 
   def evaluate_game
     @game=Game.find(params[:id])
-    @votes=Vote.where(game_id: @game.id).all
-    @candidates=@votes.map { |v| v.candidate_id }
-    first=@candidates.count(@game.first_id)
-    second=@candidates.count(@game.second_id)
-    third=@candidates.count(@game.third_id)
-    winner_id=[@game.first_id, @game.second_id, @game.third_id][[first, second, third].index([first, second, third].max)]
-    @game.winner_id=winner_id
+    @candidates=@game.candidates
+    @votes_count=@candidates.map { |c| c.votes.count }
+    @anticampaign_bets=@candidates.map { |c| c.anticampaigns.map { |a| a.campaign.bet }.sum }
+    @antivotes_count=@anticampaign_bets.map { |a| (1-(a.to_f/@anticampaign_bets.sum)) *@votes_count.sum }
+    @total_votes=@votes_count.each_with_index.map { |v, index| v+@antivotes_count[index] }
+    @winner_id=@candidates[@total_votes.index(@total_votes.max)].id
+    @game.winner_id=@winner_id
     @game.save
 
-    @users=@votes.map { |v| v.user }
-    @users.each do |user|
+    @candidates.each_with_index do |candidate, i|
+      candidate.vote_count=@total_votes[i]
+      candidate.winner=(candidate.id==@winner_id)
+      candidate.save
+    end
 
+    @users=@game.votes.map { |v| v.user }
+    @users.each do |user|
       @game_result=GameResult.new
       # Check the Vote
       @vote=Vote.where(game_id: @game.id, user_id: user.id).first
-      if @vote.candidate_id==winner_id
-        Transaction.create!(user_id: user.id, game_date: @game.game_date, account: "Vote", cost: 0, return: 2000)
+      if @vote.candidate_id==@winner_id
         @game_result.votewin=true
         @gain=2000
       else
-        Transaction.create!(user_id: user.id, game_date: @game.game_date, account: "Vote", cost: 0, return: 1000)
         @game_result.votewin=false
         @gain=1000
       end
@@ -98,11 +127,8 @@ class WelcomeController < ApplicationController
       @expense=0
       @anticampaigns=Anticampaign.where(game_id: @game.id, user_id: user.id).all
       @anticampaigns.each do |anticampaign|
-        if anticampaign.candidate_id!=winner_id
-          Transaction.create!(user_id: user.id, game_date: @game.game_date, account: anticampaign.campaign.name, cost: anticampaign.campaign.bet, return: anticampaign.campaign.payoff)
+        if anticampaign.candidate_id!=@winner_id
           @gain=@gain+anticampaign.campaign.payoff
-        else
-          Transaction.create!(user_id: user.id, game_date: @game.game_date, account: anticampaign.campaign.name, cost: anticampaign.campaign.bet, return: 0)
         end
         @expense=@expense+anticampaign.campaign.bet
       end
@@ -114,7 +140,33 @@ class WelcomeController < ApplicationController
       @game_result.balance=user.bank
       @game_result.save
     end
+    render text: "#{@game.candidates.map { |c| c.politician.name.to_s + ' got '+ c.vote_count.to_s+' votes' }.join('<br/>')} <br/><br/>#{Candidate.find(@winner_id).politician.name} Won."
+  end
 
+  def finalize
+    @game=Game.find_by_game_date(Date.today)
+    @vote=Vote.where(game_id: @game.id, user_id: current_user.id).first
+    if params[:status]=="true"
+      @vote.submitted=true
+    else
+      @vote.submitted=false
+    end
+    @vote.save
+    render text: "The finalization state is #{@vote.submitted}"
+
+  end
+
+  def my_result
+    @user = current_user
+    #@game = Game.find_by_game_date(Date.today)
+    @yesterday_game = Game.find_by_game_date(Date.today-1)
+    @game_result = GameResult.find_by_game_id(@yesterday_game.id)
+    #@game_result = GameResult.find(112)
+    @winner_candidate = Candidate.find_by_game_id(@yesterday_game.id).politician_id
+    @politician = Politician.find(@winner_candidate).name
+    #render :text => "#{@game_result}||#{@politician}"
+    render :text => "#{@game_result.balance}||#{@game_result.contribution}||#{@game_result.expense}||#{@game_result.income}||#{@game_result.votewin}||#{@politician}"
+    return
   end
 
 end

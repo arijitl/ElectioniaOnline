@@ -13,9 +13,11 @@
 	height: 0;
 }
 /* display none until init */
+/*/TODO: check this div\'s height, need to manage using media queries*/
 .owl-carousel{
 	display: none;
 	position: relative;
+    /*height: 415px;*/
 	width: 100%;
 	-ms-touch-action: pan-y;
 }

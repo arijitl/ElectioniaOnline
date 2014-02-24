@@ -4,6 +4,7 @@ class CreateVotes < ActiveRecord::Migration
       t.integer :user_id
       t.integer :candidate_id
       t.integer :game_id
+      t.boolean :submitted
 
       t.timestamps
     end

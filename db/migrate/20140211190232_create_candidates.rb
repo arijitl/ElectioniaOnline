@@ -1,14 +1,11 @@
 class CreateCandidates < ActiveRecord::Migration
   def change
     create_table :candidates do |t|
-      t.string :name
-      t.boolean :young
-      t.boolean :secular
-      t.boolean :experienced
-      t.boolean :clean
-      t.boolean :eminent
-      t.boolean :astute
+      t.integer :politician_id
+      t.integer :game_id
       t.string :comment
+      t.integer :vote_count
+      t.boolean :winner
 
       t.timestamps
     end

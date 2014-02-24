@@ -7,7 +7,7 @@ html {
 body {
     padding: 20px;
     padding-top: 0;
-    padding-right: 30px;
+    padding-right: 40px;
     width: 960px;
     margin: 0 auto;
     box-shadow: #aaa 0 0 80px;
@@ -16,13 +16,14 @@ body {
     border-bottom-right-radius: 10px;
 }
 
-a {
+a, a:visited, a:hover {
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-decoration: none;
 }
 
 .btn-inverse.active {
@@ -107,13 +108,22 @@ h1 {
     font-size: 3.2em;
 }
 
+#fbsignin {
+    font-size: 1.5em;
+}
+
 #candidateCanvas {
     text-align: center;
+    /*display: none;*/
 }
 
 .grayRayed {
     background: url(/assets/background.jpg);
     background-size: 100% 100%;
+}
+
+.candidate {
+    position: relative;
 }
 
 .candidate img {
@@ -123,19 +133,21 @@ h1 {
 }
 
 .screen {
+    background: #333333;
     background: url('/assets/canvas.jpg');
     color: white;
     box-shadow: #333 0 0 20px;
     width: 100%;
-    height: 0;
+    /*height: 0;*/
     border-radius: 10px;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     display: none;
     opacity: 0.97;
 }
 
 ul.candidateDetails {
-    display: none;
     padding: 0.5em;
     padding-top: 1em;
     list-style: none;
@@ -155,19 +167,25 @@ ul.candidateDetails {
 
 .candidateName {
     background: #333;
+    margin: 0;
+    margin-top: 0.2em;
     padding: 0.2em;
     color: white;
     border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     font-size: 1.5em;
+    border: 2px solid black;
 }
 
 .cardSlot {
     background: white;
     border: 2px solid black;
     height: 100%;
-    border-radius: 10px;
     padding: 0.5em;
     position: relative;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 #shop {
@@ -197,17 +215,17 @@ ul.candidateDetails {
 #profileBox {
     background: #333;
     color: white;
-    margin-top: 1em;
+    margin-top: 0.35em;
     padding-top: 1em;
-    height: 5em;
+    min-height: 5em;
 }
 
 #profileBox img {
-    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+ */
-    filter: gray; /* IE6-9 */
-    -webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
-    -webkit-transition: all .6s ease; /* Fade to color for Chrome and Safari */
-    -webkit-backface-visibility: hidden; /* Fix for transition flickering */
+    /*filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); *//* Firefox 10+ */
+    /*filter: gray; *//* IE6-9 */
+    /*-webkit-filter: grayscale(100%); *//* Chrome 19+ & Safari 6+ */
+    /*-webkit-transition: all .6s ease; *//* Fade to color for Chrome and Safari */
+    /*-webkit-backface-visibility: hidden; *//* Fix for transition flickering */
 }
 
 .logout {
@@ -249,7 +267,7 @@ ul.candidateDetails {
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 6px;
+    border-radius: 0;
     padding: 1em;
     color: white;
 }
@@ -271,7 +289,7 @@ ul.candidateDetails {
 #menu a h2 {
     display: inline;
     margin-left: 1em;
-    color:#333;
+    color: #333;
     font-size: 1.2em;
     padding-bottom: 0.2em;
     border-bottom: #aaa solid 1px;
@@ -283,4 +301,95 @@ ul.candidateDetails {
 
 #menu a h2:hover {
     border-bottom: #000 solid 3px;
+}
+
+#instructions, #leaderboard, #home, #candidateCanvas, #results, #prizes {
+    display: none;
+}
+
+.customNavigation {
+    text-align: center;
+}
+
+.customNavigation a {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.voteBtn {
+    width: 100%;
+    font-size: 1.5em;
+    border-radius: 0;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.cancelVote {
+    margin-top: 0.5em;
+}
+
+.btn-submit {
+    margin-top: 0.5em;
+    width: 100%;
+    font-size: 1.5em;
+}
+
+.btn-reEdit {
+    display: none;
+    margin-top: 0.5em;
+    width: 100%;
+    font-size: 1.5em;
+}
+
+.btn-bank {
+    width: 100%;
+    border-radius: 0;
+    font-size: 1.5em;
+}
+
+.btn-big {
+    font-size: 1.5em;
+}
+
+#homeGame {
+    width: 98%;
+    margin-top: 0.2em;
+}
+
+#sponsorList {
+    width: 95%;
+    background: #333333;
+    border-radius: 5px;
+    padding: 1em;
+    padding-top: 0.1em;
+    padding-right: 1.5em;
+    color: white;
+    text-align: right;
+    height: 20em;
+    margin-bottom: 0.3em;
+}
+
+.hashback {
+    /*background: url(/assets/hashback.jpg);*/
+}
+
+.resultCandidateImg {
+    border-radius: 5px;
+    border: 1px solid black
+}
+
+.candidateResultDetails {
+    font-size: 0.7em;
+}
+
+.payoffTable {
+    font-size: 0.6em;
+}
+
+#contentPanel {
+    opacity: 0;
 }

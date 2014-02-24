@@ -4,13 +4,19 @@ ElectioniaOnline::Application.routes.draw do
     get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_facebook_session
   end
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+  mount RailsAdminImport::Engine => '/rails_admin_import', :as => 'rails_admin_import'
 
-  post '/buy/:campaign_id/against/:candidate_id', to: 'welcome#buy_campaign', as: :buy_campaign
+  post '/buy/:campaign_id/against/:candidate_id/:init', to: 'welcome#buy_campaign', as: :buy_campaign
   post '/cancel/:anticampaign_id', to: 'welcome#cancel_campaign', as: :cancel_campaign
   post '/vote/:candidate_id', to:'welcome#cast_vote', as: :cast_vote
+  post '/finalize/:status', to:'welcome#finalize', as: :finalize
   post '/uncast/:vote_id', to:'welcome#uncast_vote', as: :uncast_vote
 
   get '/evaluate/:id', to:'welcome#evaluate_game', as: :evaluate_game
+
+
+  post '/my_result', to: 'welcome#my_result', as: :my_result
+  post '/control_new_deck_modal', to: 'welcome#control_new_deck_modal', as: :control_new_deck_modal
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
