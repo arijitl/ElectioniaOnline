@@ -15,7 +15,7 @@ ElectioniaOnline::Application.routes.draw do
   get '/evaluate/:id', to:'welcome#evaluate_game', as: :evaluate_game
 
 
-  post '/my_result', to: 'welcome#my_result', as: :my_result
+  post '/my_result/(:game_date)', to: 'welcome#my_result', as: :my_result
   post '/control_new_deck_modal', to: 'welcome#control_new_deck_modal', as: :control_new_deck_modal
 
   # The priority is based upon order of creation: first created -> highest priority.

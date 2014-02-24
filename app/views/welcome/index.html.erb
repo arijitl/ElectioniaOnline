@@ -23,9 +23,9 @@
       <img src="/assets/logo.jpg" alt="Electionia - Every Vote Counts" class="img-responsive"/>
     </div>
   </div>
-  <a href="#" class="btn btn-danger btn-bank">
-    <span class="glyphicon glyphicon-briefcase"></span>
-    Bank: R.<span id="bank"><%= current_user.bank rescue 1000 %></span>
+  <a href="#" class="btn btn-danger btn-bank" style="cursor: default;">
+    <span class="glyphicon glyphicon-briefcase" style="cursor: default;"></span>
+    Bank: R.<span id="bank" style="cursor: default;"><%= current_user.bank rescue 1000 %></span>
   </a>
 
   <div id="profileBox">
@@ -49,8 +49,10 @@
   <h1 style="text-align: center; margin-bottom: 0.3em"><%= Date.today.strftime("%d %b") %></h1>
 
   <!--<div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>-->
-  <div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-width="240" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-
+  <!--<div class="fb-like" data-href="http://www.electionia.com/users/sign_in" data-width="240" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>-->
+  <div class="row">
+  <div class="fb-like col-lg-4" data-href="http://www.electionia.com/users/sign_in" data-layout="button" data-action="like" data-show-faces="true" data-share="false"></div>
+  <div class="fb-share-button col-lg-4" data-href="http://www.electionia.com/users/sign_in" data-type="button" style="margin-left: -20px;"></div> </div>
 </div>
 
 <div class="col-lg-9 col-md-9 col-sm-9">
@@ -71,11 +73,11 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6">
           <div id="sponsorList">
-            <h3>Prize Sponsors</h3>
+            <!--<h3>Prize Sponsors</h3>-->
 
             <div class="row" style="padding: 0;margin:0">
               <% @sponsors.each do |s| %>
-                  <div class="col-lg-4 col-md-4 col-sm-4" style="padding: 0.3em;margin:0">
+                  <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0.3em;margin:0">
                     <%= image_tag s.avatar.url(:original), class: "sponsorImg img-responsive" %>
                   </div>
               <% end %>
@@ -322,6 +324,14 @@
                     </div>
                   </div>
               <% end %>
+              <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-lg-offset-9">
+                  <!--<input type="hidden" class="game_date" value="<%#= game.game_date %>"/>-->
+                  <div class="fb-share-div" onclick='share_result("<%= current_user.name %>", "<%= current_user.bank %>","<%= game.game_date %>");' style="float:right; height: 25px; width: 10%; cursor: pointer;">
+                    <img src="/assets/fbshare.png" style="height: 100%;">
+                  </div>
+                </div>
+              </div>
             </div>
         <% end %>
       </div>
@@ -360,18 +370,18 @@
       Wait for it... we are building it up. Trust us... it is going to be spectacular.
     </div>
 
-    <div class="fb-share-divs" id="share_leaderboard" onclick='share_score("<%= current_user.name %>", "<%= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">
+    <div class="fb-share-divs" id="share_leaderboard" onclick='share_score("<%= (User.all.order(bank: :desc).index{ |item| item.name == 'Sunny Singh' }+1)%>", "<%= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">
         <img src="/assets/fbshare.png" style="height: 100%;">
     </div>
-    <div class="fb-share-divs" id="share_result" onclick='share_result("<%= current_user.name %>", "<%= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">
-      <img src="/assets/fbshare.png" style="height: 100%;">
-    </div>
+    <!--<div class="fb-share-divs" id="share_result" onclick='share_result("<%#= current_user.name %>", "<%#= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">-->
+      <!--<img src="/assets/fbshare.png" style="height: 100%;">-->
+    <!--</div>-->
 
 </div>
 </div>
 </div>
 <div class="footer">
-  A Ptotem &copy; Games Creation
+  <a href="//ptotem.com" target="_blank" style="color: #666666">A Ptotem &copy; Games Creation</a>
   <br/>
   <small>Mail us at info@ptotem.com to get a copy of the Electionia Card Game</small>
 </div>
