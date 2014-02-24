@@ -370,7 +370,7 @@
       Wait for it... we are building it up. Trust us... it is going to be spectacular.
     </div>
 
-    <div class="fb-share-divs" id="share_leaderboard" onclick='share_score("<%= (User.all.order(bank: :desc).index{ |item| item.name == 'Sunny Singh' }+1)%>", "<%= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">
+    <div class="fb-share-divs" id="share_leaderboard" onclick='share_score("<%= (User.all.order(bank: :desc).index{ |item| item.name == current_user.name }+1)%>", "<%= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">
         <img src="/assets/fbshare.png" style="height: 100%;">
     </div>
     <!--<div class="fb-share-divs" id="share_result" onclick='share_result("<%#= current_user.name %>", "<%#= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">-->
