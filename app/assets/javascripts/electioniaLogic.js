@@ -372,20 +372,12 @@ function post_photo_on_fb(curr_usr, score){
 }
 
 function share_score(curr_usr, score){
-    var curr_usr_rank;
-    $("#leaderboard").find("td").each(function() {
-        if ($(this).text() == curr_usr ){
-            curr_usr_rank = $(this).prev().text();
-            //console.log(curr_usr, curr_usr_rank);
-        }
-    });
-
     FB.ui(
         {
             method: 'feed',
-            name: 'I am rank '+curr_usr_rank+ ' on Electionia',
+            name: 'I am rank '+curr_usr+ ' on Electionia',
             link: 'https://developers.facebook.com/docs/dialogs/',
-            picture: 'http://fbrell.com/f8.jpg',
+            picture: 'https://www.electionia.com/assets/logo.jpg',
             caption: 'I have earned R.' +score+ ' by playing this online voting game.',
             description: 'Check the game out. Vote for the candidate you like, throw a shoe at a candidate you don\'t and make it to the Leader Board to win exciting prizes. Just remember - Every Vote Counts!'
         },
@@ -399,9 +391,9 @@ function share_score(curr_usr, score){
     );
 }
 
-function share_result(curr_usr, score){
+function share_result(curr_usr, score,game_date){
     $.ajax({
-        url: '/my_result',
+        url: '/my_result/'+game_date,
         method: 'post',
         success: function (data) {
 
@@ -419,7 +411,7 @@ function share_result(curr_usr, score){
                     method: 'feed',
                     name: 'I won R.'+income+' by playing Electionia yesterday',
                     link: 'https://developers.facebook.com/docs/dialogs/',
-                    picture: 'http://fbrell.com/f8.jpg',
+                    picture: 'https://www.electionia.com/assets/logo.jpg',
                     caption: politician+' won yesterday\'s round of voting',
                     description: 'Check the game out. Vote for the candidate you like, throw a shoe at a candidate you don\'t and make it to the Leader Board to win exciting prizes. Just remember - Every Vote Counts!'
                 },

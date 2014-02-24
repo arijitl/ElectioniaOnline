@@ -23,9 +23,9 @@
       <img src="/assets/logo.jpg" alt="Electionia - Every Vote Counts" class="img-responsive"/>
     </div>
   </div>
-  <a href="#" class="btn btn-danger btn-bank">
-    <span class="glyphicon glyphicon-briefcase"></span>
-    Bank: R.<span id="bank"><%= current_user.bank rescue 1000 %></span>
+  <a href="#" class="btn btn-danger btn-bank" style="cursor: default;">
+    <span class="glyphicon glyphicon-briefcase" style="cursor: default;"></span>
+    Bank: R.<span id="bank" style="cursor: default;"><%= current_user.bank rescue 1000 %></span>
   </a>
 
   <div id="profileBox">
@@ -322,6 +322,14 @@
                     </div>
                   </div>
               <% end %>
+              <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-lg-offset-9">
+                  <!--<input type="hidden" class="game_date" value="<%#= game.game_date %>"/>-->
+                  <div class="fb-share-div" onclick='share_result("<%= current_user.name %>", "<%= current_user.bank %>","<%= game.game_date %>");' style="float:right; height: 25px; width: 10%; cursor: pointer;">
+                    <img src="/assets/fbshare.png" style="height: 100%;">
+                  </div>
+                </div>
+              </div>
             </div>
         <% end %>
       </div>
@@ -360,18 +368,18 @@
       Wait for it... we are building it up. Trust us... it is going to be spectacular.
     </div>
 
-    <div class="fb-share-divs" id="share_leaderboard" onclick='share_score("<%= current_user.name %>", "<%= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">
+    <div class="fb-share-divs" id="share_leaderboard" onclick='share_score("<%= (User.all.order(bank: :desc).index{ |item| item.name == 'Sunny Singh' }+1)%>", "<%= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">
         <img src="/assets/fbshare.png" style="height: 100%;">
     </div>
-    <div class="fb-share-divs" id="share_result" onclick='share_result("<%= current_user.name %>", "<%= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">
-      <img src="/assets/fbshare.png" style="height: 100%;">
-    </div>
+    <!--<div class="fb-share-divs" id="share_result" onclick='share_result("<%#= current_user.name %>", "<%#= current_user.bank %>");' style="display:none; float:right; height: 25px; width: 10%; cursor: pointer;">-->
+      <!--<img src="/assets/fbshare.png" style="height: 100%;">-->
+    <!--</div>-->
 
 </div>
 </div>
 </div>
 <div class="footer">
-  A Ptotem &copy; Games Creation
+  <a href="//ptotem.com" target="_blank" style="color: #666666">A Ptotem &copy; Games Creation</a>
   <br/>
   <small>Mail us at info@ptotem.com to get a copy of the Electionia Card Game</small>
 </div>

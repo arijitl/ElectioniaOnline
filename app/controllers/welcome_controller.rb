@@ -32,7 +32,7 @@ class WelcomeController < ApplicationController
 
     #  Results Details
 
-    @finished_games=Game.all.order(game_date: :asc)
+    @finished_games=Game.where('game_date < ?', Date.today).order(game_date: :asc)
 
     #@user = current_user
     #render :text => @user.display_modal
@@ -114,6 +114,8 @@ class WelcomeController < ApplicationController
     @users=@game.votes.map { |v| v.user }
     @users.each do |user|
       @game_result=GameResult.new
+      @game_result.game_id =@game.id
+      @game_result.user_id =user.id
       # Check the Vote
       @vote=Vote.where(game_id: @game.id, user_id: user.id).first
       if @vote.candidate_id==@winner_id
@@ -159,13 +161,19 @@ class WelcomeController < ApplicationController
   def my_result
     @user = current_user
     #@game = Game.find_by_game_date(Date.today)
-    @yesterday_game = Game.find_by_game_date(Date.today-1)
+    if !params[:game_date].nil?
+      @yesterday_game = Game.find_by_game_date(Date.strptime(params[:game_date], "%Y-%m-%d"))
+    else
+      @yesterday_game = Game.find_by_game_date(Date.today-1)
+    end
     @game_result = GameResult.find_by_game_id(@yesterday_game.id)
+    #render :text => @yesterday_game
+    #return
     #@game_result = GameResult.find(112)
-    @winner_candidate = Candidate.find_by_game_id(@yesterday_game.id).politician_id
+    @winner_candidate = Candidate.find_by_game_id_and_winner(@yesterday_game.id,true).politician_id
     @politician = Politician.find(@winner_candidate).name
     #render :text => "#{@game_result}||#{@politician}"
-    render :text => "#{@game_result.balance}||#{@game_result.contribution}||#{@game_result.expense}||#{@game_result.income}||#{@game_result.votewin}||#{@politician}"
+    render :text => "#{@game_result.balance rescue ''}||#{@game_result.contribution rescue ''}||#{@game_result.expense rescue ''}||#{@game_result.income rescue ''}||#{@game_result.votewin rescue ''}||#{@politician}"
     return
   end
 
