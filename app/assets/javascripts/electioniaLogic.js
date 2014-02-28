@@ -392,6 +392,7 @@ function share_score(curr_usr, score){
 }
 
 function share_result(curr_usr, score,game_date){
+
     $.ajax({
         url: '/my_result/'+game_date,
         method: 'post',
@@ -426,4 +427,18 @@ function share_result(curr_usr, score,game_date){
         }
     })
 
+}
+
+function show_daily_leaderboard_table(){
+    $('.leaderboard-table').hide();
+    $('#weekly_leaderboard_table_filter').hide();
+    $('#daily_leaderboard_table_filter').show();
+    $('#daily_leaderboard_table').fadeIn();
+}
+
+function show_weekly_leaderboard_table(){
+    $('.leaderboard-table').hide();
+    $('#daily_leaderboard_table_filter').hide();
+    $('#weekly_leaderboard_table_filter').show();
+    $('#weekly_leaderboard_table').fadeIn();
 }

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: 
+  user_id: 1
+  score: 1
+
+two:
+  date: 
+  user_id: 1
+  score: 1

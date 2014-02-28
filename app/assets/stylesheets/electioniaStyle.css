@@ -303,6 +303,23 @@ ul.candidateDetails {
     border-bottom: #000 solid 3px;
 }
 
+#leaderboard_tab a h2 {
+    display: inline;
+    margin-left: 1em;
+    color: #333;
+    font-size: 1.2em;
+    padding-bottom: 0.2em;
+    border-bottom: #aaa solid 1px;
+}
+
+#leaderboard_tab a:hover {
+    text-decoration: none;
+}
+
+#leaderboard_tab a h2:hover {
+    border-bottom: #000 solid 3px;
+}
+
 #instructions, #leaderboard, #home, #candidateCanvas, #results, #prizes {
     display: none;
 }
