@@ -59,4 +59,9 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def self.show_for_current_week
+    where(':first_day <= game_date AND game_date <= :last_day',{:first_day=>Date.today.at_beginning_of_week,:last_day=>Date.today.at_end_of_week})
+  end
+
+
 end

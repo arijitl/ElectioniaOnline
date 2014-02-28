@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20140228082213) do
+ActiveRecord::Schema.define(version: 20140228110805) do
 
   create_table "anticampaigns", force: true do |t|
     t.integer  "game_id"
@@ -147,6 +146,18 @@ ActiveRecord::Schema.define(version: 20140228082213) do
     t.date     "date"
     t.integer  "user_id"
     t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "week_no"
+    t.string   "year"
+  end
+
+  create_table "weekly_winners", force: true do |t|
+    t.integer  "user_id"
+    t.date     "date"
+    t.integer  "week_no"
+    t.integer  "score"
+    t.string   "year"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

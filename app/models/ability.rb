@@ -21,15 +21,6 @@ class Ability
     else
       cannot :manage, :all
     end
-    #case user.admin
-    #  when true
-    #    can :manage, :all
-    #  #can :access, :rails_admin # grant access to rails_admin
-    #  else
-    #    cannot :manage, :all
-    #  #cannot :access, :rails_admin
-    #end
-    #
     end
 
 
