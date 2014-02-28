@@ -21,10 +21,12 @@ class WelcomeController < ApplicationController
       gon.submitted='not a chance'
     end
 
-    if !Vote.where(game_id: @yesterday.id, user_id: current_user.id).first.blank?
-      gon.voted_yesterday='true'
-    else
-      gon.voted_yesterday='false'
+    if !@yesterday.nil?
+      if !Vote.where(game_id: @yesterday.id, user_id: current_user.id).first.blank?
+        gon.voted_yesterday='true'
+      else
+        gon.voted_yesterday='false'
+      end
     end
 
 
