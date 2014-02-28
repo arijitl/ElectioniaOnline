@@ -41,6 +41,9 @@ gem 'thin'
 gem 'binding_of_caller'
 gem 'fb_graph'
 gem 'rack-facebook-method-fix'
+gem 'cancan'
+gem 'rufus-scheduler'
+
 
 
 group :doc do

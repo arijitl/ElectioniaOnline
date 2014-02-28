@@ -9,7 +9,7 @@ var fbSdkLoader;
 
 //appId =>
 // Electionia => 418175744951459
-//Electionia-Dev => 255269797987971
+// Electionia-Dev => 255269797987971
 //agileDex=>222280634572524
 
 fbSdkLoader = function() {

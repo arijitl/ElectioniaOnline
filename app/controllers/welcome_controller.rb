@@ -1,4 +1,11 @@
 class WelcomeController < ApplicationController
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = "Access denied."
+    redirect_to root_url
+  end
+
+
   def index
     @game=Game.find_by_game_date(Date.today)
     @yesterday=Game.find_by_game_date(Date.today-1)
