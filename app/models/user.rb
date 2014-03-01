@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :votes, dependent: :destroy
   has_many :anticampaigns, dependent: :destroy
+  belongs_to :role
 
   before_create :give_money
 
@@ -46,5 +47,7 @@ class User < ActiveRecord::Base
 
     end
   end
+
+
 
 end

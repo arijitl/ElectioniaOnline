@@ -40,6 +40,7 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.1.4)
+    cancan (1.6.10)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.3)
@@ -180,6 +181,8 @@ GEM
       json (~> 1.4)
     ref (1.0.5)
     remotipart (1.2.1)
+    rufus-scheduler (3.0.6)
+      tzinfo
     safe_yaml (0.9.7)
     sass (3.2.14)
     sass-rails (4.0.1)
@@ -229,6 +232,7 @@ DEPENDENCIES
   bcrypt-ruby!
   better_errors
   binding_of_caller
+  cancan
   coffee-rails (~> 4.0.0)
   devise
   execjs
@@ -243,6 +247,7 @@ DEPENDENCIES
   rails (= 4.0.0)
   rails_admin
   rails_admin_import
+  rufus-scheduler
   sass-rails (~> 4.0.0)
   sdoc
   sqlite3

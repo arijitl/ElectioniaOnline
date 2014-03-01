@@ -1,4 +1,11 @@
 class WelcomeController < ApplicationController
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = "Access denied."
+    redirect_to root_url
+  end
+
+
   def index
     @game=Game.find_by_game_date(Date.today)
     @yesterday=Game.find_by_game_date(Date.today-1)
@@ -21,10 +28,12 @@ class WelcomeController < ApplicationController
       gon.submitted='not a chance'
     end
 
-    if !Vote.where(game_id: @yesterday.id, user_id: current_user.id).first.blank?
-      gon.voted_yesterday='true'
-    else
-      gon.voted_yesterday='false'
+    if !@yesterday.nil?
+      if !Vote.where(game_id: @yesterday.id, user_id: current_user.id).first.blank?
+        gon.voted_yesterday='true'
+      else
+        gon.voted_yesterday='false'
+      end
     end
 
 
