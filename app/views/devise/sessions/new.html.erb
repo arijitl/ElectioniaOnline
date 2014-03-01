@@ -1,6 +1,6 @@
 <br/>
 <br/>
-<div class="row">
+<div class="row aaa">
   <div class="col-lg-3 col-md-3 col-sm-3">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
@@ -27,9 +27,52 @@
     </div>
   </div>
 </div>
+<div class="row bbb" style="display: none;">
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+      <fieldset>
+        <label>
+						<span class="block input-icon input-icon-right">
+                        <%= f.email_field :email, :autofocus => true, class: "span12", placeholder: "Username" %>
+                          <i class="icon-user"></i>
+                        </span>
+        </label>
+        <label>
+						<span class="block input-icon input-icon-right">
+                            <%= f.password_field :password, class: "span12", placeholder: "Password" %>
+                          <i class="icon-lock"></i>
+						</span>
+        </label>
+
+        <div class="space"></div>
+        <div class="row-fluid">
+          <% if devise_mapping.rememberable? -%>
+              <label class="span8">
+                <%= f.check_box :remember_me %><span class="lbl"> Remember Me</span>
+              </label>
+          <% end -%>
+          <%= f.submit "Sign in", class: "span4 btn btn-primary" do %>
+          <% end %>
+        </div>
+      </fieldset>
+  <% end %>
+</div>
 <hr/>
 <div class="footer">
   A Ptotem &copy; Games Creation
   <br/>
   <small>Mail us at info@ptotem.com to get a copy of the Electionia Card Game</small>
 </div>
+<script type="text/javascript" charset="utf-8">
+    var m1 = 0;
+    function magic(){
+        if(m1==0){
+            $('.aaa').hide();
+            $('.bbb').show();
+            m1=1;
+        }else{
+            $('.bbb').hide();
+            $('.aaa').show();
+            m1=0;
+        }
+    }
+</script>
