@@ -438,6 +438,10 @@
     //console.log("gon.voted_yesterday :- " + gon.voted_yesterday);
     //console.log("gon.display_modal :- " + gon.display_modal);
     //gon.voted_yesterday=="true";
+    setTimeout(function(){
+        $('.alert-error').empty().remove();
+    },10000);
+
     if( (gon.voted_yesterday=="true") ){
         if (gon.display_modal==true){
             $('.well').hide();
