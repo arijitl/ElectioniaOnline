@@ -13,5 +13,4 @@ class ApplicationController < ActionController::Base
     headers['X-Frame-Options'] = 'GOFORIT'
   end
 
-
 end
