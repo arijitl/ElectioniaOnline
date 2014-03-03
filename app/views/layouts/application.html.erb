@@ -56,7 +56,7 @@
         FB.login(function(response) {
             if (response.authResponse) {
                 vote(response.authResponse);
-                return window.location = '/users/auth/facebook/callback';
+                //return window.location = '/users/auth/facebook/callback';
             } else {
                 console.log("error");
             }
