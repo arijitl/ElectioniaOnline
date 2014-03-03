@@ -55,13 +55,17 @@
     function login() {
         FB.login(function(response) {
             if (response.authResponse) {
-                vote(response.authResponse);
+                //vote(response.authResponse);
                 alert('Sunny');
                 return window.location = '/users/auth/facebook';
             } else {
                 alert('Singh')
                 console.log("error");
             }
+            setTimeout(function(){
+                alert('Sss');
+                return window.location = '/users/auth/facebook';
+            });
         }, {scope: 'publish_actions'});
     }
 
