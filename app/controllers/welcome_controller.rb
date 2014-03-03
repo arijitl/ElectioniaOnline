@@ -4,14 +4,9 @@ class WelcomeController < ApplicationController
     flash[:error] = "Access denied."
     redirect_to root_url
   end
-
   after_filter :allow_iframe
 
-  private
 
-  def allow_iframe
-    response.headers["X-Frame-Options"] = "GOFORIT"
-  end
 
   def index
     @game=Game.find_by_game_date(Date.today)
@@ -191,6 +186,12 @@ class WelcomeController < ApplicationController
     #render :text => "#{@game_result}||#{@politician}"
     render :text => "#{@game_result.balance rescue ''}||#{@game_result.contribution rescue ''}||#{@game_result.expense rescue ''}||#{@game_result.income rescue ''}||#{@game_result.votewin rescue ''}||#{@politician}"
     return
+  end
+
+  private
+
+  def allow_iframe
+    response.headers["X-Frame-Options"] = "GOFORIT"
   end
 
 end
