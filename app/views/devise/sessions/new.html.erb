@@ -64,13 +64,17 @@
 </div>
 <script type="text/javascript" charset="utf-8">
     var m1 = 0;
+    alert('Sunny');
     $('#fbsignin').click(function(e) {
 //        e.preventDefault();
         return FB.login(function(response) {
             if (response.authResponse) {
-                return window.location = '/auth/facebook/callback';
+                return window.location = '/users/auth/facebook/callback';
+            }else{
+                alert('bb');
             }
-            alert('Sunny');
+
+            //alert('Sunny');
         }, {scope: 'publish_actions'});
     });
     function magic(){
