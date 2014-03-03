@@ -74,10 +74,10 @@
 
 </script>
 <script>
-    if (window.self == window.top) {
+   // if (window.self == window.top) {
         alert('hhh');
         window.location.href = '//apps.facebook.com/electionia/';
-    }
+    //}
 </script>
 <% flash.each do |name, msg| %>
     <div class="alert alert-<%= name == :notice ? "success" : "error" %>" style="color: red;text-align: center;">
