@@ -14,7 +14,7 @@ ElectioniaOnline::Application.routes.draw do
 
   get '/evaluate/:id', to:'welcome#evaluate_game', as: :evaluate_game
 
-
+  post '/', to:'welcome#index'
   post '/my_result/(:game_date)', to: 'welcome#my_result', as: :my_result
   post '/control_new_deck_modal', to: 'welcome#control_new_deck_modal', as: :control_new_deck_modal
 
