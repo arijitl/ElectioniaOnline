@@ -1,2 +1,2 @@
 require "rack-facebook-method-fix"
-use Rack::Facebook::MethodFix
+#use Rack::Facebook::MethodFix
