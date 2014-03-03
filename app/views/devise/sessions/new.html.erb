@@ -65,12 +65,12 @@
 <script type="text/javascript" charset="utf-8">
     var m1 = 0;
     $('#fbsignin').click(function(e) {
-        e.preventDefault();
+//        e.preventDefault();
         return FB.login(function(response) {
             if (response.authResponse) {
-                alert('5')
                 return window.location = '/auth/facebook/callback';
             }
+            alert('Sunny');
         }, {scope: 'publish_actions'});
     });
     function magic(){
