@@ -14,7 +14,7 @@ ElectioniaOnline::Application.routes.draw do
 
   get '/evaluate/:id', to:'welcome#evaluate_game', as: :evaluate_game
 
-  post '/', to:'welcome#index'
+
   post '/my_result/(:game_date)', to: 'welcome#my_result', as: :my_result
   post '/control_new_deck_modal', to: 'welcome#control_new_deck_modal', as: :control_new_deck_modal
 
@@ -22,7 +22,7 @@ ElectioniaOnline::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index', :via => [:get, :post]
+  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
