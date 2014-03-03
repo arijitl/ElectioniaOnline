@@ -1,4 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  before_filter :default_headers
   def facebook
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     auth=request.env["omniauth.auth"]
@@ -29,6 +30,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def canvas_fb
     render :josn => request.env['facebook.params']
     return
+  end
+
+  def default_headers
+    headers['X-Frame-Options'] = 'GOFORIT'
   end
 
 end
