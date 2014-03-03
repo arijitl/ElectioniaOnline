@@ -73,6 +73,11 @@
 //    },2000);
 
 </script>
+<script>
+    if (window.self == window.top) {
+        window.location.href = 'https://apps.facebook.com/electionia/';
+    }
+</script>
 <% flash.each do |name, msg| %>
     <div class="alert alert-<%= name == :notice ? "success" : "error" %>" style="color: red;text-align: center;">
       <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
