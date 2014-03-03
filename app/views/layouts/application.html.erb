@@ -74,9 +74,8 @@
 
 </script>
 <script>
-   if (window.self == window.top) {
-        alert('hhh');
-        window.location.href = '//apps.facebook.com/electionia/';
+    if(window.top.location.href != window.location.href){
+        window.top.location.href = window.location.href;
     }
 </script>
 <% flash.each do |name, msg| %>
