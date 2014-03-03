@@ -5,6 +5,13 @@ class WelcomeController < ApplicationController
     redirect_to root_url
   end
 
+  after_filter :allow_iframe
+
+  private
+
+  def allow_iframe
+    response.headers["X-Frame-Options"] = "GOFORIT"
+  end
 
   def index
     @game=Game.find_by_game_date(Date.today)
