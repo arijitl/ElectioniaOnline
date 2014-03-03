@@ -26,4 +26,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  def canvas_fb
+    render :josn => request.env['facebook.params']
+    return
+  end
+
 end

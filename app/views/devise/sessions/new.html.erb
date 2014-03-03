@@ -18,7 +18,7 @@
           their opponents in this game of electoral machinations.</p>
 
         <%- resource_class.omniauth_providers.each do |provider| %>
-            <%= link_to raw("Sign in with #{provider.to_s.titleize}"), omniauth_authorize_path(resource_name, provider), class: "btn btn-inverse btn-large", id: "fbsignin" %>
+            <%= link_to raw("Sign in with #{provider.to_s.titleize}"), request.env['facebook.params']? canvas_login_path : omniauth_authorize_path(resource_name, provider), class: "btn btn-inverse btn-large", id: "fbsignin" %>
             <br/>
         <% end -%>
         <br/>
