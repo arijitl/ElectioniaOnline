@@ -376,7 +376,7 @@ function share_score(curr_usr, score){
         {
             method: 'feed',
             name: 'I am rank '+curr_usr+ ' on Electionia',
-            link: 'https://developers.facebook.com/docs/dialogs/',
+            link: 'https://www.electionia.com',
             picture: 'https://www.electionia.com/assets/FacebookLogo.jpg',
             caption: 'I have earned R.' +score+ ' by playing this online voting game.',
             description: 'Check the game out. Vote for the candidate you like, throw a shoe at a candidate you don\'t and make it to the Leader Board to win exciting prizes. Just remember - Every Vote Counts!'
@@ -411,7 +411,7 @@ function share_result(curr_usr, score,game_date){
                 {
                     method: 'feed',
                     name: 'I won R.'+income+' by playing Electionia yesterday',
-                    link: 'https://developers.facebook.com/docs/dialogs/',
+                    link: 'https://www.electionia.com',
                     picture: 'https://www.electionia.com/assets/FacebookLogo.jpg',
                     caption: politician+' won yesterday\'s round of voting',
                     description: 'Check the game out. Vote for the candidate you like, throw a shoe at a candidate you don\'t and make it to the Leader Board to win exciting prizes. Just remember - Every Vote Counts!'
