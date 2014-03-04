@@ -56,7 +56,7 @@
         FB.login(function(response) {
             if (response.authResponse) {
                 //vote(response.authResponse);
-                return window.location = '/users/auth/facebook';
+                return window.top.location = '/users/auth/facebook';
             } else {
                 console.log("error");
             }
