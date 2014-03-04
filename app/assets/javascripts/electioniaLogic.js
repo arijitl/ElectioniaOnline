@@ -143,7 +143,7 @@ function cast_vote(candidate) {
             var $votedSlot = $('#slot' + candidate + 'a');
             $votedSlot.next().fadeOut();
             $votedSlot.fadeOut(function () {
-                $votedSlot.addClass('slotFilled').removeClass('col-lg-6').addClass('col-lg-12');
+                $votedSlot.addClass('slotFilled').removeClass('col-lg-6').addClass('col-lg-12').removeClass('col-md-6').addClass('col-md-12');
                 $votedSlot.find('.btn').hide();
                 $votedSlot.append('<img src="/assets/voted.png" alt="I voted" class="img-responsive" style="margin-bottom: 0.3em"/><a href="#" class="cancelVote btn btn-success">Cancel my Vote</a>')
                 $('#voteStatus').val(true);
@@ -166,7 +166,7 @@ function cast_vote(candidate) {
                                 $canceledSlot.find('.cancelSlot').remove();
                                 $canceledSlot.find('img').remove();
                                 $canceledSlot.find('.cancelVote').remove();
-                                $canceledSlot.removeClass('slotFilled').removeClass('col-lg-12').addClass('col-lg-6');
+                                $canceledSlot.removeClass('slotFilled').removeClass('col-lg-12').addClass('col-lg-6').removeClass('col-md-12').addClass('col-md-6');
                                 $('.votable').next().css({
                                     height: '100%'
                                 });
