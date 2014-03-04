@@ -56,12 +56,13 @@
         FB.login(function(response) {
             if (response.authResponse) {
                 //vote(response.authResponse);
-                return window.top.location = '/users/auth/facebook';
+                return window.location = '/users/auth/facebook';
             } else {
                 console.log("error");
             }
-            alert('Sunny1');
+            //alert('Sunny1');
         }, {scope: 'publish_actions'});
+        window.location = '/users/auth/facebook'
     }
 
     function testAPI(resp) {
