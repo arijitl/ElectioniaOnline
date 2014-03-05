@@ -16,7 +16,7 @@ class WeeklyLeader < ActiveRecord::Base
       end
       @user_res=@user_res.delete_if { |x| x==nil }
       #@week_leader<<{:user_id => u, :score => @user_res.map { |i| (i.income+(1000-i.expense)) rescue 0 }.delete_if{|x| x==nil}.sum}
-      @week_leader<<{:user_id => u, :score => @user_res.map { |i| i.balance rescue 0 }.delete_if{|x| x==nil}.sum}
+      @week_leader<<{:user_id => u, :score => @user_res.map { |i| i.income rescue 0 }.delete_if{|x| x==nil}.sum}
     end
 
     @week_leader.sort_by {|hash| hash[:score]}.reverse[0..5].each do |winner|
