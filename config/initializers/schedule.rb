@@ -14,3 +14,15 @@ scheduler.cron '26 18 * * *' do
   puts 'Cron ended'
 end
 
+scheduler.cron '45 8 * * *' do
+  puts 'Cron Started User'
+  User.user_find
+  puts 'Cron ended User'
+end
+
+
+
+
+
+
+

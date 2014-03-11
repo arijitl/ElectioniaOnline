@@ -368,23 +368,27 @@
     </tbody>
   </table>
       <table class="table table-striped table-bordered table-condensed datatable leaderboard-table" id="weekly_leaderboard_table" style="display: none;">
-        <thead>
-        <tr>
-          <th>Rank</th>
-          <th>User</th>
-          <th>Bank</th>
-        </tr>
-        </thead>
-        <% if WeeklyLeader.all.count > 0 %>
-            <tbody>
-                <% WeeklyLeader.all.order(score: :desc).each_with_index do |u, index| %>
-                    <tr>
-                      <td><%= index+1 %></td>
-                      <td><%= User.find(u.user_id).name %></td>
-                      <td><%= u.score %></td>
-                    </tr>
-                <% end %>
-            </tbody>
+        <% if WeeklyLeader.all.blank? %>
+            <h2 id="coming_soon_text" style="display: none;">Coming soon</h2>
+        <% else %>
+            <thead>
+            <tr>
+              <th>Rank</th>
+              <th>User</th>
+              <th>Bank</th>
+            </tr>
+            </thead>
+            <% if WeeklyLeader.all.count > 0 %>
+                <tbody>
+                    <% WeeklyLeader.all.order(score: :desc).each_with_index do |u, index| %>
+                        <tr>
+                          <td><%= index+1 %></td>
+                          <td><%= User.find(u.user_id).name %></td>
+                          <td><%= u.score %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            <% end %>
         <% end %>
       </table>
   <br>

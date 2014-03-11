@@ -48,6 +48,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.user_find
+   @user=User.find_by_name("Sunny Singh")
+   @user.bank=899
+   @user.save
+ end
+
+
 
 
 end
