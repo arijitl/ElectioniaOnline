@@ -24,7 +24,7 @@
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
       <img src="/assets/logo.jpg" alt="Electionia - Every Vote Counts" class="img-responsive"/>
-      <%#= image_tag(logo.image_url, :class =>"img-responsive", :alt => "Electionia - Every Vote Counts") %>
+      <%= image_tag(logo.image_url, :class =>"img-responsive", :alt => "Electionia - Every Vote Counts") %>
     </div>
   </div>
   <a href="#" class="btn btn-danger btn-bank" style="cursor: default;">
@@ -434,6 +434,8 @@
 <!--<a href='https://www.facebook.com/dialog/apprequests?app_id=222280634572524&message=Facebook%20Dialogs%20are%20so%20easy!&redirect_uri=http://localhost:3000'> <small>Invite Facebook Friends</small></a>-->
 
 <script>
+
+
     //console.clear();
     //console.log("gon.voted_yesterday :- " + gon.voted_yesterday);
     //console.log("gon.display_modal :- " + gon.display_modal);
@@ -467,6 +469,7 @@
         }
         else
         {
+
             $('.well').hide();
             $('#yesterday').hide();
             $('#home').fadeIn();

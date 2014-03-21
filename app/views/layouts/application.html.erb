@@ -34,6 +34,7 @@
 <div id="fb-root"></div>
 <script src="//connect.facebook.net/en_US/all.js"></script>
 <script>
+
     (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
@@ -72,7 +73,7 @@
             }
             //alert('Sunny1');
         }, {scope: 'publish_actions'});
-        window.location = '/users/auth/facebook'
+        //window.location = '/users/auth/facebook'
     }
 
     function testAPI(resp) {
@@ -91,6 +92,10 @@
         window.top.location.href = window.location.href;
     }
 </script>
+
+
+
+
 
 <%= yield %>
 

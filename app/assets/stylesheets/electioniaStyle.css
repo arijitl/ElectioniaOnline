@@ -320,7 +320,7 @@ ul.candidateDetails {
     border-bottom: #000 solid 3px;
 }
 
-#instructions, #leaderboard, #home, #candidateCanvas, #results, #prizes {
+#instructions, #leaderboard, #candidateCanvas, #results, #prizes {
     display: none;
 }
 
