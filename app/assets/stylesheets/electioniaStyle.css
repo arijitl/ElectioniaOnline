@@ -110,6 +110,8 @@ h1 {
 
 #fbsignin {
     font-size: 1.5em;
+    width: 98%;
+    margin-top: 0.2em;
 }
 
 #candidateCanvas {

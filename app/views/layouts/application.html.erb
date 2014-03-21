@@ -63,16 +63,17 @@
 
     }
 
-    function login() {
+    function login(this_obj,active_tab) {
         FB.login(function(response) {
+
             if (response.authResponse) {
                 //vote(response.authResponse);
-                return window.location = '/users/auth/facebook';
+                return window.location = '/users/auth/facebook/?reking=123';
             } else {
                 console.log("error");
             }
-            //alert('Sunny1');
         }, {scope: 'publish_actions'});
+
         //window.location = '/users/auth/facebook'
     }
 
