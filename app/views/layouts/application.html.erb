@@ -64,17 +64,19 @@
     }
 
     function login(this_obj,active_tab) {
-        FB.login(function(response) {
+        $.get('/set_session_var',function(data){
+            FB.login(function(response) {
 
-            if (response.authResponse) {
-                //vote(response.authResponse);
-                return window.location = '/users/auth/facebook/?reking=123';
-            } else {
-                console.log("error");
-            }
-        }, {scope: 'publish_actions'});
+                if (response.authResponse) {
+                    //vote(response.authResponse);
+                    return window.location = '/users/auth/facebook';
+                } else {
+                    console.log("error");
+                }
+            }, {scope: 'publish_actions'});
 
-        //window.location = '/users/auth/facebook'
+        });
+
     }
 
     function testAPI(resp) {

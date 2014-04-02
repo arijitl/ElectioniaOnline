@@ -109,7 +109,8 @@
       <%= link_to "Check yesterday's results", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#results').fadeIn();" %>
   <% else %>
       <% resource_class.omniauth_providers.each do |provider| %>
-          <%= link_to "Check yesterday's results", request.env['facebook.params']? canvas_login_path : omniauth_authorize_path(resource_name, provider), class: "btn btn-inverse btn-large btn-big", onclick: "login();" ,id: "result_btn"  %>
+          <%#= link_to "Check yesterday's results", request.env['facebook.params']? canvas_login_path : omniauth_authorize_path(resource_name, provider), class: "btn btn-inverse btn-large btn-big", onclick: "login();" ,id: "result_btn"  %>
+          <%= link_to "Check yesterday's results", "/set_session_var/result", class: "btn btn-inverse btn-large btn-big", onclick: "" ,id: "result_btn"  %>
       <% end %>
 <% end %>
 
@@ -117,7 +118,8 @@
       <%= link_to "Where do I stand", "#", class: "btn btn-inverse btn-large btn-big", onclick: "$('.well').hide();$('#leaderboard').fadeIn();$('#share_leaderboard').fadeIn();" %>
     <% else %>
       <% resource_class.omniauth_providers.each do |provider| %>
-          <%= link_to "Where do I stand", request.env['facebook.params']? canvas_login_path : omniauth_authorize_path(resource_name, provider), class: "btn btn-inverse btn-large btn-big", onclick: "login();" ,id:"leader_btn"  %>
+          <%#= link_to "Where do I stand", request.env['facebook.params']? canvas_login_path : omniauth_authorize_path(resource_name, provider), class: "btn btn-inverse btn-large btn-big", onclick: "login();" ,id:"leader_btn"  %>
+          <%= link_to "Where do I stand", "/set_session_var/leaderboard", class: "btn btn-inverse btn-large btn-big", onclick: "" ,id:"leader_btn"  %>
       <% end %>
   <% end %>
 
@@ -130,7 +132,8 @@
       <%= link_to "Vote in the election today", "#", class: "btn btn-success btn-large btn-big", onclick: "$('.well').hide();$('#candidateCanvas').fadeIn();", id: "homeGame" %>
   <% else %>
       <% resource_class.omniauth_providers.each do |provider| %>
-      <%= link_to "Vote in the election today", request.env['facebook.params']? canvas_login_path : omniauth_authorize_path(resource_name, provider), class: "btn btn-success btn-large btn-big", onclick: "login();", id: "fbsignin" %>
+      <%#= link_to "Vote in the election today", request.env['facebook.params']? canvas_login_path : omniauth_authorize_path(resource_name, provider), class: "btn btn-success btn-large btn-big", onclick: "login();", id: "fbsignin" %>
+      <%= link_to "Vote in the election today", "/set_session_var/vote_today", class: "btn btn-success btn-large btn-big", onclick: "", id: "fbsignin" %>
       <% end %>
   <% end %>
 

@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
-  skip_before_filter :authenticate_user! , :only => :canvas_login
+  skip_before_filter :authenticate_user! , :only => [:canvas_login, :set_session_var]
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = "Access denied."
@@ -188,6 +188,18 @@ class WelcomeController < ApplicationController
     @politician = Politician.find(@winner_candidate).name
     #render :text => "#{@game_result}||#{@politician}"
     render :text => "#{@game_result.balance rescue ''}||#{@game_result.contribution rescue ''}||#{@game_result.expense rescue ''}||#{@game_result.income rescue ''}||#{@game_result.votewin rescue ''}||#{@politician}"
+    return
+  end
+
+  #This is the function to set the session variable with the value of tab name which is clicked before login with facebook
+  def set_session_var
+    session["test"] = params[:val]
+    redirect_to "/users/auth/facebook"
+  end
+
+  def clear_session_var
+    session["test"] = ""
+    render :text => ""
     return
   end
 

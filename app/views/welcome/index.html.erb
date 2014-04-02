@@ -440,7 +440,36 @@
 
 <script>
 
+    $(function(){
+//        alert('chk');
+        $.get("/get_session_var",function(data){
+            //alert(data);
+            if(data == "leaderboard"){
+                $('.well').hide();
+                $('#leaderboard').fadeIn();
+                $('.fb-share-divs').hide();
+                $('#share_leaderboard').fadeIn();
+                $('#weekly_leaderboard_table_filter').hide();
+            } else if(data == "result") {
+                $('.well').hide();
+                $('#results').fadeIn();
+                $('.fb-share-divs').hide();
+                $('#share_result').fadeIn();
+            } else if(data == "vote_today"){
+                $('.well').hide();
+                $('.fb-share-divs').hide();
+                setTimeout(function(){
+                    $('#candidateCanvas').fadeIn();
+                },1000)
 
+            } else {
+
+            }
+            $.get("/clear_session_var",function(data1){
+                console.log(data1);
+            });
+        })
+    });
     //console.clear();
     //console.log("gon.voted_yesterday :- " + gon.voted_yesterday);
     //console.log("gon.display_modal :- " + gon.display_modal);

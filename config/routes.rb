@@ -18,6 +18,10 @@ ElectioniaOnline::Application.routes.draw do
   post '/my_result/(:game_date)', to: 'welcome#my_result', as: :my_result
   post '/control_new_deck_modal', to: 'welcome#control_new_deck_modal', as: :control_new_deck_modal
 
+  get '/set_session_var/:val', to:'welcome#set_session_var'
+  get '/clear_session_var', to:'welcome#clear_session_var'
+  get '/get_session_var', to:'fb_session#get_session_var'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

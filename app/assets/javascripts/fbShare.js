@@ -16,7 +16,7 @@ fbSdkLoader = function() {
         window.fbAsyncInit = function() {
             var initConfig;
             initConfig = {
-                appId: "255269797987971",
+                appId: "418175744951459",
                 channelUrl: "/channel.html",
                 status: true,
                 cookie: true,

@@ -1,4 +1,6 @@
 class FbSessionController < ApplicationController
+  skip_before_filter :authenticate_user! , :only => :get_session_var
+
   def facebook
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     auth=request.env["omniauth.auth"]
@@ -24,5 +26,10 @@ class FbSessionController < ApplicationController
       sign_in_and_redirect user, :event => :authentication #this will throw if @user is not activated
       #redirect_to new_user_registration_url
     end
+  end
+
+  def get_session_var
+    render :text => session["test"]
+    return
   end
 end

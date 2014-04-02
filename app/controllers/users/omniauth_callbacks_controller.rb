@@ -17,7 +17,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                          :uid => request.env["omniauth.auth"].uid,
                          :email => "fb#{Random.rand(0..99999)}@eeeeemmail.com",
                          :password => Devise.friendly_token[0,20],
-                         :avatar=> open(request.env["omniauth.auth"].info.image)
+                         :avatar=> (open(request.env["omniauth.auth"].info.image))
       )
       session["devise.facebook_data"] = request.env["omniauth.auth"].uid
       sign_in_and_redirect user, :event => :authentication #this will throw if @user is not activated
